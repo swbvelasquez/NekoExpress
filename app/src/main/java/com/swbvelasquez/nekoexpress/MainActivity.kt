@@ -2,10 +2,44 @@ package com.swbvelasquez.nekoexpress
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.swbvelasquez.nekoexpress.adapters.ProductCatalogAdapter
+import com.swbvelasquez.nekoexpress.common.ProductCatalogProvider
+import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
+import com.swbvelasquez.nekoexpress.models.ProductCartModel
+import com.swbvelasquez.nekoexpress.models.toProductCartModel
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var productCartList:MutableList<ProductCartModel>
+    private lateinit var productAdapter:ProductCatalogAdapter
+    private lateinit var recyclerLayoutManager: LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView(){
+        recyclerLayoutManager = LinearLayoutManager(this)
+        productCartList = mutableListOf()
+
+        productAdapter = ProductCatalogAdapter(
+            productList = ProductCatalogProvider.productList.toMutableList(),
+            onClickAddListener = { product ->
+                val productCart = product.toProductCartModel()
+                productCartList.add(productCart)
+            }
+        )
+
+        binding.rvProduct.apply {
+            adapter = productAdapter
+            layoutManager = recyclerLayoutManager
+            hasFixedSize()
+        }
     }
 }

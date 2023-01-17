@@ -1,6 +1,6 @@
 package com.swbvelasquez.nekoexpress.models
 
-data class ProductModel(
+data class ProductCatalogModel(
     val id:Int,
     val title:String,
     val price:Double,
@@ -9,3 +9,4 @@ data class ProductModel(
     val image:String,
     val rating:RatingModel
 )
+

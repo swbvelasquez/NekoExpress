@@ -2,21 +2,31 @@ package com.swbvelasquez.nekoexpress.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.models.ProductCatalogModel
 
 class ProductCatalogAdapter(
-    private var productList:MutableList<ProductCatalogModel>,
     private val onClickAddListener:(ProductCatalogModel)->Unit)
-    :RecyclerView.Adapter<ProductViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product,parent,false))
+    :ListAdapter<ProductCatalogModel, ProductCatalogViewHolder>(ProductCatalogDiffUtilCallback) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCatalogViewHolder {
+        return ProductCatalogViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product,parent,false))
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(productList[position],onClickAddListener)
+    override fun onBindViewHolder(holder: ProductCatalogViewHolder, position: Int) {
+        holder.bind(getItem(position),onClickAddListener)
     }
 
-    override fun getItemCount(): Int = productList.size
+    /**Clase u objecto para manejar las animaciones de forma automatica**/
+    private object ProductCatalogDiffUtilCallback : DiffUtil.ItemCallback<ProductCatalogModel>(){
+        override fun areItemsTheSame(oldItem: ProductCatalogModel, newItem: ProductCatalogModel): Boolean = oldItem.id == newItem.id
+
+
+        override fun areContentsTheSame(oldItem: ProductCatalogModel, newItem: ProductCatalogModel): Boolean = oldItem == newItem
+    }
+
+
 }

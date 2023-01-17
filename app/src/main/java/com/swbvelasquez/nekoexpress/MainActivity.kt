@@ -28,13 +28,12 @@ class MainActivity : AppCompatActivity() {
         recyclerLayoutManager = LinearLayoutManager(this)
         productCartList = mutableListOf()
 
-        productAdapter = ProductCatalogAdapter(
-            productList = ProductCatalogProvider.productList.toMutableList(),
-            onClickAddListener = { product ->
-                val productCart = product.toProductCartModel()
-                productCartList.add(productCart)
-            }
-        )
+        productAdapter = ProductCatalogAdapter{ product ->
+            val productCart = product.toProductCartModel()
+            productCartList.add(productCart)
+        }.also {
+            it.submitList(ProductCatalogProvider.productList.toMutableList())
+        }
 
         binding.rvProduct.apply {
             adapter = productAdapter

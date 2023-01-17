@@ -9,7 +9,7 @@ import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.databinding.ItemProductBinding
 import com.swbvelasquez.nekoexpress.models.ProductCatalogModel
 
-class ProductViewHolder(view:View):ViewHolder(view) {
+class ProductCatalogViewHolder(view:View):ViewHolder(view) {
     private val binding = ItemProductBinding.bind(view)
     private var isAdded:Boolean = false
 

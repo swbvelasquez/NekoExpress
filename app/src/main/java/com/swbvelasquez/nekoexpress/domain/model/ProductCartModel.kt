@@ -1,5 +1,7 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
+import com.swbvelasquez.nekoexpress.data.network.model.ProductCatalogDTO
+
 data class ProductCartModel(
     val id:Int,
     val title:String,

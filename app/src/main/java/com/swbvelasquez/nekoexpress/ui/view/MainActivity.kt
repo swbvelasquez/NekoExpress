@@ -2,18 +2,25 @@ package com.swbvelasquez.nekoexpress.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.swbvelasquez.nekoexpress.ui.view.adapter.ProductCatalogAdapter
 import com.swbvelasquez.nekoexpress.core.provider.ProductCatalogProvider
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var productCartList:MutableList<ProductCartModel>
     private lateinit var productAdapter: ProductCatalogAdapter
     private lateinit var recyclerLayoutManager: LinearLayoutManager
+
+    private val viewModel:MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpRecyclerView()
+        setUpViewModel()
     }
 
     private fun setUpRecyclerView(){
@@ -31,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         productAdapter = ProductCatalogAdapter{ product ->
             val productCart = product.toProductCartModel()
             productCartList.add(productCart)
-        }.also {
-            it.submitList(ProductCatalogProvider.productList.toMutableList())
         }
 
         binding.rvProduct.apply {
@@ -40,5 +46,16 @@ class MainActivity : AppCompatActivity() {
             layoutManager = recyclerLayoutManager
             hasFixedSize()
         }
+    }
+
+    private fun setUpViewModel(){
+        viewModel.isLoading().observe(this){ loading ->
+            binding.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getProductCatalogList().observe(this){ productList ->
+            productAdapter.submitList(productList)
+        }
+
+        viewModel.getAllProducts()
     }
 }

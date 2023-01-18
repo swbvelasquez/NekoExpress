@@ -1,4 +1,4 @@
-package com.swbvelasquez.nekoexpress.common
+package com.swbvelasquez.nekoexpress.commons
 
 import com.swbvelasquez.nekoexpress.models.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.models.RatingModel

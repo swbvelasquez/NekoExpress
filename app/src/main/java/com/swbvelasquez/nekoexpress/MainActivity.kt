@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.swbvelasquez.nekoexpress.adapters.ProductCatalogAdapter
-import com.swbvelasquez.nekoexpress.common.ProductCatalogProvider
+import com.swbvelasquez.nekoexpress.commons.ProductCatalogProvider
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
 import com.swbvelasquez.nekoexpress.models.ProductCartModel
 import com.swbvelasquez.nekoexpress.models.toProductCartModel

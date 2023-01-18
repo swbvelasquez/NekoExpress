@@ -1,4 +1,4 @@
-package com.swbvelasquez.nekoexpress.adapters
+package com.swbvelasquez.nekoexpress.ui.view.viewholder
 
 import android.view.View
 import android.widget.Toast
@@ -7,13 +7,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.databinding.ItemProductBinding
-import com.swbvelasquez.nekoexpress.models.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
 class ProductCatalogViewHolder(view:View):ViewHolder(view) {
     private val binding = ItemProductBinding.bind(view)
     private var isAdded:Boolean = false
 
-    fun bind(product:ProductCatalogModel, onClickAddListener:(ProductCatalogModel)->Unit){
+    fun bind(product: ProductCatalogModel, onClickAddListener:(ProductCatalogModel)->Unit){
         with(binding){
             tvTitle.text = product.title
             tvCategory.text = product.category

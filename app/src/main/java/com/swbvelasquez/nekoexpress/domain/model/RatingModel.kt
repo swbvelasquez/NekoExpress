@@ -1,4 +1,4 @@
-package com.swbvelasquez.nekoexpress.models
+package com.swbvelasquez.nekoexpress.domain.model
 
 data class RatingModel(
     val rate:Double,

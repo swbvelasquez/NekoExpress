@@ -1,4 +1,4 @@
-package com.swbvelasquez.nekoexpress.models
+package com.swbvelasquez.nekoexpress.domain.model
 
 data class ProductCatalogModel(
     val id:Int,
@@ -7,6 +7,6 @@ data class ProductCatalogModel(
     val description:String,
     val category: String,
     val image:String,
-    val rating:RatingModel
+    val rating: RatingModel
 )
 

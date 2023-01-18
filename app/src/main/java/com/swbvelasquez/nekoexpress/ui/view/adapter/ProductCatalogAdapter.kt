@@ -1,12 +1,12 @@
-package com.swbvelasquez.nekoexpress.adapters
+package com.swbvelasquez.nekoexpress.ui.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.swbvelasquez.nekoexpress.R
-import com.swbvelasquez.nekoexpress.models.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.ui.view.viewholder.ProductCatalogViewHolder
 
 class ProductCatalogAdapter(
     private val onClickAddListener:(ProductCatalogModel)->Unit)

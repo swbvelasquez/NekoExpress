@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         setUpViewModel()
     }
 
+    override fun onDestroy() {
+        viewModel.isLoading().removeObservers(this)
+        viewModel.getProductCatalogList().removeObservers(this)
+        super.onDestroy()
+    }
+
     private fun setUpRecyclerView(){
         recyclerLayoutManager = LinearLayoutManager(this)
         productCartList = mutableListOf()

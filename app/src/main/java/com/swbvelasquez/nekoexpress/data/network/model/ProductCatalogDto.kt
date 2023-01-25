@@ -1,9 +1,8 @@
 package com.swbvelasquez.nekoexpress.data.network.model
 
-import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.model.RatingModel
 
-data class ProductCatalogDTO(
+data class ProductCatalogDto(
     val id:Int,
     val title:String,
     val price:Double,

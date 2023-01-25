@@ -25,7 +25,7 @@ class MainViewModel:ViewModel() {
     fun getAllProducts(){
         viewModelScope.launch {
             loading.value = true
-            val result = repository.getAllProducts()
+            val result = repository.getAllProductsFromApi()
 
             result?.let {
                 productCatalogList.value = result.toMutableList()
@@ -39,7 +39,7 @@ class MainViewModel:ViewModel() {
         viewModelScope.launch {
             loading.value = true
 
-            val result = repository.getProductById(id)
+            val result = repository.getProductByIdFromApi(id)
 
             result?.let {
                 productCatalog.value = result

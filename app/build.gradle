@@ -43,6 +43,7 @@ def lifecycle_version = "2.5.1"
 def coroutines_version = "1.6.4"
 def activity_version = "1.6.1"
 def fragment_version = "1.5.5"
+def room_version = "2.4.3"
 
 //librerias default
 def androidx_core_version = "1.9.0"
@@ -80,6 +81,13 @@ dependencies {
 
     // Coroutines (Permite utilizar corutinas)
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // Room (Permite utilizar Room database)
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Kotlin Room (Permite utilizar corutinas con room)
+    implementation("androidx.room:room-ktx:$room_version")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

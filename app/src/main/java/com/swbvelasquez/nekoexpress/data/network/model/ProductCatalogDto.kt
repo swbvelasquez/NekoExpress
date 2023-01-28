@@ -9,7 +9,7 @@ data class ProductCatalogDto(
     val description:String,
     val category: String,
     val image:String,
-    val rating: RatingModel
+    val rating: RatingDto
 )
 
 

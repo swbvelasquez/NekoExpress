@@ -13,7 +13,7 @@ data class ProductCatalogModel(
     val rating: RatingModel
 )
 
-fun ProductCatalogDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=rating)
+fun ProductCatalogDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rating.rate,rating.count))
 
 fun ProductCatalogWithRatingDto.toProductCatalogModel() = ProductCatalogModel(id=productCatalog.id,title=productCatalog.title,price=productCatalog.price,description=productCatalog.description,
     category=productCatalog.category,image=productCatalog.image,rating=RatingModel(rating.rate,rating.count)

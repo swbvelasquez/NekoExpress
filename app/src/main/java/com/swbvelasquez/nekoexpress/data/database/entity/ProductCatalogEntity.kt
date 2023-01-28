@@ -3,6 +3,7 @@ package com.swbvelasquez.nekoexpress.data.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
 @Entity(tableName = "ProductCatalogTable")
 data class ProductCatalogEntity (
@@ -13,3 +14,5 @@ data class ProductCatalogEntity (
     @ColumnInfo(name = "description") val description:String,
     @ColumnInfo(name = "category") val category: String,
     @ColumnInfo(name = "image") val image:String)
+
+fun ProductCatalogModel.toProductCatalogEntity() = ProductCatalogEntity(id=id,title=title,price=price,description=description,category=category,image=image)

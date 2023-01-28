@@ -1,4 +1,5 @@
 package com.swbvelasquez.nekoexpress.data.network.model
 
-class RatingDto {
-}
+data class RatingDto(
+    val rate:Double,
+    val count:Int)

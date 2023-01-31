@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.swbvelasquez.nekoexpress.data.repository.ProductCatalogRepository
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.domain.usecase.GetAllProductsCatalogUseCase
+import com.swbvelasquez.nekoexpress.domain.usecase.GetProductCatalogByIdUseCase
 import kotlinx.coroutines.launch
 
 class MainViewModel:ViewModel() {
-    private val repository = ProductCatalogRepository()
+    private var getAllProductsCatalogUseCase = GetAllProductsCatalogUseCase()
+    private var getProductCatalogByIdUseCase = GetProductCatalogByIdUseCase()
     private val loading = MutableLiveData<Boolean>()
 
     private val productCatalogList : MutableLiveData<MutableList<ProductCatalogModel>> by lazy {
@@ -25,7 +28,7 @@ class MainViewModel:ViewModel() {
     fun getAllProducts(){
         viewModelScope.launch {
             loading.value = true
-            val result = repository.getAllProductsFromApi()
+            val result = getAllProductsCatalogUseCase()
 
             result?.let {
                 productCatalogList.value = result.toMutableList()
@@ -39,10 +42,14 @@ class MainViewModel:ViewModel() {
         viewModelScope.launch {
             loading.value = true
 
-            val result = repository.getProductByIdFromApi(id)
+            try {
+                val result = getProductCatalogByIdUseCase(id)
 
-            result?.let {
-                productCatalog.value = result
+                result?.let {
+                    productCatalog.value = result
+                }
+            }catch (ex:Exception){
+                ex.printStackTrace()
             }
 
             loading.value = false

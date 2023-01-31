@@ -18,17 +18,17 @@ interface ProductCatalogDao {
     suspend fun insertProduct(product:ProductCatalogEntity):Long
 
     @Insert //Cuando falla un objeto, solo se hace rollback a ese objeto, el resto de la lista se inserta igual, si estuviera marcada con el tag @Transaction este insert, entonces la lista si se ejecuta en una misma transaccion
-    suspend fun insertAllProducts(productList:List<ProductCatalogEntity>)
+    suspend fun insertAllProducts(productList:List<ProductCatalogEntity>):List<Long>
 
     @Update
-    suspend fun updateProduct(product:ProductCatalogEntity)
+    suspend fun updateProduct(product:ProductCatalogEntity):Int
 
     @Update
-    suspend fun updateAllProducts(productList:List<ProductCatalogEntity>)
+    suspend fun updateAllProducts(productList:List<ProductCatalogEntity>):Int
 
     @Delete
-    suspend fun deleteProduct(product:ProductCatalogEntity)
+    suspend fun deleteProduct(product:ProductCatalogEntity):Int
 
     @Delete
-    suspend fun deleteAllProducts(productList:List<ProductCatalogEntity>)
+    suspend fun deleteAllProducts(productList:List<ProductCatalogEntity>):Int
 }

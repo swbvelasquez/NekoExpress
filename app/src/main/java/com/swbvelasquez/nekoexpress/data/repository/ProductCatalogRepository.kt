@@ -17,10 +17,10 @@ class ProductCatalogRepository {
 
     suspend fun getAllProductsFromApi():List<ProductCatalogModel>?{
         val productDTOList = productApi.getAllProducts()
-        var productModelList:MutableList<ProductCatalogModel>? = null
+        var productModelList:List<ProductCatalogModel>? = null
 
         if(!productDTOList.isNullOrEmpty()){
-            productModelList = productDTOList.map { it.toProductCatalogModel() }.toMutableList()
+            productModelList = productDTOList.map { it.toProductCatalogModel() }
         }
 
         return productModelList
@@ -28,10 +28,10 @@ class ProductCatalogRepository {
 
     suspend fun getAllProductsFromDatabase():List<ProductCatalogModel>?{
         val productEntityList = withContext(Dispatchers.IO){ productDao.getAllProductsWithRanking() }
-        var productModelList:MutableList<ProductCatalogModel>? = null
+        var productModelList:List<ProductCatalogModel>? = null
 
         if(!productEntityList.isNullOrEmpty()){
-            productModelList = productEntityList.map { it.toProductCatalogModel() }.toMutableList()
+            productModelList = productEntityList.map { it.toProductCatalogModel() }
         }
 
         return productModelList
@@ -48,7 +48,7 @@ class ProductCatalogRepository {
         return productModel
     }
 
-    suspend fun getProductByIdFromDatabase(id:Int):ProductCatalogModel?{
+    suspend fun getProductByIdFromDb(id:Int):ProductCatalogModel?{
         val productEntity = withContext(Dispatchers.IO){ productDao.getProductWithRankingById(id) }
         var productModel:ProductCatalogModel? = null
 
@@ -60,11 +60,83 @@ class ProductCatalogRepository {
     }
 
     @Transaction
-    suspend fun insertProductToDatabase(productModel:ProductCatalogModel){
+    suspend fun insertProductToDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductCatalogEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
-        val result = withContext(Dispatchers.IO){
+
+        val result =  withContext(Dispatchers.IO){
             productDao.insertProduct(productEntity)>0 && ratingDao.insertRating(ratingEntity)>0
         }
+
+        if(!result) throw Exception("error")
+    }
+
+    @Transaction
+    suspend fun insertAllProductsToDb(productModelList:List<ProductCatalogModel>){
+        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+
+        val result = withContext(Dispatchers.IO) {
+            val resultProductList = productDao.insertAllProducts(productEntityList) //si es un insert retorna los ids si es auto generado y retorna 1 si es generado manualmente, cuando falla retorna -1
+            val resultRatingList = ratingDao.insertAllRatings(ratingEntityList)
+
+            return@withContext !(resultProductList.isEmpty() || resultProductList.contains(-1) || resultRatingList.isEmpty() || resultRatingList.contains(-1))
+        }
+
+        if(!result) throw Exception("error")
+    }
+
+    @Transaction
+    suspend fun updateProductToDb(productModel:ProductCatalogModel){
+        val productEntity = productModel.toProductCatalogEntity()
+        val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
+
+        val result =  withContext(Dispatchers.IO){
+            productDao.updateProduct(productEntity)>0 && ratingDao.updateRating(ratingEntity)>0
+        }
+
+        if(!result) throw Exception("error")
+    }
+
+    @Transaction
+    suspend fun updateAllProductsToDb(productModelList:List<ProductCatalogModel>){
+        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+
+        val result = withContext(Dispatchers.IO) {
+            val resultProductList = productDao.updateAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas 0 -1 si fallo
+            val resultRatingList = ratingDao.updateAllRatings(ratingEntityList)
+
+            return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
+        }
+
+        if(!result) throw Exception("error")
+    }
+
+    @Transaction
+    suspend fun deleteProductToDb(productModel:ProductCatalogModel){
+        val productEntity = productModel.toProductCatalogEntity()
+        val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
+
+        val result =  withContext(Dispatchers.IO){
+            productDao.updateProduct(productEntity)>0 && ratingDao.updateRating(ratingEntity)>0
+        }
+
+        if(!result) throw Exception("error")
+    }
+
+    @Transaction
+    suspend fun deleteAllProductsToDb(productModelList:List<ProductCatalogModel>){
+        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+
+        val result = withContext(Dispatchers.IO) {
+            val resultProductList = productDao.deleteAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas 0 -1 si fallo
+            val resultRatingList = ratingDao.deleteAllRatings(ratingEntityList)
+
+            return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
+        }
+
+        if(!result) throw Exception("error")
     }
 }

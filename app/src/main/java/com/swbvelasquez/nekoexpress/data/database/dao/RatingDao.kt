@@ -16,17 +16,17 @@ interface RatingDao {
     suspend fun insertRating(rating:RatingEntity):Long
 
     @Insert
-    suspend fun insertAllRatings(ratingList:List<RatingEntity>)
+    suspend fun insertAllRatings(ratingList:List<RatingEntity>):List<Long>
 
     @Update
-    suspend fun updateRating(rating:RatingEntity)
+    suspend fun updateRating(rating:RatingEntity):Int
 
     @Update
-    suspend fun updateAllRatings(RatingList:List<RatingEntity>)
+    suspend fun updateAllRatings(RatingList:List<RatingEntity>):Int
 
     @Delete
-    suspend fun deleteRating(rating:RatingEntity)
+    suspend fun deleteRating(rating:RatingEntity):Int
 
     @Delete
-    suspend fun deleteAllRatings(RatingList:List<RatingEntity>)
+    suspend fun deleteAllRatings(RatingList:List<RatingEntity>):Int
 }

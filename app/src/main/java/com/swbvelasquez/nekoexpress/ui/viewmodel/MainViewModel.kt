@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.swbvelasquez.nekoexpress.data.repository.ProductCatalogRepository
+import com.swbvelasquez.nekoexpress.core.error.CustomException
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.usecase.GetAllProductsCatalogUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetProductCatalogByIdUseCase
@@ -21,24 +22,30 @@ class MainViewModel:ViewModel() {
     private val productCatalog : MutableLiveData<ProductCatalogModel> by lazy {
         MutableLiveData<ProductCatalogModel>()
     }
+    private val customException : MutableLiveData<CustomException> by lazy {
+        MutableLiveData<CustomException>()
+    }
 
     fun isLoading():LiveData<Boolean> = loading
+    fun getTypeException():LiveData<CustomException> = customException
     fun getProductCatalogList():LiveData<MutableList<ProductCatalogModel>> = productCatalogList
 
     fun getAllProducts(){
         viewModelScope.launch {
             loading.value = true
-            try{
+            try {
                 val result = getAllProductsCatalogUseCase()
 
                 result?.let {
                     productCatalogList.value = result.toMutableList()
                 }
+            }catch (ex:CustomException) {
+                customException.value = ex
             }catch (ex:Exception){
-                ex.printStackTrace()
+                customException.value = CustomException(CustomTypeException.UNKNOWN)
+            }finally {
+                loading.value = false
             }
-
-            loading.value = false
         }
     }
 
@@ -52,11 +59,13 @@ class MainViewModel:ViewModel() {
                 result?.let {
                     productCatalog.value = result
                 }
+            }catch (ex:CustomException) {
+                customException.value = ex
             }catch (ex:Exception){
-                ex.printStackTrace()
+                customException.value = CustomException(CustomTypeException.UNKNOWN)
+            }finally {
+                loading.value = false
             }
-
-            loading.value = false
         }
     }
 }

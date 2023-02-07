@@ -2,6 +2,8 @@ package com.swbvelasquez.nekoexpress.data.repository
 
 import androidx.room.Transaction
 import com.swbvelasquez.nekoexpress.NekoApplication
+import com.swbvelasquez.nekoexpress.core.error.CustomException
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.data.database.entity.toProductCatalogEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toRatingEntity
@@ -70,7 +72,7 @@ class ProductCatalogRepository {
             productDao.insertProduct(productEntity)>0 && ratingDao.insertRating(ratingEntity)>0
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_INSERT_ONE)
     }
 
     @Transaction
@@ -85,7 +87,7 @@ class ProductCatalogRepository {
             return@withContext !(resultProductList.isEmpty() || resultProductList.contains(-1) || resultRatingList.isEmpty() || resultRatingList.contains(-1))
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_INSERT_LIST)
     }
 
     @Transaction
@@ -97,7 +99,7 @@ class ProductCatalogRepository {
             productDao.updateProduct(productEntity)>0 && ratingDao.updateRating(ratingEntity)>0
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_UPDATE_ONE)
     }
 
     @Transaction
@@ -112,7 +114,7 @@ class ProductCatalogRepository {
             return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_UPDATE_LIST)
     }
 
     @Transaction
@@ -124,7 +126,7 @@ class ProductCatalogRepository {
             productDao.deleteProduct(productEntity)>0 && ratingDao.deleteRating(ratingEntity)>0
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
 
     @Transaction
@@ -139,6 +141,6 @@ class ProductCatalogRepository {
             return@withContext resultProductList!=Constants.DB_OPERATION_FAIL && resultRatingList!=Constants.DB_OPERATION_FAIL
         }
 
-        if(!result) throw Exception("error")
+        if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)
     }
 }

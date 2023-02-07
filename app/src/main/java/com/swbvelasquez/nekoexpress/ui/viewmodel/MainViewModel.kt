@@ -28,10 +28,14 @@ class MainViewModel:ViewModel() {
     fun getAllProducts(){
         viewModelScope.launch {
             loading.value = true
-            val result = getAllProductsCatalogUseCase()
+            try{
+                val result = getAllProductsCatalogUseCase()
 
-            result?.let {
-                productCatalogList.value = result.toMutableList()
+                result?.let {
+                    productCatalogList.value = result.toMutableList()
+                }
+            }catch (ex:Exception){
+                ex.printStackTrace()
             }
 
             loading.value = false

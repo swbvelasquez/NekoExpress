@@ -9,6 +9,13 @@ class GetProductCatalogByIdUseCase {
     suspend operator fun invoke(id:Int):ProductCatalogModel?{
         var product = repository.getProductByIdFromApi(id)
 
+        if(product!=null){
+            repository.deleteProductFromDb(product)
+            repository.insertProductToDb(product)
+        }else{
+            product = repository.getProductByIdFromDb(id)
+        }
+
         return product
     }
 }

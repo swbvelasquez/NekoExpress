@@ -2,6 +2,7 @@ package com.swbvelasquez.nekoexpress.data.repository
 
 import androidx.room.Transaction
 import com.swbvelasquez.nekoexpress.NekoApplication
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.data.database.entity.toProductCatalogEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toRatingEntity
 import com.swbvelasquez.nekoexpress.data.network.service.ProductCatalogService
@@ -18,6 +19,7 @@ class ProductCatalogRepository {
     suspend fun getAllProductsFromApi():List<ProductCatalogModel>?{
         val productDTOList = productApi.getAllProducts()
         var productModelList:List<ProductCatalogModel>? = null
+
 
         if(!productDTOList.isNullOrEmpty()){
             productModelList = productDTOList.map { it.toProductCatalogModel() }
@@ -87,7 +89,7 @@ class ProductCatalogRepository {
     }
 
     @Transaction
-    suspend fun updateProductToDb(productModel:ProductCatalogModel){
+    suspend fun updateProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductCatalogEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
 
@@ -99,12 +101,12 @@ class ProductCatalogRepository {
     }
 
     @Transaction
-    suspend fun updateAllProductsToDb(productModelList:List<ProductCatalogModel>){
+    suspend fun updateAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductCatalogEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
 
         val result = withContext(Dispatchers.IO) {
-            val resultProductList = productDao.updateAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas 0 -1 si fallo
+            val resultProductList = productDao.updateAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas o -1 si fallo
             val resultRatingList = ratingDao.updateAllRatings(ratingEntityList)
 
             return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
@@ -114,27 +116,27 @@ class ProductCatalogRepository {
     }
 
     @Transaction
-    suspend fun deleteProductToDb(productModel:ProductCatalogModel){
+    suspend fun deleteProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductCatalogEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
 
         val result =  withContext(Dispatchers.IO){
-            productDao.updateProduct(productEntity)>0 && ratingDao.updateRating(ratingEntity)>0
+            productDao.deleteProduct(productEntity)>0 && ratingDao.deleteRating(ratingEntity)>0
         }
 
         if(!result) throw Exception("error")
     }
 
     @Transaction
-    suspend fun deleteAllProductsToDb(productModelList:List<ProductCatalogModel>){
+    suspend fun deleteAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductCatalogEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
 
         val result = withContext(Dispatchers.IO) {
-            val resultProductList = productDao.deleteAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas 0 -1 si fallo
+            val resultProductList = productDao.deleteAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas o -1 si fallo
             val resultRatingList = ratingDao.deleteAllRatings(ratingEntityList)
 
-            return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
+            return@withContext resultProductList!=Constants.DB_OPERATION_FAIL && resultRatingList!=Constants.DB_OPERATION_FAIL
         }
 
         if(!result) throw Exception("error")

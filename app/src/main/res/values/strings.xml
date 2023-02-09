@@ -3,4 +3,6 @@
     <string name="thumbnail_description">Image Thumbnail</string>
     <string name="icon_description">Image Icon</string>
     <string name="format_product_price">S/ %.2f</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -18,6 +18,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCheckCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver Canasta"
+        android:gravity="center"
+        app:cornerRadius="18dp"
+        android:paddingVertical="12dp"
+        app:icon="@drawable/ic_cart"
+        app:iconGravity="textStart"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        android:layout_marginVertical="@dimen/view_margin_min"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+        -->
+
     <include
         android:id="@+id/lyProgressBar"
         layout="@layout/layout_progress_bar"/>

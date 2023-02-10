@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="view_padding_1">2dp</dimen>
+    <dimen name="view_padding_2">4dp</dimen>
+    <dimen name="view_padding_3">6dp</dimen>
+    <dimen name="view_padding_4">8dp</dimen>
+    <dimen name="view_padding_5">10dp</dimen>
+    <dimen name="view_padding_6">12dp</dimen>
+    <dimen name="view_padding_7">14dp</dimen>
+    <dimen name="view_padding_8">16dp</dimen>
+    <dimen name="view_padding_9">18dp</dimen>
+    <dimen name="view_padding_10">20dp</dimen>
+    <dimen name="view_padding_11">22dp</dimen>
+    <dimen name="view_padding_12">24dp</dimen>
+
+    <dimen name="view_margin_1">2dp</dimen>
+    <dimen name="view_margin_2">4dp</dimen>
+    <dimen name="view_margin_3">6dp</dimen>
+    <dimen name="view_margin_4">8dp</dimen>
+    <dimen name="view_margin_5">10dp</dimen>
+    <dimen name="view_margin_6">12dp</dimen>
+    <dimen name="view_margin_7">14dp</dimen>
+    <dimen name="view_margin_8">16dp</dimen>
+    <dimen name="view_margin_9">18dp</dimen>
+    <dimen name="view_margin_10">20dp</dimen>
+    <dimen name="view_margin_11">22dp</dimen>
+    <dimen name="view_margin_12">24dp</dimen>
+
+    <dimen name="view_radius_1">2dp</dimen>
+    <dimen name="view_radius_2">4dp</dimen>
+    <dimen name="view_radius_3">6dp</dimen>
+    <dimen name="view_radius_4">8dp</dimen>
+    <dimen name="view_radius_5">10dp</dimen>
+    <dimen name="view_radius_6">12dp</dimen>
+    <dimen name="view_radius_7">14dp</dimen>
+    <dimen name="view_radius_8">16dp</dimen>
+    <dimen name="view_radius_9">18dp</dimen>
+    <dimen name="view_radius_10">20dp</dimen>
+    <dimen name="view_radius_11">22dp</dimen>
+    <dimen name="view_radius_12">24dp</dimen>
+
+    <dimen name="view_border_1">2dp</dimen>
+    <dimen name="view_border_2">4dp</dimen>
+    <dimen name="view_border_3">6dp</dimen>
+    <dimen name="view_border_4">8dp</dimen>
+    <dimen name="view_border_5">10dp</dimen>
+    <dimen name="view_border_6">12dp</dimen>
+    <dimen name="view_border_7">14dp</dimen>
+    <dimen name="view_border_8">16dp</dimen>
+    <dimen name="view_border_9">18dp</dimen>
+    <dimen name="view_border_10">20dp</dimen>
+    <dimen name="view_border_11">22dp</dimen>
+    <dimen name="view_border_12">24dp</dimen>
+
+
+    <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
+    <dimen name="view_margin_default">@dimen/view_margin_8</dimen>
+</resources>

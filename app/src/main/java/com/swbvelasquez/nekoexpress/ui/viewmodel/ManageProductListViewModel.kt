@@ -11,7 +11,7 @@ import com.swbvelasquez.nekoexpress.domain.usecase.GetAllProductsCatalogUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetProductCatalogByIdUseCase
 import kotlinx.coroutines.launch
 
-class ProductCatalogListFragmentViewModel:ViewModel() {
+class ManageProductListViewModel:ViewModel() {
     private var getAllProductsCatalogUseCase = GetAllProductsCatalogUseCase()
     private var getProductCatalogByIdUseCase = GetProductCatalogByIdUseCase()
     private val loading = MutableLiveData<Boolean>()

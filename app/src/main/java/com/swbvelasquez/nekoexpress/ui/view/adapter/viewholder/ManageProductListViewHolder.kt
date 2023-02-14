@@ -1,18 +1,16 @@
-package com.swbvelasquez.nekoexpress.ui.view.viewholder
+package com.swbvelasquez.nekoexpress.ui.view.adapter.viewholder
 
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.swbvelasquez.nekoexpress.R
-import com.swbvelasquez.nekoexpress.databinding.ItemCatalogProductBinding
+import com.swbvelasquez.nekoexpress.databinding.ItemManageProductListBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
-class ProductCatalogViewHolder(view:View):ViewHolder(view) {
-    private val binding = ItemCatalogProductBinding.bind(view)
+class ManageProductListViewHolder(view:View):ViewHolder(view) {
+    private val binding = ItemManageProductListBinding.bind(view)
     private var isAdded:Boolean = false
 
     fun bind(product: ProductCatalogModel, onClickAddListener:(ProductCatalogModel)->Unit){
@@ -40,7 +38,7 @@ class ProductCatalogViewHolder(view:View):ViewHolder(view) {
             Glide
                 .with(itemView.context)
                 .load(product.image)
-                .transform(CenterCrop(),RoundedCorners(24))
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imvThumbnail)
         }

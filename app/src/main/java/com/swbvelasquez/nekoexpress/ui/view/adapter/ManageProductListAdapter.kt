@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
-import com.swbvelasquez.nekoexpress.ui.view.viewholder.ProductCatalogViewHolder
+import com.swbvelasquez.nekoexpress.ui.view.adapter.viewholder.ManageProductListViewHolder
 
-class ProductCatalogAdapter(
+class ManageProductListAdapter(
     private val onClickAddListener:(ProductCatalogModel)->Unit)
-    :ListAdapter<ProductCatalogModel, ProductCatalogViewHolder>(ProductCatalogDiffUtilCallback) {
+    :ListAdapter<ProductCatalogModel, ManageProductListViewHolder>(ProductCatalogDiffUtilCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCatalogViewHolder {
-        return ProductCatalogViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_catalog_product,parent,false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageProductListViewHolder {
+        return ManageProductListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_manage_product_list,parent,false))
     }
 
-    override fun onBindViewHolder(holder: ProductCatalogViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ManageProductListViewHolder, position: Int) {
         holder.bind(getItem(position),onClickAddListener)
     }
 

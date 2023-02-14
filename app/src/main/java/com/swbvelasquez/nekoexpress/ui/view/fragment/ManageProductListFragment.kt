@@ -5,34 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Functions.showSimpleMessage
-import com.swbvelasquez.nekoexpress.databinding.FragmentProductCatalogListBinding
+import com.swbvelasquez.nekoexpress.databinding.FragmentManageProductListBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
-import com.swbvelasquez.nekoexpress.ui.view.adapter.ProductCatalogAdapter
-import com.swbvelasquez.nekoexpress.ui.viewmodel.ProductCatalogListFragmentViewModel
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ManageProductListAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.ManageProductListViewModel
 
 
-class ProductCatalogListFragment : Fragment() {
+class ManageProductListFragment : Fragment() {
     companion object{
-        val TAG: String = ProductCatalogListFragment::class.java.simpleName
+        val TAG: String = ManageProductListFragment::class.java.simpleName
     }
 
-    private lateinit var binding: FragmentProductCatalogListBinding
+    private lateinit var binding: FragmentManageProductListBinding
     private lateinit var productCartList:MutableList<ProductCartModel>
-    private lateinit var productAdapter: ProductCatalogAdapter
+    private lateinit var productAdapter: ManageProductListAdapter
     private lateinit var recyclerLayoutManager: LinearLayoutManager
 
-    private val viewModel:ProductCatalogListFragmentViewModel by viewModels()
+    private val viewModel:ManageProductListViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentProductCatalogListBinding.inflate(inflater,container,false)
+        binding = FragmentManageProductListBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -47,7 +44,7 @@ class ProductCatalogListFragment : Fragment() {
         recyclerLayoutManager = LinearLayoutManager(activity)
         productCartList = mutableListOf()
 
-        productAdapter = ProductCatalogAdapter{ product ->
+        productAdapter = ManageProductListAdapter{ product ->
             val productCart = product.toProductCartModel()
             productCartList.add(productCart)
         }

@@ -52,6 +52,19 @@
     <dimen name="view_border_11">22dp</dimen>
     <dimen name="view_border_12">24dp</dimen>
 
+    <dimen name="view_size_1">2dp</dimen>
+    <dimen name="view_size_2">4dp</dimen>
+    <dimen name="view_size_3">6dp</dimen>
+    <dimen name="view_size_4">8dp</dimen>
+    <dimen name="view_size_5">10dp</dimen>
+    <dimen name="view_size_6">12dp</dimen>
+    <dimen name="view_size_7">14dp</dimen>
+    <dimen name="view_size_8">16dp</dimen>
+    <dimen name="view_size_9">18dp</dimen>
+    <dimen name="view_size_10">20dp</dimen>
+    <dimen name="view_size_11">22dp</dimen>
+    <dimen name="view_size_12">24dp</dimen>
+
 
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
     <dimen name="view_margin_default">@dimen/view_margin_8</dimen>

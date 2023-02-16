@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">NekoExpress</string>
-    <string name="thumbnail_description">Image Thumbnail</string>
-    <string name="icon_description">Image Icon</string>
+    <string name="image_view_thumbnail_description">Image Thumbnail</string>
+    <string name="image_view_icon_description">Image Icon</string>
+
     <string name="format_product_price">S/ %.2f</string>
 
     <string name="text_description_title">Description</string>
     <string name="text_size_title">Size</string>
     <string name="text_color_title">Color</string>
+
+    <string name="button_add_cart_description">Add To Cart</string>
 
     <string name="text_size_small_value">S</string>
     <string name="text_size_medium_value">M</string>

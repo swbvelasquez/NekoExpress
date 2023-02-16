@@ -64,6 +64,12 @@
     <dimen name="view_size_10">20dp</dimen>
     <dimen name="view_size_11">22dp</dimen>
     <dimen name="view_size_12">24dp</dimen>
+    <dimen name="view_size_13">26dp</dimen>
+    <dimen name="view_size_14">28dp</dimen>
+    <dimen name="view_size_15">30dp</dimen>
+    <dimen name="view_size_16">32dp</dimen>
+    <dimen name="view_size_17">34dp</dimen>
+    <dimen name="view_size_18">36dp</dimen>
 
 
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>

@@ -11,7 +11,7 @@
         android:id="@+id/imvThumbnail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/thumbnail_description"
+        android:contentDescription="@string/image_view_thumbnail_description"
         android:src="@drawable/ropa_default"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,12 +26,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="@dimen/view_radius_12">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginBottom="4dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -52,7 +51,7 @@
                 android:id="@+id/imvScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/thumbnail_description"
+                android:contentDescription="@string/image_view_thumbnail_description"
                 android:src="@drawable/ic_score"
                 app:tint="@color/color_primary"
                 android:scaleType="fitXY"
@@ -138,8 +137,8 @@
 
             <LinearLayout
                 android:id="@+id/lySizeSmall"
-                android:layout_width="@dimen/view_size_12"
-                android:layout_height="@dimen/view_size_12"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
                 android:layout_marginTop="@dimen/view_margin_min"
                 android:background="@drawable/drw_size_layout_active"
                 app:layout_constraintStart_toStartOf="@id/tvTitleSize"
@@ -160,8 +159,8 @@
 
             <LinearLayout
                 android:id="@+id/lySizeMedium"
-                android:layout_width="@dimen/view_size_12"
-                android:layout_height="@dimen/view_size_12"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
                 android:layout_marginTop="@dimen/view_margin_min"
                 android:layout_marginStart="@dimen/view_margin_min"
                 android:background="@drawable/drw_size_layout_inactive"
@@ -183,8 +182,8 @@
 
             <LinearLayout
                 android:id="@+id/lySizeLarge"
-                android:layout_width="@dimen/view_size_12"
-                android:layout_height="@dimen/view_size_12"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
                 android:layout_marginTop="@dimen/view_margin_min"
                 android:layout_marginStart="@dimen/view_margin_min"
                 android:background="@drawable/drw_size_layout_inactive"
@@ -206,8 +205,8 @@
 
             <LinearLayout
                 android:id="@+id/lySizeExtraLarge"
-                android:layout_width="@dimen/view_size_12"
-                android:layout_height="@dimen/view_size_12"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
                 android:layout_marginTop="@dimen/view_margin_min"
                 android:layout_marginStart="@dimen/view_margin_min"
                 android:background="@drawable/drw_size_layout_inactive"
@@ -227,6 +226,101 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvTitleColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/text_color_title"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/view_margin_default"
+                app:layout_constraintStart_toStartOf="@id/imvColorRed"
+                app:layout_constraintTop_toBottomOf="@id/tvDescription"/>
+
+            <ImageButton
+                android:id="@+id/imvColorRed"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
+                android:contentDescription="@string/image_view_icon_description"
+                android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_min"
+                android:src="@drawable/ic_check"
+                app:tint="@color/color_on_primary"
+                android:background="@drawable/drw_color_layout_red"
+                app:layout_constraintEnd_toStartOf="@id/imvColorBlue"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleColor"
+                />
+
+            <ImageButton
+                android:id="@+id/imvColorBlue"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
+                android:contentDescription="@string/image_view_icon_description"
+                android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_min"
+                app:tint="@color/color_on_primary"
+                android:background="@drawable/drw_color_layout_blue"
+                app:layout_constraintEnd_toStartOf="@id/imvColorGreen"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleColor"
+                />
+
+            <ImageButton
+                android:id="@+id/imvColorGreen"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
+                android:contentDescription="@string/image_view_icon_description"
+                android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_min"
+                app:tint="@color/color_on_primary"
+                android:background="@drawable/drw_color_layout_green"
+                app:layout_constraintEnd_toStartOf="@id/imvColorOrange"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleColor"
+                />
+
+            <ImageButton
+                android:id="@+id/imvColorOrange"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
+                android:contentDescription="@string/image_view_icon_description"
+                android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_min"
+                app:tint="@color/color_on_primary"
+                android:background="@drawable/drw_color_layout_orange"
+                app:layout_constraintEnd_toStartOf="@id/imvColorPurple"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleColor"
+                />
+
+            <ImageButton
+                android:id="@+id/imvColorPurple"
+                android:layout_width="@dimen/view_size_14"
+                android:layout_height="@dimen/view_size_14"
+                android:contentDescription="@string/image_view_icon_description"
+                android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_default"
+                app:tint="@color/color_on_primary"
+                android:background="@drawable/drw_color_layout_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleColor"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCheckCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_add_cart_description"
+                android:textAllCaps="false"
+                android:gravity="center"
+                app:cornerRadius="@dimen/view_radius_12"
+                android:paddingVertical="@dimen/view_padding_6"
+                app:icon="@drawable/ic_cart"
+                app:iconGravity="textStart"
+                android:layout_marginHorizontal="@dimen/view_margin_default"
+                android:layout_marginTop="@dimen/view_margin_default"
+                android:layout_marginBottom="@dimen/view_margin_min"
+                app:layout_constraintTop_toBottomOf="@id/lySizeSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

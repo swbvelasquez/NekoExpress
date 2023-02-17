@@ -12,6 +12,10 @@
     <dimen name="view_padding_10">20dp</dimen>
     <dimen name="view_padding_11">22dp</dimen>
     <dimen name="view_padding_12">24dp</dimen>
+    <dimen name="view_padding_13">26dp</dimen>
+    <dimen name="view_padding_14">28dp</dimen>
+    <dimen name="view_padding_15">30dp</dimen>
+    <dimen name="view_padding_16">32dp</dimen>
 
     <dimen name="view_margin_1">2dp</dimen>
     <dimen name="view_margin_2">4dp</dimen>
@@ -25,6 +29,10 @@
     <dimen name="view_margin_10">20dp</dimen>
     <dimen name="view_margin_11">22dp</dimen>
     <dimen name="view_margin_12">24dp</dimen>
+    <dimen name="view_margin_13">26dp</dimen>
+    <dimen name="view_margin_14">28dp</dimen>
+    <dimen name="view_margin_15">30dp</dimen>
+    <dimen name="view_margin_16">32dp</dimen>
 
     <dimen name="view_radius_1">2dp</dimen>
     <dimen name="view_radius_2">4dp</dimen>
@@ -38,6 +46,10 @@
     <dimen name="view_radius_10">20dp</dimen>
     <dimen name="view_radius_11">22dp</dimen>
     <dimen name="view_radius_12">24dp</dimen>
+    <dimen name="view_radius_13">26dp</dimen>
+    <dimen name="view_radius_14">28dp</dimen>
+    <dimen name="view_radius_15">30dp</dimen>
+    <dimen name="view_radius_16">32dp</dimen>
 
     <dimen name="view_border_1">2dp</dimen>
     <dimen name="view_border_2">4dp</dimen>
@@ -51,6 +63,27 @@
     <dimen name="view_border_10">20dp</dimen>
     <dimen name="view_border_11">22dp</dimen>
     <dimen name="view_border_12">24dp</dimen>
+    <dimen name="view_border_13">26dp</dimen>
+    <dimen name="view_border_14">28dp</dimen>
+    <dimen name="view_border_15">30dp</dimen>
+    <dimen name="view_border_16">32dp</dimen>
+
+    <dimen name="view_elevation_1">2dp</dimen>
+    <dimen name="view_elevation_2">4dp</dimen>
+    <dimen name="view_elevation_3">6dp</dimen>
+    <dimen name="view_elevation_4">8dp</dimen>
+    <dimen name="view_elevation_5">10dp</dimen>
+    <dimen name="view_elevation_6">12dp</dimen>
+    <dimen name="view_elevation_7">14dp</dimen>
+    <dimen name="view_elevation_8">16dp</dimen>
+    <dimen name="view_elevation_9">18dp</dimen>
+    <dimen name="view_elevation_10">20dp</dimen>
+    <dimen name="view_elevation_11">22dp</dimen>
+    <dimen name="view_elevation_12">24dp</dimen>
+    <dimen name="view_elevation_13">26dp</dimen>
+    <dimen name="view_elevation_14">28dp</dimen>
+    <dimen name="view_elevation_15">30dp</dimen>
+    <dimen name="view_elevation_16">32dp</dimen>
 
     <dimen name="view_size_1">2dp</dimen>
     <dimen name="view_size_2">4dp</dimen>
@@ -70,8 +103,26 @@
     <dimen name="view_size_16">32dp</dimen>
     <dimen name="view_size_17">34dp</dimen>
     <dimen name="view_size_18">36dp</dimen>
+    <dimen name="view_size_19">38dp</dimen>
+    <dimen name="view_size_20">40dp</dimen>
+    <dimen name="view_size_21">42dp</dimen>
+    <dimen name="view_size_22">44dp</dimen>
+    <dimen name="view_size_23">46dp</dimen>
+    <dimen name="view_size_24">48dp</dimen>
+    <dimen name="view_size_25">50dp</dimen>
+    <dimen name="view_size_26">52dp</dimen>
+    <dimen name="view_size_27">54dp</dimen>
+    <dimen name="view_size_28">56dp</dimen>
+    <dimen name="view_size_29">58dp</dimen>
+    <dimen name="view_size_30">60dp</dimen>
 
-
+    <dimen name="card_view_expose_product_height">240dp</dimen>
+    <dimen name="card_view_radius_min">@dimen/view_radius_4</dimen>
+    <dimen name="card_view_radius_default">@dimen/view_radius_8</dimen>
+    <dimen name="image_view_thumbnail_expose_product_width">150dp</dimen>
+    <dimen name="image_view_thumbnail_expose_product_height">175dp</dimen>
+    <dimen name="image_view_icon_favorite_size">@dimen/view_size_8</dimen>
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
     <dimen name="view_margin_default">@dimen/view_margin_8</dimen>
+    <dimen name="view_margin_max">@dimen/view_margin_16</dimen>
 </resources>

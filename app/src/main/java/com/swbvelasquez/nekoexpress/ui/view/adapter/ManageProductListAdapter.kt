@@ -13,7 +13,7 @@ class ManageProductListAdapter(
     :ListAdapter<ProductCatalogModel, ManageProductListViewHolder>(ProductCatalogDiffUtilCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageProductListViewHolder {
-        return ManageProductListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_manage_product_list,parent,false))
+        return ManageProductListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_manage_product,parent,false))
     }
 
     override fun onBindViewHolder(holder: ManageProductListViewHolder, position: Int) {

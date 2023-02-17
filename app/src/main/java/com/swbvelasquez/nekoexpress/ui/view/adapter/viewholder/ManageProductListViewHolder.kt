@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.swbvelasquez.nekoexpress.R
-import com.swbvelasquez.nekoexpress.databinding.ItemManageProductListBinding
+import com.swbvelasquez.nekoexpress.databinding.ItemManageProductBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
 class ManageProductListViewHolder(view:View):ViewHolder(view) {
-    private val binding = ItemManageProductListBinding.bind(view)
+    private val binding = ItemManageProductBinding.bind(view)
     private var isAdded:Boolean = false
 
     fun bind(product: ProductCatalogModel, onClickAddListener:(ProductCatalogModel)->Unit){

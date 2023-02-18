@@ -10,7 +10,8 @@ data class ProductCatalogModel(
     val description:String,
     val category: String,
     val image:String,
-    val rating: RatingModel
+    val rating: RatingModel,
+    var isFavorite:Boolean=false
 )
 
 fun ProductCatalogDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rating.rate,rating.count))

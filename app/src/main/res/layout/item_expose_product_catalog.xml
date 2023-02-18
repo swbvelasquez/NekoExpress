@@ -78,6 +78,7 @@
                 app:cardCornerRadius="@dimen/view_radius_8">
 
                 <ImageView
+                    android:id="@+id/imvFavorite"
                     android:layout_width="@dimen/image_view_icon_favorite_size"
                     android:layout_height="@dimen/image_view_icon_favorite_size"
                     android:layout_margin="@dimen/view_margin_1"

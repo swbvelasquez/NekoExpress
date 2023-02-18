@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/imvThumbnail"
-                    android:layout_width="180dp"
-                    android:layout_height="160dp"
+                    android:layout_width="@dimen/image_view_thumbnail_expose_category_width"
+                    android:layout_height="@dimen/image_view_thumbnail_expose_category_height"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_no_photo"
                     tools:src="@drawable/category_women_thumbnail"

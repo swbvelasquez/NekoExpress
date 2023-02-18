@@ -123,6 +123,8 @@
     <dimen name="card_view_row_margin_default">@dimen/view_margin_4</dimen>
     <dimen name="image_view_thumbnail_expose_product_width">150dp</dimen>
     <dimen name="image_view_thumbnail_expose_product_height">175dp</dimen>
+    <dimen name="image_view_thumbnail_expose_category_width">180dp</dimen>
+    <dimen name="image_view_thumbnail_expose_category_height">160dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_width">80dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_height">105dp</dimen>
     <dimen name="image_view_icon_favorite_size">@dimen/view_size_8</dimen>

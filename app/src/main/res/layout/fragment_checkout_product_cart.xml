@@ -5,20 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.fragment.MainCatalogFragment">
+    tools:context=".ui.view.fragment.CheckoutProductCartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProduct"
+        android:id="@+id/rvCategory"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/color_secondary"
-        tools:listitem="@layout/item_expose_product_catalog"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
+        tools:listitem="@layout/item_checkout_product_cart"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+
 
     <include
         android:id="@+id/lyProgressBar"

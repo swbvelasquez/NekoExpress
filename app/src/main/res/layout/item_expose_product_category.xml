@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="@dimen/view_elevation_8"
-        android:layout_margin="@dimen/view_margin_2"
+        android:layout_margin="@dimen/card_view_row_margin_default"
         app:cardCornerRadius="@dimen/card_view_radius_default">
 
         <androidx.constraintlayout.widget.ConstraintLayout

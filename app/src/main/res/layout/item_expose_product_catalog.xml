@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/card_view_expose_product_height"
         android:elevation="@dimen/view_elevation_8"
-        android:layout_margin="@dimen/view_margin_2"
+        android:layout_margin="@dimen/card_view_row_margin_default"
         app:cardCornerRadius="@dimen/card_view_radius_min">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,7 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="Mens Cotton Candy Jacket"
+                tools:text="Women's Cotton Candy Jacket"
                 android:layout_marginTop="@dimen/view_margin_1"
                 android:layout_marginHorizontal="@dimen/view_margin_2"
                 android:textAppearance="?attr/textAppearanceBody2"

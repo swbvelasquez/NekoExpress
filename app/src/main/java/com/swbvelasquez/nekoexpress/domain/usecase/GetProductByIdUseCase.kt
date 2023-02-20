@@ -1,10 +1,10 @@
 package com.swbvelasquez.nekoexpress.domain.usecase
 
-import com.swbvelasquez.nekoexpress.data.repository.ProductCatalogRepository
+import com.swbvelasquez.nekoexpress.data.repository.ProductRepository
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
-class GetProductCatalogByIdUseCase {
-    private val repository = ProductCatalogRepository()
+class GetProductByIdUseCase {
+    private val repository = ProductRepository()
 
     suspend operator fun invoke(id:Int):ProductCatalogModel?{
         var product = repository.getProductByIdFromApi(id)

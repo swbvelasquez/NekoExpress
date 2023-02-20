@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
-import com.swbvelasquez.nekoexpress.domain.usecase.GetAllProductsCatalogUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.GetProductCatalogByIdUseCase
+import com.swbvelasquez.nekoexpress.domain.usecase.GetAllProductsUseCase
+import com.swbvelasquez.nekoexpress.domain.usecase.GetProductByIdUseCase
 import kotlinx.coroutines.launch
 
 class ManageProductListViewModel:ViewModel() {
-    private var getAllProductsCatalogUseCase = GetAllProductsCatalogUseCase()
-    private var getProductCatalogByIdUseCase = GetProductCatalogByIdUseCase()
+    private var getAllProductsUseCase = GetAllProductsUseCase()
+    private var getProductByIdUseCase = GetProductByIdUseCase()
     private val loading = MutableLiveData<Boolean>()
 
     private val productCatalogList : MutableLiveData<MutableList<ProductCatalogModel>> by lazy {
@@ -34,7 +34,7 @@ class ManageProductListViewModel:ViewModel() {
         viewModelScope.launch {
             loading.value = true
             try {
-                val result = getAllProductsCatalogUseCase()
+                val result = getAllProductsUseCase()
 
                 result?.let {
                     productCatalogList.value = result.toMutableList()
@@ -54,7 +54,7 @@ class ManageProductListViewModel:ViewModel() {
             loading.value = true
 
             try {
-                val result = getProductCatalogByIdUseCase(id)
+                val result = getProductByIdUseCase(id)
 
                 result?.let {
                     productCatalog.value = result

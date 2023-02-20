@@ -1,7 +1,6 @@
 package com.swbvelasquez.nekoexpress.data.database.dao
 
 import androidx.room.*
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductCatalogEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.RatingEntity
 
 @Dao

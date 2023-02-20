@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CheckoutProductCartFragment.newInstance] factory method to
+ * Use the [ExposeProductCategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CheckoutProductCartFragment : Fragment() {
+class ExposeProductCategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class CheckoutProductCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkout_product_cart, container, false)
+        return inflater.inflate(R.layout.fragment_expose_category, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class CheckoutProductCartFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckoutProductCartFragment.
+         * @return A new instance of fragment ExposeProductCategoryFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CheckoutProductCartFragment().apply {
+            ExposeProductCategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

@@ -2,11 +2,11 @@ package com.swbvelasquez.nekoexpress.data.database.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductCatalogEntity
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.RatingEntity
 
-data class ProductCatalogWithRatingDto(
-    @Embedded val productCatalog:ProductCatalogEntity, //Embedded permite incluir las propiedades como parte de la clase ProductCatalogWithRatingDto
+data class ProductWithRatingDto(
+    @Embedded val productCatalog:ProductEntity, //Embedded permite incluir las propiedades como parte de la clase ProductCatalogWithRatingDto
     @Relation(
         parentColumn = "id", //entidad principal
         entityColumn = "productId", //entidad secundaria

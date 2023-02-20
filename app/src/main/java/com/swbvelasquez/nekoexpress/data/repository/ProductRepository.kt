@@ -5,17 +5,17 @@ import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Constants
-import com.swbvelasquez.nekoexpress.data.database.entity.toProductCatalogEntity
+import com.swbvelasquez.nekoexpress.data.database.entity.toProductEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toRatingEntity
-import com.swbvelasquez.nekoexpress.data.network.service.ProductCatalogService
+import com.swbvelasquez.nekoexpress.data.network.service.ProductService
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCatalogModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ProductCatalogRepository {
-    private val productApi = ProductCatalogService()
-    private val productDao = NekoApplication.database.getProductCatalogDao()
+class ProductRepository {
+    private val productApi = ProductService()
+    private val productDao = NekoApplication.database.getProductDao()
     private val ratingDao = NekoApplication.database.getRatingDao()
 
     suspend fun getAllProductsFromApi():List<ProductCatalogModel>?{
@@ -30,7 +30,7 @@ class ProductCatalogRepository {
         return productModelList
     }
 
-    suspend fun getAllProductsFromDatabase():List<ProductCatalogModel>?{
+    suspend fun getAllProductsFromDb():List<ProductCatalogModel>?{
         val productEntityList = withContext(Dispatchers.IO){ productDao.getAllProductsWithRanking() }
         var productModelList:List<ProductCatalogModel>? = null
 
@@ -65,7 +65,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun insertProductToDb(productModel:ProductCatalogModel){
-        val productEntity = productModel.toProductCatalogEntity()
+        val productEntity = productModel.toProductEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
 
         val result =  withContext(Dispatchers.IO){
@@ -77,7 +77,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun insertAllProductsToDb(productModelList:List<ProductCatalogModel>){
-        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
 
         val result = withContext(Dispatchers.IO) {
@@ -92,7 +92,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun updateProductFromDb(productModel:ProductCatalogModel){
-        val productEntity = productModel.toProductCatalogEntity()
+        val productEntity = productModel.toProductEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
 
         val result =  withContext(Dispatchers.IO){
@@ -104,7 +104,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun updateAllProductsFromDb(productModelList:List<ProductCatalogModel>){
-        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
 
         val result = withContext(Dispatchers.IO) {
@@ -119,7 +119,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun deleteProductFromDb(productModel:ProductCatalogModel){
-        val productEntity = productModel.toProductCatalogEntity()
+        val productEntity = productModel.toProductEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
 
         val result =  withContext(Dispatchers.IO){
@@ -131,7 +131,7 @@ class ProductCatalogRepository {
 
     @Transaction
     suspend fun deleteAllProductsFromDb(productModelList:List<ProductCatalogModel>){
-        val productEntityList = productModelList.map { it.toProductCatalogEntity() }
+        val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
 
         val result = withContext(Dispatchers.IO) {

@@ -2,16 +2,19 @@ package com.swbvelasquez.nekoexpress.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.swbvelasquez.nekoexpress.data.database.dao.ProductCatalogDao
+import com.swbvelasquez.nekoexpress.data.database.dao.ProductDao
+import com.swbvelasquez.nekoexpress.data.database.dao.CategoryDao
 import com.swbvelasquez.nekoexpress.data.database.dao.RatingDao
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductCatalogEntity
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
+import com.swbvelasquez.nekoexpress.data.database.entity.CategoryEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.RatingEntity
 
 @Database(
-    entities = [ProductCatalogEntity::class, RatingEntity::class],
+    entities = [ProductEntity::class, RatingEntity::class, CategoryEntity::class],
     version = 1
 )
 abstract class RoomDataBase:RoomDatabase() {
-    abstract fun getProductCatalogDao():ProductCatalogDao
+    abstract fun getProductDao():ProductDao
     abstract fun getRatingDao():RatingDao
+    abstract fun getCategoryDao():CategoryDao
 }

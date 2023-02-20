@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 
-@Entity(tableName = "ProductCatalogTable")
-data class ProductCatalogEntity (
+@Entity(tableName = "ProductTable")
+data class ProductEntity (
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id") val id:Int,
     @ColumnInfo(name = "title") val title:String,
@@ -15,4 +15,4 @@ data class ProductCatalogEntity (
     @ColumnInfo(name = "category") val category: String,
     @ColumnInfo(name = "image") val image:String)
 
-fun ProductCatalogModel.toProductCatalogEntity() = ProductCatalogEntity(id=id,title=title,price=price,description=description,category=category,image=image)
+fun ProductCatalogModel.toProductEntity() = ProductEntity(id=id,title=title,price=price,description=description,category=category,image=image)

@@ -1,7 +1,7 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
-import com.swbvelasquez.nekoexpress.data.database.model.ProductCatalogWithRatingDto
-import com.swbvelasquez.nekoexpress.data.network.model.ProductCatalogDto
+import com.swbvelasquez.nekoexpress.data.database.model.ProductWithRatingDto
+import com.swbvelasquez.nekoexpress.data.network.model.ProductDto
 
 data class ProductCatalogModel(
     val id:Int,
@@ -14,8 +14,8 @@ data class ProductCatalogModel(
     var isFavorite:Boolean=false
 )
 
-fun ProductCatalogDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rating.rate,rating.count))
+fun ProductDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rating.rate,rating.count))
 
-fun ProductCatalogWithRatingDto.toProductCatalogModel() = ProductCatalogModel(id=productCatalog.id,title=productCatalog.title,price=productCatalog.price,description=productCatalog.description,
+fun ProductWithRatingDto.toProductCatalogModel() = ProductCatalogModel(id=productCatalog.id,title=productCatalog.title,price=productCatalog.price,description=productCatalog.description,
     category=productCatalog.category,image=productCatalog.image,rating=RatingModel(rating.rate,rating.count)
 )

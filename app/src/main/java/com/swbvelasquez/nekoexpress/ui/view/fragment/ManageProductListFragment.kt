@@ -19,6 +19,9 @@ import com.swbvelasquez.nekoexpress.ui.viewmodel.ManageProductListViewModel
 class ManageProductListFragment : Fragment() {
     companion object{
         val TAG: String = ManageProductListFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance() = ManageProductListFragment()
     }
 
     private lateinit var binding: FragmentManageProductListBinding
@@ -36,11 +39,11 @@ class ManageProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpRecyclerView()
-        setUpViewModel()
+        setupRecyclerView()
+        setupViewModel()
     }
 
-    private fun setUpRecyclerView(){
+    private fun setupRecyclerView(){
         recyclerLayoutManager = LinearLayoutManager(activity)
         productCartList = mutableListOf()
 
@@ -52,11 +55,11 @@ class ManageProductListFragment : Fragment() {
         binding.rvProduct.apply {
             adapter = productAdapter
             layoutManager = recyclerLayoutManager
-            hasFixedSize()
+            setHasFixedSize(true)
         }
     }
 
-    private fun setUpViewModel(){
+    private fun setupViewModel(){
         viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
             binding.lyProgressBar.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
         }

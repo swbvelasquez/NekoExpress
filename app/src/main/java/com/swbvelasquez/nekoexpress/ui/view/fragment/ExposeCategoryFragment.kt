@@ -5,56 +5,69 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.swbvelasquez.nekoexpress.R
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentExposeCategoryBinding
+import com.swbvelasquez.nekoexpress.domain.model.CategoryModel
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeCategoryAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.ExposeCategoryViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ExposeCategoryFragment : Fragment() {
+    companion object {
+        val TAG:String = ExposeCategoryFragment::class.java.simpleName
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExposeProductCategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ExposeProductCategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+        @JvmStatic
+        fun newInstance() = ExposeCategoryFragment()
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentExposeCategoryBinding
+    private lateinit var categoryAdapter: ExposeCategoryAdapter
+    private val viewModel:ExposeCategoryViewModel by viewModels()
+    private var onClickCategory:((CategoryModel)->Unit)? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentExposeCategoryBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupViewModel()
+    }
+
+    private fun setupRecyclerView(){
+        categoryAdapter = ExposeCategoryAdapter { category ->
+            onClickCategory?.invoke(category)
+        }
+
+        binding.rvCategory.apply {
+            adapter = categoryAdapter
+            layoutManager = GridLayoutManager(activity,2)
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expose_category, container, false)
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getCategoryList().observe(viewLifecycleOwner){ categoryList ->
+            categoryAdapter.submitList(categoryList)
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
+
+        viewModel.getAllCategories()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExposeProductCategoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExposeProductCategoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun sendCategory(onClickCategory:(CategoryModel)->Unit){
+        this.onClickCategory = onClickCategory
     }
 }

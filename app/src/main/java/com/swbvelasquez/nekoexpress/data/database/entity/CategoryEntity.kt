@@ -10,6 +10,6 @@ data class CategoryEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id") val id:Int,
     @ColumnInfo(name = "name") val name:String,
-    @ColumnInfo(name = "image") val image:Int)
+    @ColumnInfo(name = "image") val image:String)
 
 fun CategoryModel.toCategoryEntity() = CategoryEntity(id=id,name=name,image=image)

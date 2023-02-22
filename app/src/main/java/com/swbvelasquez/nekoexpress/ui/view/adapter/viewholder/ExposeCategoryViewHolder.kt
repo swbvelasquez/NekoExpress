@@ -17,7 +17,7 @@ class ExposeCategoryViewHolder(view: View):ViewHolder(view) {
 
             Glide
                 .with(itemView.context)
-                .load(category.id)
+                .load(category.image)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imvThumbnail)

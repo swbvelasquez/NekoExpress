@@ -6,7 +6,7 @@ import com.swbvelasquez.nekoexpress.data.network.model.CategoryDto
 data class CategoryModel(
     val id:Int,
     val name:String,
-    val image:Int
+    val image:String
 )
 
 fun CategoryDto.toCategoryModel() = CategoryModel(id=id,name=name,image=image)

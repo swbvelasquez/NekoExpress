@@ -14,6 +14,10 @@ interface ProductDao {
     @Query("select * from ProductTable where id = :id")
     suspend fun getProductWithRankingById(id:Int):ProductWithRatingDto?
 
+    @Transaction
+    @Query("select * from ProductTable where category = :category")
+    suspend fun getProductsWithRankingByCategory(category:String):List<ProductWithRatingDto>?
+
     @Insert(onConflict = OnConflictStrategy.ABORT) //ABORT es el default, si falla hace rollback
     suspend fun insertProduct(product:ProductEntity):Long
 

@@ -2,12 +2,15 @@ package com.swbvelasquez.nekoexpress.core.util
 
 import android.content.Context
 import android.widget.Toast
-import com.swbvelasquez.nekoexpress.R
+import com.google.gson.reflect.TypeToken
+import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.data.network.interceptor.RetrofitInterceptor
 import com.swbvelasquez.nekoexpress.data.network.model.CategoryDto
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
+
 
 object Functions {
     fun getRetrofit(): Retrofit{
@@ -26,6 +29,15 @@ object Functions {
 
     fun showSimpleMessage(context:Context,message:String){
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+    }
+
+    inline fun <reified T> T.toJson():String{
+        return NekoApplication.gson.toJson(this)
+    }
+
+    inline fun <reified T> String.fromJson():T{
+        val type: Type = object : TypeToken<T>() {}.type
+        return NekoApplication.gson.fromJson(this,type)
     }
 
     fun getCompleteCategoryDto(index:Int,category: String):CategoryDto = CategoryDto(index+1,category, getCategoryImage(category))

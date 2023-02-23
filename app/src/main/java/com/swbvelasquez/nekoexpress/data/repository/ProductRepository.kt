@@ -63,6 +63,29 @@ class ProductRepository {
         return productModel
     }
 
+    suspend fun getProductsByCategoryFromApi(category:String):List<ProductCatalogModel>?{
+        val productDTOList = productApi.getProductsByCategory(category)
+        var productModelList:List<ProductCatalogModel>? = null
+
+
+        if(!productDTOList.isNullOrEmpty()){
+            productModelList = productDTOList.map { it.toProductCatalogModel() }
+        }
+
+        return productModelList
+    }
+
+    suspend fun getAllProductsByCategoryFromDb(category:String):List<ProductCatalogModel>?{
+        val productEntityList = withContext(Dispatchers.IO){ productDao.getProductsWithRankingByCategory(category)}
+        var productModelList:List<ProductCatalogModel>? = null
+
+        if(!productEntityList.isNullOrEmpty()){
+            productModelList = productEntityList.map { it.toProductCatalogModel() }
+        }
+
+        return productModelList
+    }
+
     @Transaction
     suspend fun insertProductToDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()

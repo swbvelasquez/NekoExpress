@@ -11,4 +11,7 @@ interface ProductApi {
 
     @GET("products/{id}")
     suspend fun getProductById(@Path("id") id:Int):Response<ProductDto>
+
+    @GET("products/category/{category}")
+    suspend fun getProductsByCategory(@Path("category") category:String):Response<List<ProductDto>>
 }

@@ -20,4 +20,10 @@ class ProductService {
             service.getProductById(id).body()
         }
     }
+
+    suspend fun getProductsByCategory(category:String):List<ProductDto>? {
+        return withContext(Dispatchers.IO){
+            service.getProductsByCategory(category).body()
+        }
+    }
 }

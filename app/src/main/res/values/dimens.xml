@@ -116,18 +116,19 @@
     <dimen name="view_size_29">58dp</dimen>
     <dimen name="view_size_30">60dp</dimen>
 
-    <dimen name="card_view_expose_product_height">240dp</dimen>
+    <dimen name="card_view_expose_product_height">270dp</dimen>
     <dimen name="card_view_radius_min">@dimen/view_radius_4</dimen>
     <dimen name="card_view_radius_default">@dimen/view_radius_8</dimen>
+    <dimen name="card_view_radius_max">@dimen/view_radius_16</dimen>
     <dimen name="card_view_row_margin_min">@dimen/view_margin_2</dimen>
     <dimen name="card_view_row_margin_default">@dimen/view_margin_4</dimen>
-    <dimen name="image_view_thumbnail_expose_product_width">150dp</dimen>
-    <dimen name="image_view_thumbnail_expose_product_height">175dp</dimen>
+    <dimen name="image_view_thumbnail_expose_product_width">175dp</dimen>
+    <dimen name="image_view_thumbnail_expose_product_height">200dp</dimen>
     <dimen name="image_view_thumbnail_expose_category_width">180dp</dimen>
     <dimen name="image_view_thumbnail_expose_category_height">160dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_width">80dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_height">105dp</dimen>
-    <dimen name="image_view_icon_favorite_size">@dimen/view_size_8</dimen>
+    <dimen name="image_view_icon_favorite_size">@dimen/view_size_16</dimen>
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
     <dimen name="view_margin_default">@dimen/view_margin_8</dimen>
     <dimen name="view_margin_max">@dimen/view_margin_16</dimen>

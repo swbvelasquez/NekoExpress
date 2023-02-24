@@ -67,7 +67,7 @@ class ExposeCategoryFragment : Fragment() {
         viewModel.getAllCategories()
     }
 
-    fun sendCategory(onClickCategory:(CategoryModel)->Unit){
+    fun selectCategory(onClickCategory:(CategoryModel)->Unit){
         this.onClickCategory = onClickCategory
     }
 }

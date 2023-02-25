@@ -64,6 +64,10 @@ class MainActivity : AppCompatActivity() {
     private fun showProductDetails(product:String){
         val fragment = DetailProductCatalogFragment.newInstance(product)
 
+        fragment.onBackPressed {
+            removeFragment(it)
+        }
+
         addFragment(fragment,DetailProductCatalogFragment.TAG)
     }
 

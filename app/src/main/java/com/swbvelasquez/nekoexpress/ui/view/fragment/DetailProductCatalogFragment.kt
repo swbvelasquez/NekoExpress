@@ -155,4 +155,8 @@ class DetailProductCatalogFragment : Fragment() {
         layout.setBackgroundResource(R.drawable.drw_size_layout_active)
         activity?.let { textView.setTextColor(it.getColor(R.color.color_on_primary)) }
     }
+
+    fun onBackPressed(onClickBackPressed:(String)->Unit){
+        this.onClickBackPressed=onClickBackPressed
+    }
 }

@@ -11,7 +11,9 @@ data class ProductCatalogModel(
     val category: String,
     val image:String,
     val rating: RatingModel,
-    var isFavorite:Boolean=false
+    var isFavorite:Boolean=false,
+    var size:String="",
+    var color:String=""
 )
 
 fun ProductDto.toProductCatalogModel() = ProductCatalogModel(id=id,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rating.rate,rating.count))

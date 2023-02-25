@@ -116,7 +116,7 @@
     <dimen name="view_size_29">58dp</dimen>
     <dimen name="view_size_30">60dp</dimen>
 
-    <dimen name="card_view_expose_product_height">270dp</dimen>
+    <dimen name="card_view_expose_product_height">280dp</dimen>
     <dimen name="card_view_radius_min">@dimen/view_radius_4</dimen>
     <dimen name="card_view_radius_default">@dimen/view_radius_8</dimen>
     <dimen name="card_view_radius_max">@dimen/view_radius_16</dimen>

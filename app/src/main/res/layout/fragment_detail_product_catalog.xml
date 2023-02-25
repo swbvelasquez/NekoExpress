@@ -326,4 +326,8 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <include
+        android:id="@+id/lyProgressBar"
+        layout="@layout/layout_progress_bar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

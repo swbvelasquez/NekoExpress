@@ -1,10 +1,14 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +44,7 @@ class ExposeProductCatalogFragment : Fragment() {
     private lateinit var productAdapter: ExposeProductCatalogAdapter
     private val viewModel : ExposeProductCatalogViewModel by viewModels()
     private var onClickProductCatalog : ((ProductCatalogModel)->Unit)? = null
+    private var onClickBackPressed : ((String)->Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +55,21 @@ class ExposeProductCatalogFragment : Fragment() {
                 categoryModel = it.fromJson()
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke(ExposeCategoryFragment.TAG)
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG,"onDestroy")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -84,7 +104,7 @@ class ExposeProductCatalogFragment : Fragment() {
 
     private fun setupViewModel(){
         viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
-            binding.lyProgressBar.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
         }
         viewModel.getProductList().observe(viewLifecycleOwner){ productList ->
             productAdapter.submitList(productList)
@@ -100,5 +120,9 @@ class ExposeProductCatalogFragment : Fragment() {
 
     fun selectProduct(onClickProductCatalog:(ProductCatalogModel)->Unit){
         this.onClickProductCatalog = onClickProductCatalog
+    }
+
+    fun onBackPressed(onClickBackPressed:(String)->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

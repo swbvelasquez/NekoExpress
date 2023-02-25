@@ -8,13 +8,15 @@ import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.toJson
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
+import com.swbvelasquez.nekoexpress.ui.view.fragment.DetailProductCatalogFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeCategoryFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeProductCatalogFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var onBackPressedCallback: OnBackPressedCallback
-    private lateinit var currentFragment : Fragment
+    private lateinit var fragmentList:MutableList<Fragment>
+    private var currentFragment : Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,24 +24,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupOnBackPressed()
         showCategories()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         onBackPressedCallback.remove()
-    }
-
-    private fun setupOnBackPressed(){
-        onBackPressedCallback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                removeFragment()
-            }
-        }
-
-        onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
     private fun showCategories(){
@@ -49,7 +39,11 @@ class MainActivity : AppCompatActivity() {
             Functions.showSimpleMessage(this,"Categoria seleccionada ${category.name}")
             showProductsByCategory(category.toJson())
         }
+        fragment.onBackPressed {
+            finish()
+        }
 
+        fragmentList = mutableListOf()
         addFragment(fragment,ExposeCategoryFragment.TAG)
     }
 
@@ -58,30 +52,55 @@ class MainActivity : AppCompatActivity() {
 
         fragment.selectProduct { product ->
             Functions.showSimpleMessage(this,"Producto seleccionado ${product.title}")
+            showProductDetails(product.toJson())
+        }
+        fragment.onBackPressed {
+            removeFragment(it)
         }
 
         addFragment(fragment,ExposeProductCatalogFragment.TAG)
+    }
+
+    private fun showProductDetails(product:String){
+        val fragment = DetailProductCatalogFragment.newInstance(product)
+
+        addFragment(fragment,DetailProductCatalogFragment.TAG)
     }
 
     private fun addFragment(fragment:Fragment,tag:String){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
         fragmentTransaction.add(R.id.lyMainContent,fragment,tag)
-
-        if(fragment !is ExposeCategoryFragment) {
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.hide(currentFragment)
+        fragmentTransaction.addToBackStack(tag)
+        currentFragment?.let {
+            fragmentTransaction.hide(it)
         }
 
+        fragmentList.add(fragment)
         currentFragment = fragment
+
         fragmentTransaction.commit()
     }
 
-    private fun removeFragment(){
-        if(currentFragment !is ExposeCategoryFragment){
-            supportFragmentManager.popBackStack()
+    private fun removeFragment(destinyTag:String){
+        var destinyFragment = supportFragmentManager.findFragmentByTag(destinyTag)
+
+        if(destinyFragment!=null){
+            val index = fragmentList.indexOf(destinyFragment)
+
+            for(i in fragmentList.size - 1 downTo index+1){
+                fragmentList.removeAt(i)
+            }
+            currentFragment = fragmentList.last()
+            supportFragmentManager.popBackStackImmediate(destinyTag,0)
         }else{
-            onBackPressedDispatcher.onBackPressed()
+            destinyFragment = supportFragmentManager.findFragmentByTag(ExposeCategoryFragment.TAG)
+
+            if(destinyFragment!=null){
+                fragmentList.clear()
+                fragmentList.add(destinyFragment)
+                supportFragmentManager.popBackStackImmediate(ExposeCategoryFragment.TAG,0)
+            }
         }
     }
 }

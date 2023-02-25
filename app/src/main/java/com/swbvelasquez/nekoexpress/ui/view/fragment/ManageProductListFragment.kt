@@ -61,7 +61,7 @@ class ManageProductListFragment : Fragment() {
 
     private fun setupViewModel(){
         viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
-            binding.lyProgressBar.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
         }
         viewModel.getProductCatalogList().observe(viewLifecycleOwner){ productList ->
             productAdapter.submitList(productList)

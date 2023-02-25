@@ -4,6 +4,8 @@
     <string name="image_view_icon_description">Image Icon</string>
 
     <string name="format_product_price">S/ %.2f</string>
+    <string name="format_product_score">%.1f</string>
+    <string name="format_product_review">%d reviews</string>
 
     <string name="text_description_title">Description</string>
     <string name="text_size_title">Size</string>

@@ -1,10 +1,12 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
@@ -26,6 +28,28 @@ class ExposeCategoryFragment : Fragment() {
     private lateinit var categoryAdapter: ExposeCategoryAdapter
     private val viewModel:ExposeCategoryViewModel by viewModels()
     private var onClickCategory:((CategoryModel)->Unit)? = null
+    private var onClickBackPressed : (()->Unit)? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke()
+                    remove()
+                }
+            }
+        )
+
+        Log.d(TAG,"onCreate")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG,"onDestroy")
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentExposeCategoryBinding.inflate(inflater,container,false)
@@ -53,7 +77,7 @@ class ExposeCategoryFragment : Fragment() {
 
     private fun setupViewModel(){
         viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
-            binding.lyProgressBar.pgLoading.visibility =  if(loading) View.VISIBLE else View.GONE
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
         }
         viewModel.getCategoryList().observe(viewLifecycleOwner){ categoryList ->
             categoryAdapter.submitList(categoryList)
@@ -69,5 +93,9 @@ class ExposeCategoryFragment : Fragment() {
 
     fun selectCategory(onClickCategory:(CategoryModel)->Unit){
         this.onClickCategory = onClickCategory
+    }
+
+    fun onBackPressed(onClickBackPressed:()->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

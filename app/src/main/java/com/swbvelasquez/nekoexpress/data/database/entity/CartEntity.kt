@@ -9,7 +9,9 @@ import com.swbvelasquez.nekoexpress.domain.model.CartModel
 data class CartEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id") val id:Int,
-    @ColumnInfo(name="userId") val userId:Int
+    @ColumnInfo(name="userId") val userId:Int,
+    @ColumnInfo(name="status") var status:Int,
+    @ColumnInfo(name="date") var date:Long
 )
 
-fun CartModel.toCartEntity() = CartEntity(id=id,userId=userId)
+fun CartModel.toCartEntity() = CartEntity(id=id,userId=userId,status=status,date=date)

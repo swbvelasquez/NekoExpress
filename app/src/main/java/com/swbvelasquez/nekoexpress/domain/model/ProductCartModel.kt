@@ -1,5 +1,6 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartEntityCrossRef
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.model.ProductCartDto
 

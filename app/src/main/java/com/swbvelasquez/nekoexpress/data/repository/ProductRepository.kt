@@ -94,7 +94,6 @@ class ProductRepository {
         }
     }
 
-    @Transaction
     suspend fun insertAllProductsToDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
@@ -104,7 +103,7 @@ class ProductRepository {
         }
     }
 
-    @Transaction
+
     suspend fun updateProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.productId)
@@ -114,7 +113,6 @@ class ProductRepository {
         }
     }
 
-    @Transaction
     suspend fun updateAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
@@ -125,7 +123,6 @@ class ProductRepository {
 
     }
 
-    @Transaction
     suspend fun deleteProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()
         val ratingEntity = productModel.rating.toRatingEntity(productModel.productId)
@@ -135,7 +132,6 @@ class ProductRepository {
         }
     }
 
-    @Transaction
     suspend fun deleteAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }

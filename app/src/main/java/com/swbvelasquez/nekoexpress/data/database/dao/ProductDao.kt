@@ -109,8 +109,8 @@ interface ProductDao {
 
     @Transaction
     suspend fun deleteAllProductsWithRating(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
-        val resultProductList = updateAllProducts(productList)
-        val resultRatingList = updateAllRatings(ratingList)
+        val resultProductList = deleteAllProducts(productList)
+        val resultRatingList = deleteAllRatings(ratingList)
 
         if(resultProductList != productList.size || resultRatingList != ratingList.size){
             throw CustomException(CustomTypeException.DB_DELETE_LIST)

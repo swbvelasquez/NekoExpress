@@ -74,9 +74,7 @@ class CategoryRepository {
         val categoryEntityList = categoryModelList.map { it.toCategoryEntity() }
 
         val result = withContext(Dispatchers.IO){
-            val resultCategoryList =  categoryDao.deleteAllCategories(categoryEntityList)
-
-            return@withContext resultCategoryList != Constants.DB_OPERATION_FAIL
+            categoryDao.deleteAllCategories(categoryEntityList) != categoryEntityList.size
         }
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)

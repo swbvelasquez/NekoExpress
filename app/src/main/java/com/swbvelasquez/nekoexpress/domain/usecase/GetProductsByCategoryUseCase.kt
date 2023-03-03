@@ -11,6 +11,8 @@ class GetProductsByCategoryUseCase {
 
         if(productList.isNullOrEmpty()){
             productList = repository.getAllProductsByCategoryFromDb(category)
+        }else{
+            repository.insertAllProductsToDb(productList)
         }
 
         return productList

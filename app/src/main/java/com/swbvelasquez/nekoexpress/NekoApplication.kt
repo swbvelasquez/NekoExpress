@@ -19,6 +19,7 @@ class NekoApplication:Application() {
         try {
             database = Room
                 .databaseBuilder(this, RoomDataBase::class.java, Constants.ROOM_DB_NAME)
+                .fallbackToDestructiveMigration() //permite destruir los esquemas anteriores, solo usar en desarrollo, jamas produccion
                 .build()
             gson = GsonBuilder().create()
         }catch (ex:Exception){

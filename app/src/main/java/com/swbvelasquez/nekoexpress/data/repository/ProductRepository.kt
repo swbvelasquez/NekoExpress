@@ -16,7 +16,6 @@ import kotlinx.coroutines.withContext
 class ProductRepository {
     private val productApi = ProductService()
     private val productDao = NekoApplication.database.getProductDao()
-    private val ratingDao = NekoApplication.database.getRatingDao()
 
     suspend fun getAllProductsFromApi():List<ProductCatalogModel>?{
         val productDTOList = productApi.getAllProducts()
@@ -86,84 +85,63 @@ class ProductRepository {
         return productModelList
     }
 
-    @Transaction
     suspend fun insertProductToDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()
-        val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
+        val ratingEntity = productModel.rating.toRatingEntity(productModel.productId)
 
-        val result =  withContext(Dispatchers.IO){
-            productDao.insertProduct(productEntity)>0 && ratingDao.insertRating(ratingEntity)>0
+        withContext(Dispatchers.IO){
+            productDao.insertProductWithRating(productEntity,ratingEntity)
         }
-
-        if(!result) throw CustomException(CustomTypeException.DB_INSERT_ONE)
     }
 
     @Transaction
     suspend fun insertAllProductsToDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
-        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
-        val result = withContext(Dispatchers.IO) {
-            val resultProductList = productDao.insertAllProducts(productEntityList) //si es un insert retorna los ids si es auto generado y retorna 1 si es generado manualmente, cuando falla retorna -1
-            val resultRatingList = ratingDao.insertAllRatings(ratingEntityList)
-
-            return@withContext !(resultProductList.isEmpty() || resultProductList.contains(-1) || resultRatingList.isEmpty() || resultRatingList.contains(-1))
+        withContext(Dispatchers.IO){
+            productDao.insertAllProductsWithRating(productEntityList,ratingEntityList)
         }
-
-        if(!result) throw CustomException(CustomTypeException.DB_INSERT_LIST)
     }
 
     @Transaction
     suspend fun updateProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()
-        val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
+        val ratingEntity = productModel.rating.toRatingEntity(productModel.productId)
 
-        val result =  withContext(Dispatchers.IO){
-            productDao.updateProduct(productEntity)>0 && ratingDao.updateRating(ratingEntity)>0
+        withContext(Dispatchers.IO){
+            productDao.updateProductWithRating(productEntity,ratingEntity)
         }
-
-        if(!result) throw CustomException(CustomTypeException.DB_UPDATE_ONE)
     }
 
     @Transaction
     suspend fun updateAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
-        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
-        val result = withContext(Dispatchers.IO) {
-            val resultProductList = productDao.updateAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas o -1 si fallo
-            val resultRatingList = ratingDao.updateAllRatings(ratingEntityList)
-
-            return@withContext resultProductList==productEntityList.size && resultRatingList==ratingEntityList.size
+         withContext(Dispatchers.IO) {
+            productDao.updateAllProductsWithRating(productEntityList,ratingEntityList)
         }
 
-        if(!result) throw CustomException(CustomTypeException.DB_UPDATE_LIST)
     }
 
     @Transaction
     suspend fun deleteProductFromDb(productModel:ProductCatalogModel){
         val productEntity = productModel.toProductEntity()
-        val ratingEntity = productModel.rating.toRatingEntity(productModel.id)
+        val ratingEntity = productModel.rating.toRatingEntity(productModel.productId)
 
-        val result =  withContext(Dispatchers.IO){
-            productDao.deleteProduct(productEntity)>0 && ratingDao.deleteRating(ratingEntity)>0
+        withContext(Dispatchers.IO){
+            productDao.deleteProductWithRating(productEntity,ratingEntity)
         }
-
-        if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
 
     @Transaction
     suspend fun deleteAllProductsFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
-        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.id) }
+        val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
-        val result = withContext(Dispatchers.IO) {
-            val resultProductList = productDao.deleteAllProducts(productEntityList) //si es un update o delete, retorna la cantidad de filas afectadas o -1 si fallo
-            val resultRatingList = ratingDao.deleteAllRatings(ratingEntityList)
-
-            return@withContext resultProductList!=Constants.DB_OPERATION_FAIL && resultRatingList!=Constants.DB_OPERATION_FAIL
+        withContext(Dispatchers.IO){
+            productDao.deleteAllProductsWithRating(productEntityList,ratingEntityList)
         }
-
-        if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)
     }
 }

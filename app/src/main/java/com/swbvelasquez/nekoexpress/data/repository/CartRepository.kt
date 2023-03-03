@@ -8,11 +8,11 @@ import com.swbvelasquez.nekoexpress.data.database.entity.toCartEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toProductCartEntity
 import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
-import com.swbvelasquez.nekoexpress.domain.model.toCartModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CartRepository {
+    /*
     private val cartDao = NekoApplication.database.getCartDao()
 
     suspend fun getCartWithProductsFromDb(cartId:Int):CartModel? {
@@ -136,4 +136,6 @@ class CartRepository {
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)
     }
+
+     */
 }

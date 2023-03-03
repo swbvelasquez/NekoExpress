@@ -17,7 +17,7 @@ class CategoryRepository {
     private val categoryDao = NekoApplication.database.getCategoryDao()
 
     suspend fun getAllCategoriesFromApi():List<CategoryModel>?{
-        val categoryDtoList = categoryApi.getAllCategories()?.mapIndexed { index, name -> Functions.getCompleteCategoryDto(index,name) }
+        val categoryDtoList = categoryApi.getAllCategories()?.mapIndexed { index, name -> Functions.getCompleteCategoryDto(index.toLong(),name) }
         var categoryModelList: List<CategoryModel>? = null
 
         if(!categoryDtoList.isNullOrEmpty()){

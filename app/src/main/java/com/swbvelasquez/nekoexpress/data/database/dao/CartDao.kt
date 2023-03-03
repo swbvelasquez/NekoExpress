@@ -1,5 +1,5 @@
 package com.swbvelasquez.nekoexpress.data.database.dao
-
+/*
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,8 +13,8 @@ import com.swbvelasquez.nekoexpress.data.database.model.CartWithProductDto
 
 @Dao
 interface CartDao {
-    @Transaction
-    @Query("select * from CartTable where id = :cartId")
+   @Transaction
+    @Query("select * from CartTable where cartId = :cartId")
     suspend fun getCartWithProducts(cartId:Int) : CartWithProductDto?
 
     @Transaction
@@ -53,4 +53,7 @@ interface CartDao {
 
     @Delete
     suspend fun deleteAllProductsCart(productCartList:List<ProductCartEntityCrossRef>):Int
+
+
 }
+*/

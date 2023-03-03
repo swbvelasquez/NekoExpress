@@ -8,7 +8,7 @@ import com.swbvelasquez.nekoexpress.data.database.entity.RatingEntity
 data class ProductWithRatingDto(
     @Embedded val productCatalog:ProductEntity, //Embedded permite incluir las propiedades como parte de la clase ProductCatalogWithRatingDto
     @Relation(
-        parentColumn = "id", //entidad principal
+        parentColumn = "productId", //entidad principal
         entityColumn = "productId", //entidad secundaria
         entity = RatingEntity::class //tipo de entidad retornada
     )

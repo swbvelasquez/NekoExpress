@@ -1,7 +1,10 @@
 package com.swbvelasquez.nekoexpress.data.network.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ProductDto(
-    val id:Int,
+    @SerializedName("id")
+    val productId:Long,
     val title:String,
     val price:Double,
     val description:String,

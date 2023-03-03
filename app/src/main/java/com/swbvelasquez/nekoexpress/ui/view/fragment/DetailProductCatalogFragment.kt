@@ -17,7 +17,6 @@ import com.swbvelasquez.nekoexpress.core.util.Functions.fromJson
 import com.swbvelasquez.nekoexpress.databinding.FragmentDetailProductCatalogBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.ui.viewmodel.DetailProductCatalogViewModel
-import com.swbvelasquez.nekoexpress.ui.viewmodel.ExposeProductCatalogViewModel
 
 
 private const val PRODUCT_PARAM = "PRODUCT_PARAM"
@@ -90,7 +89,7 @@ class DetailProductCatalogFragment : Fragment() {
             }
         }
         viewModel.getProduct().observe(viewLifecycleOwner){ product ->
-            if(product.id > 0) setupUiProduct(product)
+            if(product.productId > 0) setupUiProduct(product)
         }
 
         viewModel.setProduct(productModel)

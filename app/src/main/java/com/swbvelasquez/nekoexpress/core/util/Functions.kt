@@ -40,7 +40,7 @@ object Functions {
         return NekoApplication.gson.fromJson(this,type)
     }
 
-    fun getCompleteCategoryDto(index:Int,category: String):CategoryDto = CategoryDto(index+1,category, getCategoryImage(category))
+    fun getCompleteCategoryDto(index:Long,category: String):CategoryDto = CategoryDto(index+1,category, getCategoryImage(category))
 
     private fun getCategoryImage(category: String):String{
         return when(category){

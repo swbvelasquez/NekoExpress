@@ -8,11 +8,12 @@ import com.swbvelasquez.nekoexpress.data.database.entity.toCartEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toProductCartEntity
 import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
+import com.swbvelasquez.nekoexpress.domain.model.toCartModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CartRepository {
-    /*
+
     private val cartDao = NekoApplication.database.getCartDao()
 
     suspend fun getCartWithProductsFromDb(cartId:Int):CartModel? {
@@ -37,7 +38,7 @@ class CartRepository {
         return cartModel
     }
 
-    suspend fun existProductCartFromDb(cartId:Int,productId:Int):Boolean {
+    suspend fun existProductCartFromDb(cartId:Long,productId:Long):Boolean {
         return cartDao.existProductCart(cartId,productId) > 0
     }
 
@@ -61,7 +62,6 @@ class CartRepository {
         if(!result) throw CustomException(CustomTypeException.DB_INSERT_ONE)
     }
 
-    @Transaction
     suspend fun insertAllProductsCartToDb(productList:List<ProductCartModel>){
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
@@ -104,38 +104,14 @@ class CartRepository {
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
 
-    @Transaction
+
     suspend fun deleteAllProductsCartToDb(productList:List<ProductCartModel>){
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
         val result = withContext(Dispatchers.IO){
-            val resultProductCartList = cartDao.deleteAllProductsCart(productCartEntityList)
-
-            return@withContext resultProductCartList <= 0
+            cartDao.deleteAllProductsCart(productCartEntityList) != productCartEntityList.size
         }
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)
     }
-
-    @Transaction
-    suspend fun deleteCartWithProductsToDb(cart:CartModel){
-        val cartEntity = cart.toCartEntity()
-        val productCartEntityList = cart.productList.map { it.toProductCartEntity() }
-
-        val result = withContext(Dispatchers.IO){
-            var resultProductCartList = 1
-
-            if(productCartEntityList.isNotEmpty()){
-                resultProductCartList = cartDao.deleteAllProductsCart(productCartEntityList)
-            }
-
-            val resultCart = cartDao.deleteCart(cartEntity)
-
-            return@withContext !(resultProductCartList <= 0 || resultCart <= 0)
-        }
-
-        if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)
-    }
-
-     */
 }

@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import com.swbvelasquez.nekoexpress.data.database.entity.CartEntity
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartEntityCrossRef
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartCrossRefEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 
 data class CartWithProductDto(
@@ -12,7 +12,13 @@ data class CartWithProductDto(
     @Relation(
         parentColumn = "cartId",
         entityColumn = "productId",
-        associateBy = Junction(ProductCartEntityCrossRef::class)
+        associateBy = Junction(ProductCartCrossRefEntity::class)
     )
-    val productList:List<ProductEntity>
+    val productList:List<ProductEntity>,
+    @Relation(
+        parentColumn = "cartId",
+        entityColumn = "cartId",
+        entity = ProductCartCrossRefEntity::class
+    )
+    val productCrossRefList:List<ProductCartCrossRefEntity>
 )

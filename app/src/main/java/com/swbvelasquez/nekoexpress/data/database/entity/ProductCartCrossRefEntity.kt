@@ -24,11 +24,11 @@ import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
         )
     ]
 )
-data class ProductCartEntityCrossRef(
+data class ProductCartCrossRefEntity(
     @ColumnInfo(name="cartId") val cartId:Long,
     @ColumnInfo(name="productId") val productId:Long,
     val quantity:Int,
     val total:Double
 )
 
-fun ProductCartModel.toProductCartEntity() = ProductCartEntityCrossRef(cartId=cartId,productId=productId,quantity=quantity,total=total)
+fun ProductCartModel.toProductCartEntity() = ProductCartCrossRefEntity(cartId=cartId,productId=productId,quantity=quantity,total=total)

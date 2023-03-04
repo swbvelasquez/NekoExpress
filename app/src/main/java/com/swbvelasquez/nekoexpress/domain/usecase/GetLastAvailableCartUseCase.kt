@@ -7,7 +7,6 @@ import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import java.util.*
 
 class GetLastAvailableCartUseCase {
-    /*
     private val repository = CartRepository()
 
     suspend operator fun invoke():CartModel?{
@@ -25,6 +24,4 @@ class GetLastAvailableCartUseCase {
 
         return cartModel
     }
-
-     */
 }

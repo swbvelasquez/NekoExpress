@@ -8,4 +8,6 @@ object Constants {
     const val DB_OPERATION_FAIL = -1
 
     const val MAX_TIME_AVAILABLE_CART = 60 * 60 * 1000
+
+    const val TAXES_PERCENT = 0.18
 }

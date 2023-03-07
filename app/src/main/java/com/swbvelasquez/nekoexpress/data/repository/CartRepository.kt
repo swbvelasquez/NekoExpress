@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CartRepository {
-
     private val cartDao = NekoApplication.database.getCartDao()
 
     suspend fun getCartWithProductsFromDb(cartId:Int):CartModel? {
@@ -27,8 +26,8 @@ class CartRepository {
         return cartModel
     }
 
-    suspend fun getLastCartWithProductsFromDb():CartModel? {
-        val cartDto = cartDao.getLastCartWithProducts()
+    suspend fun getLastCartWithProductsFromDb(userId:Long):CartModel? {
+        val cartDto = cartDao.getLastCartWithProducts(userId)
         var cartModel : CartModel? = null
 
         if(cartDto!=null){
@@ -103,7 +102,6 @@ class CartRepository {
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
-
 
     suspend fun deleteAllProductsCartToDb(productList:List<ProductCartModel>){
         val productCartEntityList = productList.map { it.toProductCartEntity() }

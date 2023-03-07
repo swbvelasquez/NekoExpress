@@ -20,8 +20,8 @@ interface CartDao {
     suspend fun getCartWithProducts(cartId:Int) : CartWithProductDto?
 
     @Transaction
-    @Query("select * from CartTable where cartId = (select max(cartId) from CartTable) and status = ${CartStatus.PENDING}")
-    suspend fun getLastCartWithProducts() : CartWithProductDto?
+    @Query("select * from CartTable where cartId = (select max(cartId) from CartTable) and status = ${CartStatus.PENDING} and userId = :userId")
+    suspend fun getLastCartWithProducts(userId:Long) : CartWithProductDto?
 
     @Query("select * from ProductCartTable where cartId = :cartId and productId = :productId")
     suspend fun getProductCart(cartId:Long,productId:Long) : ProductCartCrossRefEntity?

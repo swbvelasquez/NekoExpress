@@ -9,8 +9,8 @@ import java.util.*
 class GetLastAvailableCartUseCase {
     private val repository = CartRepository()
 
-    suspend operator fun invoke():CartModel?{
-        val cartModel = repository.getLastCartWithProductsFromDb()
+    suspend operator fun invoke(userId:Long):CartModel?{
+        var cartModel = repository.getLastCartWithProductsFromDb(userId)
 
         if(cartModel!=null){
             val currentDateTime = Calendar.getInstance().time
@@ -19,6 +19,8 @@ class GetLastAvailableCartUseCase {
             if(differenceInMS >= Constants.MAX_TIME_AVAILABLE_CART){
                 cartModel.status = CartStatus.CANCELED
                 repository.updateCartToDb(cartModel)
+                cartModel = CartModel(userId=userId,status=CartStatus.PENDING,date=currentDateTime.time)
+                repository.insertCartToDb(cartModel)
             }
         }
 

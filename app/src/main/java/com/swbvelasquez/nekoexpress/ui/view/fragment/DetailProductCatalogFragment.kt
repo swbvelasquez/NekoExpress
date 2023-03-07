@@ -13,9 +13,12 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions.fromJson
 import com.swbvelasquez.nekoexpress.databinding.FragmentDetailProductCatalogBinding
+import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
 import com.swbvelasquez.nekoexpress.ui.viewmodel.DetailProductCatalogViewModel
 
 
@@ -36,8 +39,9 @@ class DetailProductCatalogFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailProductCatalogBinding
     private lateinit var productModel: ProductCatalogModel
-    private val viewModel : DetailProductCatalogViewModel by viewModels()
-    private var onClickBackPressed : ((String)->Unit)? = null
+    private lateinit var cartModel: CartModel
+    private val viewModel: DetailProductCatalogViewModel by viewModels()
+    private var onClickBackPressed: ((String)->Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +96,7 @@ class DetailProductCatalogFragment : Fragment() {
             if(product.productId > 0) setupUiProduct(product)
         }
 
-        viewModel.setProduct(productModel)
+        viewModel.setInitValues(productModel,cartModel)
     }
 
     private fun setupUiProduct(product:ProductCatalogModel){
@@ -102,6 +106,9 @@ class DetailProductCatalogFragment : Fragment() {
             tvScore.text = String.format(getString(R.string.format_product_score),product.rating.rate)
             tvReviewAmount.text = String.format(getString(R.string.format_product_review),product.rating.count)
             tvDescription.text = product.description
+            btnAddToCart.setOnClickListener {
+
+            }
 
             activity?.let {
                 Glide
@@ -153,6 +160,10 @@ class DetailProductCatalogFragment : Fragment() {
     private fun enableButtonSize(layout:LinearLayout,textView: TextView){
         layout.setBackgroundResource(R.drawable.drw_size_layout_active)
         activity?.let { textView.setTextColor(it.getColor(R.color.color_on_primary)) }
+    }
+
+    private fun addProductToCart(){
+        val productCart = productModel.toProductCartModel()
     }
 
     fun onBackPressed(onClickBackPressed:(String)->Unit){

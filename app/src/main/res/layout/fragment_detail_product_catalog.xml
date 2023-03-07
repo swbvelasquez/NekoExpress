@@ -304,7 +304,7 @@
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCheckCart"
+                android:id="@+id/btnAddToCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_add_cart_description"

@@ -11,7 +11,9 @@ data class ProductCartModel(
     val category: String,
     val image:String,
     var quantity:Int=1,
-    var total:Double=0.0
+    var total:Double=0.0,
+    var size:String="",
+    var color:String=""
 )
 
 fun ProductCatalogModel.toProductCartModel() = ProductCartModel(productId=productId,title=title,price=price,category=category,image=image)

@@ -9,3 +9,21 @@ data class InvoiceModel(
     var total:Double=0.0,
     var detailList:MutableList<InvoiceDetailModel> = mutableListOf()
 )
+
+fun CartModel.toInvoiceModel():InvoiceModel {
+    var invoiceDetail:InvoiceDetailModel
+    val invoiceDetailList:MutableList<InvoiceDetailModel> = mutableListOf()
+
+    productList.forEachIndexed{ index, product ->
+        invoiceDetail = product.toInvoiceDetailModel(index+1)
+        invoiceDetailList.add(invoiceDetail)
+    }
+
+    return InvoiceModel(
+        userId = userId,
+        cartId = cartId,
+        subtotal = subtotal,
+        taxes = taxes,
+        total = total,
+        detailList = invoiceDetailList)
+}

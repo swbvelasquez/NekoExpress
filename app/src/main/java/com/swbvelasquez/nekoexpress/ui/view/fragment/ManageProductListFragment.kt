@@ -48,8 +48,8 @@ class ManageProductListFragment : Fragment() {
         productCartList = mutableListOf()
 
         productAdapter = ManageProductListAdapter{ product ->
-            val productCart = product.toProductCartModel()
-            productCartList.add(productCart)
+            //val productCart = product.toProductCartModel()
+            //productCartList.add(productCart)
         }
 
         binding.rvProduct.apply {

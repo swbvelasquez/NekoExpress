@@ -17,7 +17,7 @@ import com.swbvelasquez.nekoexpress.data.database.model.CartWithProductDto
 interface CartDao {
     @Transaction
     @Query("select * from CartTable where cartId = :cartId")
-    suspend fun getCartWithProducts(cartId:Int) : CartWithProductDto?
+    suspend fun getCartWithProducts(cartId:Long) : CartWithProductDto?
 
     @Transaction
     @Query("select * from CartTable where cartId = (select max(cartId) from CartTable) and status = ${CartStatus.PENDING} and userId = :userId")

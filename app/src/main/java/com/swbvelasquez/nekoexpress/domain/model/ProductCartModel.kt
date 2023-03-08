@@ -1,11 +1,13 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartCrossRefEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.model.ProductCartDto
 
 data class ProductCartModel(
+    var productCartId:Long,
     val productId:Long,
-    var cartId:Long=0,
+    var cartId:Long,
     val title:String,
     val price:Double,
     val category: String,
@@ -16,8 +18,7 @@ data class ProductCartModel(
     var color:String=""
 )
 
-fun ProductCatalogModel.toProductCartModel() = ProductCartModel(productId=productId,title=title,price=price,category=category,image=image)
+fun ProductCatalogModel.toProductCartModel(productCartId:Long,cartId:Long) = ProductCartModel(productCartId=productCartId,productId=productId,cartId=cartId,title=title,price=price,category=category,image=image,size=size,color=color)
 
-fun ProductCartDto.toProductCartModel() = ProductCartModel(productId=product.productId,title=product.title,price=product.price,category=product.category,image=product.image,quantity=quantity,total=total)
-
-fun ProductEntity.toProductCartModel() = ProductCartModel(productId=productId,title=title,price=price,category=category,image=image)
+fun ProductCartCrossRefEntity.toProductCartModel(title:String,category:String,image:String) = ProductCartModel(productCartId=productCartId,productId=productId,cartId=cartId,title=title
+    ,price=price,category=category,image=image,quantity=quantity,total=total,size=size,color=color)

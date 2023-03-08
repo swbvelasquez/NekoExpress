@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         fragment.selectProduct { product ->
             Functions.showSimpleMessage(this,"Producto seleccionado ${product.title}")
-            showProductDetails(product.toJson())
+            showProductDetails(product.productId,0,product.category)
         }
         fragment.onBackPressed {
             removeFragment(it)
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         addFragment(fragment,ExposeProductCatalogFragment.TAG)
     }
 
-    private fun showProductDetails(product:String){
-        val fragment = DetailProductCatalogFragment.newInstance(product)
+    private fun showProductDetails(productId:Long,cartId:Long,category:String){
+        val fragment = DetailProductCatalogFragment.newInstance(productId,cartId,category)
 
         fragment.onBackPressed {
             removeFragment(it)

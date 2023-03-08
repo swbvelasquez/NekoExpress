@@ -15,9 +15,9 @@ class ProductService {
         }
     }
 
-    suspend fun getProductById(id:Int):ProductDto? {
+    suspend fun getProductById(productId:Long):ProductDto? {
         return withContext(Dispatchers.IO){
-            service.getProductById(id).body()
+            service.getProductById(productId).body()
         }
     }
 

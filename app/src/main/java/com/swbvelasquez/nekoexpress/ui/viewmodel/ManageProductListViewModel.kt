@@ -49,7 +49,7 @@ class ManageProductListViewModel:ViewModel() {
         }
     }
 
-    fun getProductById(id:Int){
+    fun getProductById(id:Long){
         viewModelScope.launch {
             loading.value = true
 

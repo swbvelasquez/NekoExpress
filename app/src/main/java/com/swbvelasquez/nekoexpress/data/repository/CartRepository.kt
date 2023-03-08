@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 class CartRepository {
     private val cartDao = NekoApplication.database.getCartDao()
 
-    suspend fun getCartWithProductsFromDb(cartId:Int):CartModel? {
+    suspend fun getCartWithProductsFromDb(cartId:Long):CartModel? {
         val cartDto = cartDao.getCartWithProducts(cartId)
         var cartModel : CartModel? = null
 

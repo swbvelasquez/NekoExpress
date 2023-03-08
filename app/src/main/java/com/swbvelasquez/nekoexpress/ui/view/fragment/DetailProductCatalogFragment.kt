@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -17,40 +18,46 @@ import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions.fromJson
 import com.swbvelasquez.nekoexpress.databinding.FragmentDetailProductCatalogBinding
 import com.swbvelasquez.nekoexpress.domain.model.CartModel
+import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
 import com.swbvelasquez.nekoexpress.ui.viewmodel.DetailProductCatalogViewModel
 
 
-private const val PRODUCT_PARAM = "PRODUCT_PARAM"
+private const val PRODUCT_ID = "PRODUCT_ID"
+private const val PRODUCT_CATEGORY = "PRODUCT_CATEGORY"
+private const val CART_ID = "CART_ID"
 
 class DetailProductCatalogFragment : Fragment() {
     companion object {
         val TAG:String = DetailProductCatalogFragment::class.java.simpleName
 
         @JvmStatic
-        fun newInstance(productCatalogModel: String) =
+        fun newInstance(productId: Long,cartId: Long,category:String) =
             DetailProductCatalogFragment().apply {
                 arguments = Bundle().apply {
-                    putString(PRODUCT_PARAM, productCatalogModel)
+                    putLong(PRODUCT_ID, productId)
+                    putString(PRODUCT_CATEGORY, category)
+                    putLong(CART_ID,cartId)
                 }
             }
     }
 
     private lateinit var binding: FragmentDetailProductCatalogBinding
-    private lateinit var productModel: ProductCatalogModel
-    private lateinit var cartModel: CartModel
+    private var productId:Long=0
+    private var cartId:Long=0
+    private var category:String= ""
     private val viewModel: DetailProductCatalogViewModel by viewModels()
     private var onClickBackPressed: ((String)->Unit)? = null
+    private var selectedColor:String = ""
+    private var selectedSize:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle->
-            val productJson = bundle.getString(PRODUCT_PARAM)
-
-            productJson?.let {
-                productModel = it.fromJson()
-            }
+            productId = bundle.getLong(PRODUCT_ID)
+            category = bundle.getString(PRODUCT_CATEGORY,"")
+            cartId = bundle.getLong(CART_ID)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this,
@@ -92,11 +99,14 @@ class DetailProductCatalogFragment : Fragment() {
                 binding.cvDetails.visibility = View.VISIBLE
             }
         }
-        viewModel.getProduct().observe(viewLifecycleOwner){ product ->
-            if(product.productId > 0) setupUiProduct(product)
+        viewModel.getResult().observe(viewLifecycleOwner){ result ->
+            when(result){
+                is ProductCatalogModel -> setupUiProduct(result)
+                is ProductCartModel -> requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
         }
 
-        viewModel.setInitValues(productModel,cartModel)
+        viewModel.setInitValues(productId,cartId)
     }
 
     private fun setupUiProduct(product:ProductCatalogModel){
@@ -106,9 +116,6 @@ class DetailProductCatalogFragment : Fragment() {
             tvScore.text = String.format(getString(R.string.format_product_score),product.rating.rate)
             tvReviewAmount.text = String.format(getString(R.string.format_product_review),product.rating.count)
             tvDescription.text = product.description
-            btnAddToCart.setOnClickListener {
-
-            }
 
             activity?.let {
                 Glide
@@ -123,26 +130,58 @@ class DetailProductCatalogFragment : Fragment() {
 
     private fun setupButtons(){
         with(binding){
-            lySizeSmall.setOnClickListener {
-                enableButtonSize(lySizeSmall,tvSizeSmall)
-                disableButtonsSize(lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
+            btnAddToCart.setOnClickListener {
+                viewModel.addProductToCart(selectedSize,selectedColor)
             }
-            lySizeMedium.setOnClickListener {
-                enableButtonSize(lySizeMedium,tvSizeMedium)
-                disableButtonsSize(lySizeSmall,tvSizeSmall,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
-            }
-            lySizeLarge.setOnClickListener {
-                enableButtonSize(lySizeLarge,tvSizeLarge)
-                disableButtonsSize(lySizeSmall,tvSizeSmall,lySizeMedium,tvSizeMedium,lySizeExtraLarge,tvSizeExtraLarge)
-            }
-            lySizeExtraLarge.setOnClickListener {
-                enableButtonSize(lySizeExtraLarge,tvSizeExtraLarge)
-                disableButtonsSize(lySizeSmall,tvSizeSmall,lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge)
+
+            if(category == Constants.CLOTH_CATEGORY){
+                lySizeSmall.setOnClickListener {
+                    setActiveButtonSize(lySizeSmall,tvSizeSmall)
+                    setInactiveButtonsSize(lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
+                }
+                lySizeMedium.setOnClickListener {
+                    setActiveButtonSize(lySizeMedium,tvSizeMedium)
+                    setInactiveButtonsSize(lySizeSmall,tvSizeSmall,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
+                }
+                lySizeLarge.setOnClickListener {
+                    setActiveButtonSize(lySizeLarge,tvSizeLarge)
+                    setInactiveButtonsSize(lySizeSmall,tvSizeSmall,lySizeMedium,tvSizeMedium,lySizeExtraLarge,tvSizeExtraLarge)
+                }
+                lySizeExtraLarge.setOnClickListener {
+                    setActiveButtonSize(lySizeExtraLarge,tvSizeExtraLarge)
+                    setInactiveButtonsSize(lySizeSmall,tvSizeSmall,lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge)
+                }
+                imvColorRed.setOnClickListener {
+                    setActiveButtonColor(imvColorRed)
+                    setInactiveButtonsColor(imvColorBlue,imvColorGreen,imvColorOrange,imvColorPurple)
+                }
+                imvColorBlue.setOnClickListener {
+                    setActiveButtonColor(imvColorBlue)
+                    setInactiveButtonsColor(imvColorRed,imvColorGreen,imvColorOrange,imvColorPurple)
+                }
+                imvColorGreen.setOnClickListener {
+                    setActiveButtonColor(imvColorGreen)
+                    setInactiveButtonsColor(imvColorBlue,imvColorRed,imvColorOrange,imvColorPurple)
+                }
+                imvColorOrange.setOnClickListener {
+                    setActiveButtonColor(imvColorOrange)
+                    setInactiveButtonsColor(imvColorBlue,imvColorGreen,imvColorRed,imvColorPurple)
+                }
+                imvColorPurple.setOnClickListener {
+                    setActiveButtonColor(imvColorPurple)
+                    setInactiveButtonsColor(imvColorBlue,imvColorGreen,imvColorOrange,imvColorRed)
+                }
+            }else{
+                hideClothingOptions(lySizeSmall,lySizeMedium,lySizeLarge,lySizeExtraLarge,imvColorRed,imvColorBlue,imvColorGreen,imvColorOrange,imvColorPurple)
             }
         }
     }
 
-    private fun disableButtonsSize(vararg views:View){
+    private fun hideClothingOptions(vararg views:View){
+        views.forEach { it.visibility = View.GONE }
+    }
+
+    private fun setInactiveButtonsSize(vararg views:View){
         var layout:LinearLayout
         var textView:TextView
 
@@ -157,13 +196,21 @@ class DetailProductCatalogFragment : Fragment() {
         }
     }
 
-    private fun enableButtonSize(layout:LinearLayout,textView: TextView){
+    private fun setActiveButtonSize(layout:LinearLayout, textView: TextView){
         layout.setBackgroundResource(R.drawable.drw_size_layout_active)
         activity?.let { textView.setTextColor(it.getColor(R.color.color_on_primary)) }
+        selectedSize = textView.tag as String
     }
 
-    private fun addProductToCart(){
-        val productCart = productModel.toProductCartModel()
+    private fun setInactiveButtonsColor(vararg views:ImageView){
+        for(view in views){
+            view.setImageDrawable(null)
+        }
+    }
+
+    private fun setActiveButtonColor(view:ImageView){
+        view.setImageResource(R.drawable.ic_check)
+        selectedColor = view.tag as String
     }
 
     fun onBackPressed(onClickBackPressed:(String)->Unit){

@@ -1,7 +1,6 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
-import com.swbvelasquez.nekoexpress.core.util.Constants
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartCrossRefEntity
+import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.model.CartWithProductDto
 
 data class CartModel(
@@ -16,28 +15,24 @@ data class CartModel(
 )
 
 fun CartWithProductDto.toCartModel():CartModel{
-    val productCartList = productList.map { it.toProductCartModel() }
-    var productCrossRef : ProductCartCrossRefEntity
-    var subtotal=0.0
+    val productCartList:MutableList<ProductCartModel> = mutableListOf()
+    var productCartModel : ProductCartModel
+    var productEntity : ProductEntity
 
-    for(product in productCartList){
-        productCrossRef = productCrossRefList.first { x -> x.productId == product.productId }
-        product.quantity = productCrossRef.quantity
-        product.total = productCrossRef.total
-        subtotal += product.total
+    for(productCartEntity in productCrossRefList){
+        productEntity = productList.first { x -> x.productId == productCartEntity.productId }
+        productCartModel = productCartEntity.toProductCartModel(productEntity.title,productEntity.category,productEntity.image)
+        productCartList.add(productCartModel)
     }
-
-    val taxes = subtotal * Constants.TAXES_PERCENT
-    val total = subtotal + taxes
 
     return CartModel(
         cartId = cart.cartId,
         userId = cart.userId,
         status = cart.status,
         date = cart.date,
-        subtotal = subtotal,
-        taxes = taxes,
-        total = total,
+        subtotal = cart.subtotal,
+        taxes = cart.taxes,
+        total = cart.total,
         productList = productCartList.toMutableList()
     )
 }

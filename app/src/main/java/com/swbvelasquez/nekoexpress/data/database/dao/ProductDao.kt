@@ -15,7 +15,7 @@ interface ProductDao {
 
     @Transaction
     @Query("select * from ProductTable where productId = :productId")
-    suspend fun getProductWithRankingById(productId:Int):ProductWithRatingDto?
+    suspend fun getProductWithRankingById(productId:Long):ProductWithRatingDto?
 
     @Transaction
     @Query("select * from ProductTable where category = :category")

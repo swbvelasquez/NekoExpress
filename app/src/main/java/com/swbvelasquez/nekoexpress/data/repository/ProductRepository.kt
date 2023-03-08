@@ -1,10 +1,6 @@
 package com.swbvelasquez.nekoexpress.data.repository
 
-import androidx.room.Transaction
 import com.swbvelasquez.nekoexpress.NekoApplication
-import com.swbvelasquez.nekoexpress.core.error.CustomException
-import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
-import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.data.database.entity.toProductEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.toRatingEntity
 import com.swbvelasquez.nekoexpress.data.network.service.ProductService
@@ -40,8 +36,8 @@ class ProductRepository {
         return productModelList
     }
 
-    suspend fun getProductByIdFromApi(id:Int):ProductCatalogModel?{
-        val productDTO = productApi.getProductById(id)
+    suspend fun getProductByIdFromApi(productId:Long):ProductCatalogModel?{
+        val productDTO = productApi.getProductById(productId)
         var productModel:ProductCatalogModel? = null
 
         if(productDTO !=null){
@@ -51,8 +47,8 @@ class ProductRepository {
         return productModel
     }
 
-    suspend fun getProductByIdFromDb(id:Int):ProductCatalogModel?{
-        val productEntity = withContext(Dispatchers.IO){ productDao.getProductWithRankingById(id) }
+    suspend fun getProductByIdFromDb(productId:Long):ProductCatalogModel?{
+        val productEntity = withContext(Dispatchers.IO){ productDao.getProductWithRankingById(productId) }
         var productModel:ProductCatalogModel? = null
 
         if(productEntity !=null){

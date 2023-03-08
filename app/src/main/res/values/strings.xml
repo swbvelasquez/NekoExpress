@@ -23,6 +23,12 @@
     <string name="text_size_large_value">L</string>
     <string name="text_size_extra_large_value">XL</string>
 
+    <string name="text_color_red_value">Red</string>
+    <string name="text_color_blue_value">Blue</string>
+    <string name="text_color_green_value">Green</string>
+    <string name="text_color_orange_value">Orange</string>
+    <string name="text_color_purple_value">Purple</string>
+
     <string name="text_description_default">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn t anything embarrassing hidden in the middle of text.</string>
 
 

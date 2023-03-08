@@ -28,11 +28,11 @@ data class ProductCartCrossRefEntity(
     @ColumnInfo(name="productCartId") val productCartId:Long,
     @ColumnInfo(name="cartId") val cartId:Long,
     @ColumnInfo(name="productId") val productId:Long,
-    val size:String,
-    val color:String,
-    val quantity:Int,
-    val price:Double,
-    val total:Double
+    @ColumnInfo(name="size") val size:String,
+    @ColumnInfo(name="color") val color:String,
+    @ColumnInfo(name="quantity") val quantity:Int,
+    @ColumnInfo(name="price") val price:Double,
+    @ColumnInfo(name="total") val total:Double
 )
 
 fun ProductCartModel.toProductCartEntity() = ProductCartCrossRefEntity(productCartId=productCartId,cartId=cartId,productId=productId,size=size,color=color,quantity=quantity,price=price,total=total)

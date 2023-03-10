@@ -8,12 +8,18 @@ class GetProductsByCategoryUseCase {
 
     suspend operator fun invoke(category:String):List<ProductCatalogModel>?{
         var productList = repository.getProductsByCategoryFromApi(category)
+        val productLocalList = repository.getAllProductsByCategoryFromDb(category)
 
         if(productList.isNullOrEmpty()){
-            productList = repository.getAllProductsByCategoryFromDb(category)
+            productList = productLocalList
         }else{
-            repository.deleteAllProductsByCategoryFromDb(category)
-            repository.insertProductListToDb(productList)
+            val productInsertList:List<ProductCatalogModel> = if(productLocalList.isNullOrEmpty()){
+                productList
+            }else{
+                productList.filterNot { productApi -> productApi.productId in productLocalList.map { productDb -> productDb.productId } }
+            }
+
+            if(productInsertList.isNotEmpty()) repository.insertProductListToDb(productInsertList)
         }
 
         return productList

@@ -2,21 +2,30 @@ package com.swbvelasquez.nekoexpress.ui.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.toJson
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
+import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.ui.view.fragment.DetailProductCatalogFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeCategoryFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeProductCatalogFragment
+import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var onBackPressedCallback: OnBackPressedCallback
     private lateinit var fragmentList:MutableList<Fragment>
+    private lateinit var cart:CartModel
     private var currentFragment : Fragment? = null
+
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,12 +33,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupViewModel()
         showCategories()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         onBackPressedCallback.remove()
+    }
+
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(this){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getTypeException().observe(this){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                Functions.showSimpleMessage(this, exception.typeException.message)
+            }
+        }
+        viewModel.getCart().observe(this){
+            cart = it
+        }
+        viewModel.getLastAvailableCart(Constants.USER_ID)
     }
 
     private fun showCategories(){
@@ -50,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = ExposeProductCatalogFragment.newInstance(category)
 
         fragment.selectProduct { product ->
-            showProductDetails(product.productId,0,product.category)
+            showProductDetails(product.productId,cart.cartId,product.category)
         }
         fragment.onBackPressed {
             removeFragment(it)

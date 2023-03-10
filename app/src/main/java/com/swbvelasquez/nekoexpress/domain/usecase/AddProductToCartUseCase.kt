@@ -23,7 +23,7 @@ class AddProductToCartUseCase {
                 repository.updateProductCartToDb(productCart)
             } else {
                 val newProductId = cart.productList.size.toLong().plus(1)
-                productCart = newProduct.copy(productCartId = newProductId)
+                productCart = newProduct.copy(productCartId = newProductId, total = newProduct.price)
                 repository.insertProductCartToDb(productCart)
             }
         }

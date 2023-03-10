@@ -140,11 +140,13 @@ class DetailProductCatalogFragment : Fragment() {
     private fun setupButtons(){
         with(binding){
             btnAddToCart.setOnClickListener {
-                val productCart = productCatalog.toProductCartModel(0, cartId)
-                viewModel.addProductToCart(productCart)
+                addProductToCart()
             }
 
             if(category.contains(Constants.CLOTH_CATEGORY)){
+                selectedSize = tvSizeSmall.tag as String
+                selectedColor = imvColorRed.tag as String
+
                 lySizeSmall.setOnClickListener {
                     setActiveButtonSize(lySizeSmall,tvSizeSmall)
                     setInactiveButtonsSize(lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
@@ -221,6 +223,14 @@ class DetailProductCatalogFragment : Fragment() {
     private fun setActiveButtonColor(view:ImageView){
         view.setImageResource(R.drawable.ic_check)
         selectedColor = view.tag as String
+    }
+
+    private fun addProductToCart(){
+        val productCart = productCatalog.toProductCartModel(0, cartId).apply {
+            size=selectedSize
+            color=selectedColor
+        }
+        viewModel.addProductToCart(productCart)
     }
 
     fun onBackPressed(onClickBackPressed:(String)->Unit){

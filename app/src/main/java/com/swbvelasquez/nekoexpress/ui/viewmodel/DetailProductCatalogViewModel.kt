@@ -11,7 +11,10 @@ import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.usecase.AddProductToCartUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetCartByIdUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetProductByIdUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailProductCatalogViewModel:ViewModel() {
     private val addProductToCartUseCase = AddProductToCartUseCase()
@@ -37,6 +40,9 @@ class DetailProductCatalogViewModel:ViewModel() {
 
             try {
                 val product = getProductByIdUseCase(productId)
+                withContext(Dispatchers.IO){
+                    delay(250)
+                }
                 productModel.value = product
                 result.value = product
             }catch (ex:CustomException){

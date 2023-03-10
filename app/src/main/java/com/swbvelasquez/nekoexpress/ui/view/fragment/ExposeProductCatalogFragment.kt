@@ -87,7 +87,7 @@ class ExposeProductCatalogFragment : Fragment() {
     private fun setupRecyclerView(){
         productAdapter = ExposeProductCatalogAdapter(
             onClickListener = { product ->
-                activity?.let { Functions.showSimpleMessage(it,"Producto Seleccionado: ${product.title}") }
+                //activity?.let { Functions.showSimpleMessage(it,"Producto Seleccionado: ${product.title}") }
                 onClickProductCatalog?.invoke(product)
             },
             onClickFavoriteListener = { product ->

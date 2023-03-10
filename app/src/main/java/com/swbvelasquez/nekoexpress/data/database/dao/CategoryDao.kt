@@ -17,12 +17,12 @@ interface CategoryDao {
 
     @Transaction
     @Insert
-    suspend fun insertAllCategories(categoryList:List<CategoryEntity>):List<Long>
+    suspend fun insertCategoryList(categoryList:List<CategoryEntity>):List<Long>
 
     @Delete
     suspend fun deleteCategory(category:CategoryEntity):Int
 
     @Transaction
     @Delete
-    suspend fun deleteAllCategories(categoryList:List<CategoryEntity>):Int
+    suspend fun deleteCategoryList(categoryList:List<CategoryEntity>):Int
 }

@@ -3,7 +3,6 @@ package com.swbvelasquez.nekoexpress.data.repository
 import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
-import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.data.database.entity.toCategoryEntity
 import com.swbvelasquez.nekoexpress.data.network.service.CategoryService
@@ -48,11 +47,11 @@ class CategoryRepository {
         if(!result) throw CustomException(CustomTypeException.DB_INSERT_ONE)
     }
 
-    suspend fun insertAllCategoriesToDb(categoryModelList:List<CategoryModel>){
+    suspend fun insertCategoryListToDb(categoryModelList:List<CategoryModel>){
         val categoryEntityList = categoryModelList.map { it.toCategoryEntity() }
 
         val result = withContext(Dispatchers.IO){
-            val resultCategoryList =  categoryDao.insertAllCategories(categoryEntityList)
+            val resultCategoryList =  categoryDao.insertCategoryList(categoryEntityList)
 
             return@withContext !(resultCategoryList.isEmpty() || resultCategoryList.contains(-1))
         }
@@ -70,11 +69,11 @@ class CategoryRepository {
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
 
-    suspend fun deleteAllCategoriesToDb(categoryModelList:List<CategoryModel>){
+    suspend fun deleteCategoryListToDb(categoryModelList:List<CategoryModel>){
         val categoryEntityList = categoryModelList.map { it.toCategoryEntity() }
 
         val result = withContext(Dispatchers.IO){
-            categoryDao.deleteAllCategories(categoryEntityList) != categoryEntityList.size
+            categoryDao.deleteCategoryList(categoryEntityList) != categoryEntityList.size
         }
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)

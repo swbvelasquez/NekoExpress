@@ -10,8 +10,8 @@ class GetAllProductsUseCase {
         var productList = repository.getAllProductsFromApi()
 
         if(!productList.isNullOrEmpty()){
-            repository.deleteAllProductsFromDb(productList)
-            repository.insertAllProductsToDb(productList)
+            repository.deleteProductListFromDb(productList)
+            repository.insertProductListToDb(productList)
         }else{
             productList = repository.getAllProductsFromDb()
         }

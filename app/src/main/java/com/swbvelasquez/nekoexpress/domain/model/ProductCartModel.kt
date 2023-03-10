@@ -5,9 +5,9 @@ import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.model.ProductCartDto
 
 data class ProductCartModel(
-    var productCartId:Long,
+    val productCartId:Long,
     val productId:Long,
-    var cartId:Long,
+    val cartId:Long,
     val title:String,
     val price:Double,
     val category: String,

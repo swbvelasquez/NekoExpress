@@ -3,6 +3,7 @@ package com.swbvelasquez.nekoexpress.data.database.dao
 import androidx.room.*
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.RatingEntity
 import com.swbvelasquez.nekoexpress.data.database.model.ProductWithRatingDto
@@ -38,15 +39,15 @@ interface ProductDao {
     }
 
     @Insert //Cuando falla un objeto, solo se hace rollback a ese objeto, el resto de la lista se inserta igual, si estuviera marcada con el tag @Transaction este insert, entonces la lista si se ejecuta en una misma transaccion
-    suspend fun insertAllProducts(productList:List<ProductEntity>):List<Long>
+    suspend fun insertProductList(productList:List<ProductEntity>):List<Long>
 
     @Insert
-    suspend fun insertAllRatings(ratingList:List<RatingEntity>):List<Long>
+    suspend fun insertRatingList(ratingList:List<RatingEntity>):List<Long>
 
     @Transaction
-    suspend fun insertAllProductsWithRating(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
-        val resultProductList = insertAllProducts(productList)
-        val resultRatingList = insertAllRatings(ratingList)
+    suspend fun insertProductWithRatingList(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
+        val resultProductList = insertProductList(productList)
+        val resultRatingList = insertRatingList(ratingList)
 
         if(resultProductList.isEmpty() || resultProductList.contains(-1) || resultRatingList.isEmpty() || resultRatingList.contains(-1)){
             throw CustomException(CustomTypeException.DB_INSERT_LIST)
@@ -70,15 +71,15 @@ interface ProductDao {
     }
 
     @Update
-    suspend fun updateAllProducts(productList:List<ProductEntity>):Int
+    suspend fun updateProductList(productList:List<ProductEntity>):Int
 
     @Update
-    suspend fun updateAllRatings(RatingList:List<RatingEntity>):Int
+    suspend fun updateRatingList(RatingList:List<RatingEntity>):Int
 
     @Transaction
-    suspend fun updateAllProductsWithRating(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
-        val resultProductList = updateAllProducts(productList)
-        val resultRatingList = updateAllRatings(ratingList)
+    suspend fun updateProductWithRatingList(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
+        val resultProductList = updateProductList(productList)
+        val resultRatingList = updateRatingList(ratingList)
 
         if(resultProductList != productList.size || resultRatingList != ratingList.size){
             throw CustomException(CustomTypeException.DB_UPDATE_LIST)
@@ -102,18 +103,30 @@ interface ProductDao {
     }
 
     @Delete
-    suspend fun deleteAllProducts(productList:List<ProductEntity>):Int
+    suspend fun deleteProductList(productList:List<ProductEntity>):Int
 
     @Delete
-    suspend fun deleteAllRatings(RatingList:List<RatingEntity>):Int
+    suspend fun deleteRatingList(RatingList:List<RatingEntity>):Int
 
     @Transaction
-    suspend fun deleteAllProductsWithRating(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
-        val resultProductList = deleteAllProducts(productList)
-        val resultRatingList = deleteAllRatings(ratingList)
+    suspend fun deleteProductWithRatingList(productList:List<ProductEntity>, ratingList:List<RatingEntity>){
+        val resultProductList = deleteProductList(productList)
+        val resultRatingList = deleteRatingList(ratingList)
 
-        if(resultProductList != productList.size || resultRatingList != ratingList.size){
+        if(resultProductList == Constants.ROOM_DB_OPERATION_FAIL || resultRatingList == Constants.ROOM_DB_OPERATION_FAIL){
             throw CustomException(CustomTypeException.DB_DELETE_LIST)
         }
+    }
+
+    @Query("delete from ProductTable where category = :category")
+    suspend fun deleteAllProductsByCategory(category:String)
+
+    @Query("delete from RatingTable where productId in (select productId from ProductTable where category = :category)")
+    suspend fun deleteAllRatingByCategory(category:String)
+
+    @Transaction
+    suspend fun deleteAllProductsWithRatingByCategory(category: String){
+        deleteAllRatingByCategory(category)
+        deleteAllProductsByCategory(category)
     }
 }

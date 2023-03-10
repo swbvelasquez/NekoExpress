@@ -1,6 +1,5 @@
 package com.swbvelasquez.nekoexpress.data.repository
 
-import androidx.room.Transaction
 import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
@@ -65,7 +64,7 @@ class CartRepository {
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
         val result = withContext(Dispatchers.IO){
-            val resultProductCartList = cartDao.insertAllProductsCart(productCartEntityList)
+            val resultProductCartList = cartDao.insertProductCartList(productCartEntityList)
 
             return@withContext !(resultProductCartList.isEmpty() || resultProductCartList.contains(-1))
         }
@@ -107,7 +106,7 @@ class CartRepository {
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
         val result = withContext(Dispatchers.IO){
-            cartDao.deleteAllProductsCart(productCartEntityList) != productCartEntityList.size
+            cartDao.deleteProductCartList(productCartEntityList) != productCartEntityList.size
         }
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)

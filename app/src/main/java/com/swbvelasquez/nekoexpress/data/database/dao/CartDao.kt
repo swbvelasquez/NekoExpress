@@ -7,8 +7,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.swbvelasquez.nekoexpress.core.enum.CartStatus
-import com.swbvelasquez.nekoexpress.core.error.CustomException
-import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.data.database.entity.CartEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductCartCrossRefEntity
 import com.swbvelasquez.nekoexpress.data.database.model.CartWithProductDto
@@ -37,7 +35,7 @@ interface CartDao {
 
     @Transaction
     @Insert
-    suspend fun insertAllProductsCart(productCartList:List<ProductCartCrossRefEntity>):List<Long>
+    suspend fun insertProductCartList(productCartList:List<ProductCartCrossRefEntity>):List<Long>
 
     @Update
     suspend fun updateCart(cart:CartEntity):Int
@@ -47,7 +45,7 @@ interface CartDao {
 
     @Transaction
     @Update
-    suspend fun updateAllProductsCart(productCartList:List<ProductCartCrossRefEntity>):Int
+    suspend fun updateProductCartList(productCartList:List<ProductCartCrossRefEntity>):Int
 
     @Delete
     suspend fun deleteCart(cart:CartEntity):Int
@@ -57,5 +55,5 @@ interface CartDao {
 
     @Transaction
     @Delete
-    suspend fun deleteAllProductsCart(productCartList:List<ProductCartCrossRefEntity>):Int
+    suspend fun deleteProductCartList(productCartList:List<ProductCartCrossRefEntity>):Int
 }

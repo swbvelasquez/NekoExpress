@@ -90,12 +90,12 @@ class ProductRepository {
         }
     }
 
-    suspend fun insertAllProductsToDb(productModelList:List<ProductCatalogModel>){
+    suspend fun insertProductListToDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
         withContext(Dispatchers.IO){
-            productDao.insertAllProductsWithRating(productEntityList,ratingEntityList)
+            productDao.insertProductWithRatingList(productEntityList,ratingEntityList)
         }
     }
 
@@ -109,12 +109,12 @@ class ProductRepository {
         }
     }
 
-    suspend fun updateAllProductsFromDb(productModelList:List<ProductCatalogModel>){
+    suspend fun updateProductListFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
          withContext(Dispatchers.IO) {
-            productDao.updateAllProductsWithRating(productEntityList,ratingEntityList)
+            productDao.updateProductWithRatingList(productEntityList,ratingEntityList)
         }
 
     }
@@ -128,12 +128,18 @@ class ProductRepository {
         }
     }
 
-    suspend fun deleteAllProductsFromDb(productModelList:List<ProductCatalogModel>){
+    suspend fun deleteProductListFromDb(productModelList:List<ProductCatalogModel>){
         val productEntityList = productModelList.map { it.toProductEntity() }
         val ratingEntityList = productModelList.map { it.rating.toRatingEntity(it.productId) }
 
         withContext(Dispatchers.IO){
-            productDao.deleteAllProductsWithRating(productEntityList,ratingEntityList)
+            productDao.deleteProductWithRatingList(productEntityList,ratingEntityList)
+        }
+    }
+
+    suspend fun deleteAllProductsByCategoryFromDb(category: String){
+        withContext(Dispatchers.IO){
+            productDao.deleteAllProductsWithRatingByCategory(category)
         }
     }
 }

@@ -14,10 +14,10 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Constants
-import com.swbvelasquez.nekoexpress.core.util.Functions.fromJson
+import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.databinding.FragmentDetailProductCatalogBinding
-import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
@@ -44,6 +44,7 @@ class DetailProductCatalogFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentDetailProductCatalogBinding
+    private lateinit var productCatalog:ProductCatalogModel
     private var productId:Long=0
     private var cartId:Long=0
     private var category:String= ""
@@ -99,14 +100,22 @@ class DetailProductCatalogFragment : Fragment() {
                 binding.cvDetails.visibility = View.VISIBLE
             }
         }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
         viewModel.getResult().observe(viewLifecycleOwner){ result ->
             when(result){
-                is ProductCatalogModel -> setupUiProduct(result)
+                is ProductCatalogModel -> {
+                    productCatalog = result
+                    setupUiProduct(result)
+                }
                 is ProductCartModel -> requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
 
-        viewModel.setInitValues(productId,cartId)
+        viewModel.getProductDetails(productId)
     }
 
     private fun setupUiProduct(product:ProductCatalogModel){
@@ -131,10 +140,11 @@ class DetailProductCatalogFragment : Fragment() {
     private fun setupButtons(){
         with(binding){
             btnAddToCart.setOnClickListener {
-                viewModel.addProductToCart(selectedSize,selectedColor)
+                val productCart = productCatalog.toProductCartModel(0, cartId)
+                viewModel.addProductToCart(productCart)
             }
 
-            if(category == Constants.CLOTH_CATEGORY){
+            if(category.contains(Constants.CLOTH_CATEGORY)){
                 lySizeSmall.setOnClickListener {
                     setActiveButtonSize(lySizeSmall,tvSizeSmall)
                     setInactiveButtonsSize(lySizeMedium,tvSizeMedium,lySizeLarge,tvSizeLarge,lySizeExtraLarge,tvSizeExtraLarge)
@@ -172,7 +182,7 @@ class DetailProductCatalogFragment : Fragment() {
                     setInactiveButtonsColor(imvColorBlue,imvColorGreen,imvColorOrange,imvColorRed)
                 }
             }else{
-                hideClothingOptions(lySizeSmall,lySizeMedium,lySizeLarge,lySizeExtraLarge,imvColorRed,imvColorBlue,imvColorGreen,imvColorOrange,imvColorPurple)
+                hideClothingOptions(tvTitleSize,tvTitleColor,lySizeSmall,lySizeMedium,lySizeLarge,lySizeExtraLarge,imvColorRed,imvColorBlue,imvColorGreen,imvColorOrange,imvColorPurple)
             }
         }
     }

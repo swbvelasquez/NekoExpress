@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         val fragment = ExposeCategoryFragment.newInstance()
 
         fragment.selectCategory{ category ->
-            Functions.showSimpleMessage(this,"Categoria seleccionada ${category.name}")
             showProductsByCategory(category.toJson())
         }
         fragment.onBackPressed {
@@ -51,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         val fragment = ExposeProductCatalogFragment.newInstance(category)
 
         fragment.selectProduct { product ->
-            Functions.showSimpleMessage(this,"Producto seleccionado ${product.title}")
             showProductDetails(product.productId,0,product.category)
         }
         fragment.onBackPressed {

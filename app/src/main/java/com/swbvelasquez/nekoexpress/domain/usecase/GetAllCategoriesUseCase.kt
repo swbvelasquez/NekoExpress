@@ -13,7 +13,7 @@ class GetAllCategoriesUseCase {
             categoryList = repository.getAllCategoriesFromApi()
 
             if(!categoryList.isNullOrEmpty()){
-                repository.insertAllCategoriesToDb(categoryList)
+                repository.insertCategoryListToDb(categoryList)
             }
         }
 

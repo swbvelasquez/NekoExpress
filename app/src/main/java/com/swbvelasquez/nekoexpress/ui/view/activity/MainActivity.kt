@@ -42,6 +42,13 @@ class MainActivity : AppCompatActivity() {
         onBackPressedCallback.remove()
     }
 
+    private fun setupBottomNav(){
+        binding.bnvMain.background = null
+        binding.bnvMain.setOnItemSelectedListener { option ->
+            TODO()
+        }
+    }
+
     private fun setupViewModel(){
         viewModel.isLoading().observe(this){ loading ->
             binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE

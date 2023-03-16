@@ -1,19 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_secondary"
     tools:context=".ui.view.activity.MainActivity">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyMainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/babMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fabCradleMargin="@dimen/view_margin_default"
+        app:fabCradleVerticalOffset="@dimen/view_margin_min"
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnvMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="@dimen/view_margin_default"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_nav_main_menu"/>
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCheckoutCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cart"
+        app:fabSize="normal"
+        app:layout_anchor="@id/babMain"
+        app:backgroundTint="@color/color_primary"
+        app:tint="@color/color_on_primary"
+        android:contentDescription="@string/image_view_icon_description" />
+
+    <TextView
+        android:id="@+id/tvTotalQuantityProduct"
+        android:layout_width="@dimen/view_size_14"
+        android:layout_height="@dimen/view_size_14"
+        android:background="@drawable/drw_total_product_cart_item_layout"
+        android:textColor="@color/color_on_primary"
+        android:gravity="center"
+        android:elevation="@dimen/view_elevation_8"
+        app:layout_anchor="@id/fabCheckoutCart"
+        app:layout_anchorGravity="end|top"
+        android:translationY="@dimen/text_view_total_quantity_product_translation_y"
+        android:translationX="@dimen/text_view_total_quantity_product_translation_x"
+        tools:text="12"/>
 
     <include
         android:id="@+id/lyProgressBar"
+        android:visibility="gone"
         layout="@layout/layout_progress_bar"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -19,7 +19,6 @@ import kotlinx.coroutines.withContext
 class DetailProductCatalogViewModel:ViewModel() {
     private val addProductToCartUseCase = AddProductToCartUseCase()
     private val getProductByIdUseCase = GetProductByIdUseCase()
-    private val getCartByIdUseCase = GetCartByIdUseCase()
 
     private val loading = MutableLiveData<Boolean>()
     private val result = MutableLiveData<Any?>()

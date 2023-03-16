@@ -14,7 +14,7 @@ class GetLastAvailableCartUseCase {
         val currentDateTime = Calendar.getInstance().time
 
         if(cartModel!=null){
-            val differenceInMS = cartModel.date - currentDateTime.time
+            val differenceInMS = currentDateTime.time - cartModel.date
 
             if(differenceInMS >= Constants.MAX_TIME_AVAILABLE_CART){
                 cartModel.status = CartStatus.CANCELED

@@ -12,20 +12,23 @@ import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.toJson
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
-import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.ui.view.fragment.DetailProductCatalogFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeCategoryFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeProductCatalogFragment
 import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var onBackPressedCallback: OnBackPressedCallback
     private lateinit var fragmentList:MutableList<Fragment>
-    private lateinit var cart:CartModel
     private var currentFragment : Fragment? = null
+    private var cartId : Long = 0
 
-    private val viewModel : MainViewModel by viewModels()
+    private val viewModel : MainViewModel by viewModels {
+        MainViewModelFactory(Constants.USER_ID)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupBottomNav()
         setupViewModel()
         showCategories()
     }
@@ -58,10 +62,14 @@ class MainActivity : AppCompatActivity() {
                 Functions.showSimpleMessage(this, exception.typeException.message)
             }
         }
-        viewModel.getCart().observe(this){
-            cart = it
+        viewModel.getCartId().observe(this){
+            cartId = it
         }
-        viewModel.getLastAvailableCart(Constants.USER_ID)
+        viewModel.totalQuantity.observe(this){
+            binding.tvTotalQuantityProduct.text = it.toString()
+        }
+
+        viewModel.getLastAvailableCart()
     }
 
     private fun showCategories(){
@@ -82,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = ExposeProductCatalogFragment.newInstance(category)
 
         fragment.selectProduct { product ->
-            showProductDetails(product.productId,cart.cartId,product.category)
+            showProductDetails(product.productId,cartId,product.category)
         }
         fragment.onBackPressed {
             removeFragment(it)

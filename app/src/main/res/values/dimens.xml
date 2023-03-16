@@ -129,8 +129,8 @@
     <dimen name="image_view_thumbnail_checkout_cart_width">80dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_height">105dp</dimen>
     <dimen name="image_view_icon_favorite_size">@dimen/view_size_16</dimen>
-    <dimen name="text_view_total_quantity_product_translation_y">4dp</dimen>
-    <dimen name="text_view_total_quantity_product_translation_x">-4dp</dimen>
+    <dimen name="text_view_total_quantity_product_translation_y">8dp</dimen>
+    <dimen name="text_view_total_quantity_product_translation_x">-8dp</dimen>
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
     <dimen name="view_margin_default">@dimen/view_margin_8</dimen>
     <dimen name="view_margin_max">@dimen/view_margin_16</dimen>

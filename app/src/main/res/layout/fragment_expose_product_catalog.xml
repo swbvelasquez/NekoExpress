@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <include
+        android:visibility="gone"
         android:id="@+id/lyProgressBar"
         layout="@layout/layout_progress_bar"/>
 

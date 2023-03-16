@@ -1,5 +1,6 @@
 package com.swbvelasquez.nekoexpress.data.repository
 
+import androidx.lifecycle.LiveData
 import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
@@ -34,6 +35,10 @@ class CartRepository {
         }
 
         return cartModel
+    }
+
+    fun getTotalQuantityProductsByIdCart(userId: Long) : LiveData<Int>{
+        return cartDao.getTotalQuantityProductsByIdCart(userId)
     }
 
     suspend fun existProductCartFromDb(cartId:Long,productId:Long):Boolean {

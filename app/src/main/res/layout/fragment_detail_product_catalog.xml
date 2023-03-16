@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_view_thumbnail_description"
         android:src="@drawable/cloth_women_thumbnail_default"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -325,7 +325,7 @@
                 app:iconGravity="textStart"
                 android:layout_marginHorizontal="@dimen/view_margin_default"
                 android:layout_marginTop="@dimen/view_margin_default"
-                android:layout_marginBottom="@dimen/view_margin_min"
+                android:layout_marginBottom="@dimen/view_margin_max"
                 app:layout_constraintTop_toBottomOf="@id/lySizeSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -336,6 +336,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <include
+        android:visibility="gone"
         android:id="@+id/lyProgressBar"
         layout="@layout/layout_progress_bar"/>
 

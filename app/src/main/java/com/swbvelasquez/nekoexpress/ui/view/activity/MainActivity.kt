@@ -12,6 +12,7 @@ import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.toJson
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
+import com.swbvelasquez.nekoexpress.ui.view.fragment.CheckoutCartFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.DetailProductCatalogFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeCategoryFragment
 import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeProductCatalogFragment
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.background = null
         binding.bnvMain.setOnItemSelectedListener { option ->
             TODO()
+        }
+        binding.fabCheckoutCart.setOnClickListener {
+            showCart()
         }
     }
 
@@ -92,8 +96,8 @@ class MainActivity : AppCompatActivity() {
         fragment.selectProduct { product ->
             showProductDetails(product.productId,cartId,product.category)
         }
-        fragment.onBackPressed {
-            removeFragment(it)
+        fragment.onBackPressed { destiny->
+            removeFragment(destiny)
         }
 
         addFragment(fragment,ExposeProductCatalogFragment.TAG)
@@ -102,11 +106,22 @@ class MainActivity : AppCompatActivity() {
     private fun showProductDetails(productId:Long,cartId:Long,category:String){
         val fragment = DetailProductCatalogFragment.newInstance(productId,cartId,category)
 
-        fragment.onBackPressed {
-            removeFragment(it)
+        fragment.onBackPressed { destiny->
+            removeFragment(destiny)
         }
 
         addFragment(fragment,DetailProductCatalogFragment.TAG)
+    }
+
+    private fun showCart(){
+        val fragment = CheckoutCartFragment.newInstance(cartId)
+
+        fragment.onBackPressed { destiny->
+            removeFragment(destiny)
+            binding.bnvMain.selectedItemId = R.id.optHome
+        }
+
+        addFragment(fragment,CheckoutCartFragment.TAG)
     }
 
     private fun addFragment(fragment:Fragment,tag:String){

@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_secondary"
-    tools:context=".ui.view.fragment.CheckoutProductCartFragment">
+    tools:context=".ui.view.fragment.CheckoutCartFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategory"
+        android:id="@+id/rvProduct"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/view_margin_default"
@@ -109,6 +109,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <include
+        android:visibility="gone"
         android:id="@+id/lyProgressBar"
         layout="@layout/layout_progress_bar"/>
 

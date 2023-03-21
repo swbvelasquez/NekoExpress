@@ -40,6 +40,18 @@
 
         </androidx.cardview.widget.CardView>
 
+        <ImageView
+            android:id="@+id/imvDelete"
+            android:layout_width="@dimen/image_view_icon_delete"
+            android:layout_height="@dimen/image_view_icon_delete"
+            android:layout_marginEnd="@dimen/view_margin_min"
+            android:layout_marginTop="@dimen/view_margin_min"
+            android:contentDescription="@string/image_view_icon_description"
+            android:src="@drawable/ic_delete_trash"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/color_primary" />
+
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
@@ -50,7 +62,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/cvThumbnail"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imvDelete"
             app:layout_constraintTop_toTopOf="@id/cvThumbnail" />
 
         <TextView
@@ -94,14 +106,14 @@
             app:cardBackgroundColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="@dimen/view_margin_default"
-            android:layout_marginBottom="@dimen/view_margin_default"
-            app:cardCornerRadius="@dimen/view_radius_8">
+            android:layout_marginEnd="@dimen/view_margin_min"
+            android:layout_marginBottom="@dimen/view_margin_min"
+            app:cardCornerRadius="@dimen/view_radius_16">
 
             <ImageView
                 android:id="@+id/imvAdd"
-                android:layout_width="@dimen/image_view_icon_favorite_size"
-                android:layout_height="@dimen/image_view_icon_favorite_size"
+                android:layout_width="@dimen/image_view_icon_quantity_cart_size"
+                android:layout_height="@dimen/image_view_icon_quantity_cart_size"
                 android:layout_margin="@dimen/view_margin_4"
                 android:contentDescription="@string/image_view_icon_description"
                 android:src="@drawable/ic_add"
@@ -116,7 +128,7 @@
             tools:text="14"
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="@color/black"
-            android:layout_marginHorizontal="@dimen/view_margin_default"
+            android:layout_marginEnd="@dimen/view_margin_default"
             app:layout_constraintEnd_toStartOf="@id/cvAdd"
             app:layout_constraintTop_toTopOf="@id/cvAdd"
             app:layout_constraintBottom_toBottomOf="@id/cvAdd"
@@ -130,12 +142,12 @@
             app:layout_constraintEnd_toStartOf="@id/tvQuantity"
             app:layout_constraintTop_toTopOf="@id/cvAdd"
             android:layout_marginEnd="@dimen/view_margin_default"
-            app:cardCornerRadius="@dimen/view_radius_8">
+            app:cardCornerRadius="@dimen/view_radius_16">
 
             <ImageView
                 android:id="@+id/imvRemove"
-                android:layout_width="@dimen/image_view_icon_favorite_size"
-                android:layout_height="@dimen/image_view_icon_favorite_size"
+                android:layout_width="@dimen/image_view_icon_quantity_cart_size"
+                android:layout_height="@dimen/image_view_icon_quantity_cart_size"
                 android:layout_margin="@dimen/view_margin_4"
                 android:contentDescription="@string/image_view_icon_description"
                 android:src="@drawable/ic_remove"

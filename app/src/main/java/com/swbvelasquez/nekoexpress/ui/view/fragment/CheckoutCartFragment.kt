@@ -1,60 +1,141 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Constants
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentCheckoutCartBinding
+import com.swbvelasquez.nekoexpress.domain.model.CartModel
+import com.swbvelasquez.nekoexpress.ui.view.adapter.CheckoutCartAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.CheckoutCartViewModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.CheckoutCartViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val CART_ID = "CART_ID"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CheckoutProductCartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CheckoutProductCartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+class CheckoutCartFragment : Fragment() {
+    companion object {
+        val TAG:String = CheckoutCartFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(cartId: Long) =
+            CheckoutCartFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(CART_ID, cartId)
+                }
+            }
+    }
+
+    private lateinit var cart: CartModel
+    private lateinit var binding: FragmentCheckoutCartBinding
+    private lateinit var cartAdapter: CheckoutCartAdapter
+    private var cartId: Long = 0
+    private var onClickBackPressed: ((String)->Unit)? = null
+
+    private val viewModel : CheckoutCartViewModel by viewModels {
+        CheckoutCartViewModelFactory(cartId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        arguments?.let { bundle->
+            cartId = bundle.getLong(CART_ID,0)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke(ExposeCategoryFragment.TAG)
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG,"onDestroy")
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentCheckoutCartBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViewModel()
+        setupRecyclerView()
+    }
+
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
+        viewModel.getCart().observe(viewLifecycleOwner){
+            cart = it
+            showTotalCart()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkout_cart, container, false)
+    private fun setupRecyclerView(){
+        cartAdapter = CheckoutCartAdapter(
+            onClickChangeQuantityListener = {
+                val index = cart.productList.indexOf(it)
+                cart.productList[index] = it
+                cartAdapter.submitList(cart.productList.toList())
+                calculateTotalCart()
+            },
+            onClickDeleteListener = {
+                val index = cart.productList.indexOf(it)
+                cart.productList.removeAt(index)
+                cartAdapter.submitList(cart.productList.toList())
+                calculateTotalCart()
+            }
+        )
+
+        binding.rvProduct.apply {
+            adapter = cartAdapter
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CheckoutProductCartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CheckoutProductCartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun calculateTotalCart(){
+        cart.apply {
+            subtotal = cart.productList.sumOf { it.total }
+            taxes =  subtotal * Constants.TAXES_PERCENT
+            total = subtotal + taxes
+        }
+
+        showTotalCart()
+    }
+
+    private fun showTotalCart(){
+        activity?.let{
+            binding.tvSubtotal.text = String.format(getString(R.string.format_price),cart.subtotal)
+            binding.tvTaxes.text = String.format(getString(R.string.format_price),cart.taxes)
+            binding.tvTotal.text = String.format(getString(R.string.format_price),cart.total)
+        }
+    }
+
+    fun onBackPressed(onClickBackPressed:(String)->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

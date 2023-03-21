@@ -3,8 +3,11 @@
     <string name="image_view_thumbnail_description">Image Thumbnail</string>
     <string name="image_view_icon_description">Image Icon</string>
 
+    <string name="format_price">S/ %.2f</string>
     <string name="format_product_price">S/ %.2f</string>
     <string name="format_product_score">%.1f</string>
+    <string name="format_product_size">Size: %s</string>
+    <string name="format_product_color">Color: %s</string>
     <string name="format_product_review">(%d reviews)</string>
 
     <string name="text_description_title">Description</string>

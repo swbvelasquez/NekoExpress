@@ -34,6 +34,23 @@
     <dimen name="view_margin_15">30dp</dimen>
     <dimen name="view_margin_16">32dp</dimen>
 
+    <dimen name="view_inverse_margin_1">-2dp</dimen>
+    <dimen name="view_inverse_margin_2">-4dp</dimen>
+    <dimen name="view_inverse_margin_3">-6dp</dimen>
+    <dimen name="view_inverse_margin_4">-8dp</dimen>
+    <dimen name="view_inverse_margin_5">-10dp</dimen>
+    <dimen name="view_inverse_margin_6">-12dp</dimen>
+    <dimen name="view_inverse_margin_7">-14dp</dimen>
+    <dimen name="view_inverse_margin_8">-16dp</dimen>
+    <dimen name="view_inverse_margin_9">-18dp</dimen>
+    <dimen name="view_inverse_margin_10">-20dp</dimen>
+    <dimen name="view_inverse_margin_11">-22dp</dimen>
+    <dimen name="view_inverse_margin_12">-24dp</dimen>
+    <dimen name="view_inverse_margin_13">-26dp</dimen>
+    <dimen name="view_inverse_margin_14">-28dp</dimen>
+    <dimen name="view_inverse_margin_15">-30dp</dimen>
+    <dimen name="view_inverse_margin_16">-32dp</dimen>
+
     <dimen name="view_radius_1">2dp</dimen>
     <dimen name="view_radius_2">4dp</dimen>
     <dimen name="view_radius_3">6dp</dimen>
@@ -128,11 +145,16 @@
     <dimen name="image_view_thumbnail_expose_category_height">160dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_width">80dp</dimen>
     <dimen name="image_view_thumbnail_checkout_cart_height">105dp</dimen>
+    <dimen name="image_view_thumbnail_payment_cart_height">200dp</dimen>
     <dimen name="image_view_icon_favorite_size">@dimen/view_size_16</dimen>
     <dimen name="image_view_icon_delete">@dimen/view_size_18</dimen>
     <dimen name="image_view_icon_quantity_cart_size">@dimen/view_size_12</dimen>
     <dimen name="text_view_total_quantity_product_translation_y">8dp</dimen>
     <dimen name="text_view_total_quantity_product_translation_x">-8dp</dimen>
+    <dimen name="edit_text_card_number_margin_top">100dp</dimen>
+    <dimen name="edit_text_radius_min">@dimen/view_radius_4</dimen>
+    <dimen name="edit_text_radius_default">@dimen/view_radius_6</dimen>
+    <dimen name="layout_thumbnail_payment_cart_height">240dp</dimen>
     <dimen name="view_margin_min">@dimen/view_margin_4</dimen>
     <dimen name="view_margin_default">@dimen/view_margin_8</dimen>
     <dimen name="view_margin_max">@dimen/view_margin_16</dimen>

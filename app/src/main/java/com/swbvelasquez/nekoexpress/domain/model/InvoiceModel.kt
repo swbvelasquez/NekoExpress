@@ -7,10 +7,11 @@ data class InvoiceModel(
     var subtotal:Double=0.0,
     var taxes:Double=0.0,
     var total:Double=0.0,
+    var deliveryAddress: DeliveryAddressModel,
     var detailList:MutableList<InvoiceDetailModel> = mutableListOf()
 )
 
-fun CartModel.toInvoiceModel():InvoiceModel {
+fun CartModel.toInvoiceModel(deliveryAddress:DeliveryAddressModel):InvoiceModel {
     var invoiceDetail:InvoiceDetailModel
     val invoiceDetailList:MutableList<InvoiceDetailModel> = mutableListOf()
 
@@ -25,5 +26,6 @@ fun CartModel.toInvoiceModel():InvoiceModel {
         subtotal = subtotal,
         taxes = taxes,
         total = total,
+        deliveryAddress = deliveryAddress,
         detailList = invoiceDetailList)
 }

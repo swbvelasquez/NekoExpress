@@ -5,16 +5,16 @@
         android:title=""
         android:icon="@drawable/ic_home"/>
     <item
-        android:id="@+id/optProfile"
+        android:id="@+id/optUserProfile"
         android:title=""
         android:icon="@drawable/ic_person"/>
     <item android:title="" android:enabled="false"/>
     <item
-        android:id="@+id/optFavorite"
+        android:id="@+id/optFavoriteProducts"
         android:title=""
         android:icon="@drawable/ic_favorite_checked"/>
     <item
-        android:id="@+id/optRecord"
+        android:id="@+id/optSalesHistory"
         android:title=""
-        android:icon="@drawable/ic_record"/>
+        android:icon="@drawable/ic_sales_history"/>
 </menu>

@@ -16,10 +16,32 @@
     <string name="text_subtotal_title">Subtotal</string>
     <string name="text_taxes_title">Taxes</string>
     <string name="text_total_title">Total</string>
+    <string name="text_total_order_title">Total Order</string>
+
+    <string name="text_card_section_title">Card Information</string>
+    <string name="text_card_number_title">Card Number</string>
+    <string name="text_expire_date_title">Expire Date</string>
+    <string name="text_cvv_title">CVV</string>
+    <string name="text_card_holder_title">Card Holder</string>
+    <string name="text_delivery_section_title">Delivery Information</string>
+    <string name="text_delivery_department_title">Department</string>
+    <string name="text_delivery_province_title">Province</string>
+    <string name="text_delivery_district_title">District</string>
+    <string name="text_delivery_address_title">Address</string>
+    <string name="text_delivery_phone_title">Phone Number</string>
 
     <string name="button_add_cart_description">Add To Cart</string>
     <string name="button_checkout_cart_description">Checkout</string>
     <string name="button_pay_order_description">Pay Order</string>
+    <string name="button_confirm_order_description">Confirm Order</string>
+
+    <string name="dialog_confirm_order_success_title">Order Successful</string>
+    <string name="dialog_confirm_order_success_message">Thanks for use our services. Your order is on the way.</string>
+    <string name="dialog_confirm_order_success_positive_button">OK</string>
+
+    <string name="dialog_confirm_order_fail_title">Oops..</string>
+    <string name="dialog_confirm_order_fail_message">Something went wrong. Please try again.</string>
+    <string name="dialog_confirm_order_fail_positive_button">OK</string>
 
     <string name="text_size_small_value">S</string>
     <string name="text_size_medium_value">M</string>

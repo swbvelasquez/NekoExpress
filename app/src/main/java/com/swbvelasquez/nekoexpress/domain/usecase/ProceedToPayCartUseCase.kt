@@ -11,5 +11,6 @@ class ProceedToPayCartUseCase {
             repository.deleteAllProductsCartToDb(cart.productList)
             repository.insertAllProductsCartToDb(cart.productList)
         }
+        repository.updateCartToDb(cart)
     }
 }

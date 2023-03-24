@@ -21,7 +21,6 @@ import com.swbvelasquez.nekoexpress.ui.viewmodel.CheckoutCartViewModelFactory
 
 private const val CART_ID = "CART_ID"
 
-
 class CheckoutCartFragment : Fragment() {
     companion object {
         val TAG:String = CheckoutCartFragment::class.java.simpleName
@@ -40,6 +39,7 @@ class CheckoutCartFragment : Fragment() {
     private lateinit var cartAdapter: CheckoutCartAdapter
     private var cartId: Long = 0
     private var onClickBackPressed: ((String)->Unit)? = null
+    private var onClickPayOrder: ((Double)->Unit)? = null
 
     private val viewModel : CheckoutCartViewModel by viewModels {
         CheckoutCartViewModelFactory(cartId)
@@ -75,6 +75,7 @@ class CheckoutCartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupButtons()
         setupViewModel()
         setupRecyclerView()
     }
@@ -88,9 +89,17 @@ class CheckoutCartFragment : Fragment() {
                 activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
             }
         }
-        viewModel.getCart().observe(viewLifecycleOwner){
-            cart = it
-            showTotalCart()
+        viewModel.getResult().observe(viewLifecycleOwner){ result ->
+
+            when(result){
+                is CartModel -> {
+                    cart = result
+                    showTotalCart()
+                }
+                is Boolean -> {
+                    onClickPayOrder?.invoke(cart.total)
+                }
+            }
         }
     }
 
@@ -117,6 +126,12 @@ class CheckoutCartFragment : Fragment() {
         }
     }
 
+    private fun setupButtons(){
+        binding.btnPayOrder.setOnClickListener {
+            viewModel.proceedToPayCart(cart)
+        }
+    }
+
     private fun calculateTotalCart(){
         cart.apply {
             subtotal = cart.productList.sumOf { it.total }
@@ -137,5 +152,9 @@ class CheckoutCartFragment : Fragment() {
 
     fun onBackPressed(onClickBackPressed:(String)->Unit){
         this.onClickBackPressed=onClickBackPressed
+    }
+
+    fun onPayOrder(onClickPayOrder:(Double)->Unit){
+        this.onClickPayOrder = onClickPayOrder
     }
 }

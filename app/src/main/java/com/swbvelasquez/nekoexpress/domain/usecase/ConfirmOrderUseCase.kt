@@ -9,8 +9,8 @@ class ConfirmOrderUseCase {
     private val cartRepository = CartRepository()
     private val invoiceRepository = InvoiceRepository()
 
-    suspend operator fun invoke(cart:CartModel){
-        invoiceRepository.insertInvoiceToDb(cart.toInvoiceModel())
+    suspend operator fun invoke(cart:CartModel, deliveryAddress:DeliveryAddressModel){
+        invoiceRepository.insertInvoiceToDb(cart.toInvoiceModel(deliveryAddress))
         cart.status = CartStatus.PAID
         cartRepository.updateCartToDb(cart)
     }

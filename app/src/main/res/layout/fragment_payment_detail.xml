@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_secondary"
+    tools:context=".ui.view.fragment.PaymentDetailFragment">
+
+    <LinearLayout
+        android:id="@+id/lyThumbnailBackground"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_thumbnail_payment_cart_height"
+        android:orientation="vertical"
+        android:background="@color/color_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imvThumbnail"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_view_thumbnail_payment_cart_height"
+        android:layout_marginTop="@dimen/view_margin_default"
+        android:contentDescription="@string/image_view_thumbnail_description"
+        android:src="@drawable/credit_card_thumbnail"
+        android:scaleType="centerInside"
+        android:elevation="@dimen/view_elevation_16"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalOrder"/>
+
+    <TextView
+        android:id="@+id/tvTotalOrderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@color/color_on_primary"
+        android:textStyle="bold"
+        android:text="@string/text_total_order_title"/>
+
+    <TextView
+        android:id="@+id/tvTotalOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="$ 457.50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalOrderTitle"
+        android:layout_marginTop="@dimen/view_margin_min"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        android:textStyle="bold"
+        android:textColor="@color/color_on_primary"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvDetails"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lyThumbnailBackground"
+        android:layout_marginTop="@dimen/view_inverse_margin_16"
+        app:cardCornerRadius="@dimen/view_radius_12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/edit_text_card_number_margin_top">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvCardSectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_card_section_title"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        android:layout_marginTop="@dimen/view_margin_default"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCardNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tvCardSectionTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCardNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_card_number_title"
+                            android:inputType="number"
+                            tools:text="455788053421467"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilExpireDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilCardNumber"
+                        app:layout_constraintEnd_toStartOf="@id/tilCVV"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginStart="@dimen/view_margin_default"
+                        android:layout_marginEnd="@dimen/view_margin_min"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etExpireDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_expire_date_title"
+                            android:inputType="text"
+                            tools:text="24/07"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCVV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilCardNumber"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tilExpireDate"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginStart="@dimen/view_margin_min"
+                        android:layout_marginEnd="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCVV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_cvv_title"
+                            android:inputType="number"
+                            tools:text="532"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCardHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilExpireDate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCardHolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_card_holder_title"
+                            android:inputType="text"
+                            tools:text="Juan Valdez Olivares"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tvDeliverySectionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_delivery_section_title"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        app:layout_constraintTop_toBottomOf="@id/tilCardHolder"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        android:layout_marginTop="@dimen/view_margin_default"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDepartment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tvDeliverySectionTitle"
+                        app:layout_constraintEnd_toStartOf="@id/tilProvince"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/black"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/etDepartment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_delivery_department_title"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilProvince"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilDepartment"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/black"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/etProvince"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_delivery_province_title"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDistrict"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilProvince"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/black"
+                        app:endIconMode="dropdown_menu">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/etDistrict"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_delivery_district_title"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilDistrict"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_delivery_address_title"
+                            android:inputType="text"
+                            tools:text="Jr Siempre Viva 143, Alto Mayo"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tilAddress"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        app:boxBackgroundColor="@color/color_secondary"
+                        app:boxStrokeWidth="0dp"
+                        app:boxCornerRadiusTopStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusTopEnd="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomStart="@dimen/edit_text_radius_default"
+                        app:boxCornerRadiusBottomEnd="@dimen/edit_text_radius_default"
+                        android:textColorHint="@color/black"
+                        app:endIconTint="@color/color_primary"
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_delivery_phone_title"
+                            android:inputType="text"
+                            tools:text="958785478"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConfirmOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_confirm_order_description"
+                        android:textAllCaps="false"
+                        android:gravity="center"
+                        app:cornerRadius="@dimen/view_radius_12"
+                        android:paddingVertical="@dimen/view_padding_6"
+                        app:icon="@drawable/ic_delivery"
+                        app:iconGravity="textStart"
+                        android:layout_marginHorizontal="@dimen/view_margin_default"
+                        android:layout_marginTop="@dimen/view_margin_default"
+                        android:layout_marginBottom="@dimen/view_margin_max"
+                        app:layout_constraintTop_toBottomOf="@id/tilPhone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/lyProgressBar"
+        layout="@layout/layout_progress_bar"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

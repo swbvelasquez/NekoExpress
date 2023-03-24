@@ -12,10 +12,7 @@ import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.toJson
 import com.swbvelasquez.nekoexpress.databinding.ActivityMainBinding
-import com.swbvelasquez.nekoexpress.ui.view.fragment.CheckoutCartFragment
-import com.swbvelasquez.nekoexpress.ui.view.fragment.DetailProductCatalogFragment
-import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeCategoryFragment
-import com.swbvelasquez.nekoexpress.ui.view.fragment.ExposeProductCatalogFragment
+import com.swbvelasquez.nekoexpress.ui.view.fragment.*
 import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModel
 import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModelFactory
 
@@ -50,7 +47,35 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNav(){
         binding.bnvMain.background = null
         binding.bnvMain.setOnItemSelectedListener { option ->
-            TODO()
+
+            when(option.itemId){
+                R.id.optHome -> {
+                    if(currentFragment !is ExposeCategoryFragment) {
+                        removeAllFragments()
+                        showCategories()
+                    }
+                }
+                R.id.optUserProfile -> {
+                    if(currentFragment !is UserProfileFragment) {
+                        removeAllFragments()
+                        showUserProfile()
+                    }
+                }
+                R.id.optFavoriteProducts -> {
+                    if(currentFragment !is ExposeFavoriteProductFragment) {
+                        removeAllFragments()
+                        showFavoriteProducts()
+                    }
+                }
+                R.id.optSalesHistory -> {
+                    if(currentFragment !is ExposeSaleHistoryFragment) {
+                        removeAllFragments()
+                        showSalesHistory()
+                    }
+                }
+            }
+
+            true
         }
         binding.fabCheckoutCart.setOnClickListener {
             showCart()
@@ -88,6 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentList = mutableListOf()
         addFragment(fragment,ExposeCategoryFragment.TAG)
+        binding.bnvMain.selectedItemId = R.id.optHome
     }
 
     private fun showProductsByCategory(category:String){
@@ -114,14 +140,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCart(){
-        val fragment = CheckoutCartFragment.newInstance(cartId)
+        if(currentFragment !is CheckoutCartFragment) {
+            val fragment = CheckoutCartFragment.newInstance(cartId)
+
+            fragment.onBackPressed { destiny ->
+                removeFragment(destiny)
+            }
+            fragment.onPayOrder { totalOrder ->
+                removeFragment(ExposeCategoryFragment.TAG)
+                showPaymentDetails(cartId,totalOrder)
+            }
+
+            addFragment(fragment, CheckoutCartFragment.TAG)
+        }
+    }
+
+    private fun showPaymentDetails(cartId:Long,total:Double){
+        val fragment = PaymentDetailFragment.newInstance(cartId,total)
 
         fragment.onBackPressed { destiny->
             removeFragment(destiny)
-            binding.bnvMain.selectedItemId = R.id.optHome
         }
 
-        addFragment(fragment,CheckoutCartFragment.TAG)
+        fragment.onConfirmOrder {
+            removeAllFragments()
+            showCategories()
+        }
+
+        addFragment(fragment,PaymentDetailFragment.TAG)
+    }
+
+    private fun showUserProfile(){
+        Functions.showSimpleMessage(this,"User Profile")
+    }
+
+    private fun showFavoriteProducts(){
+        Functions.showSimpleMessage(this,"Favorite Products")
+    }
+
+    private fun showSalesHistory(){
+        Functions.showSimpleMessage(this,"SalesHistory")
     }
 
     private fun addFragment(fragment:Fragment,tag:String){
@@ -156,8 +214,19 @@ class MainActivity : AppCompatActivity() {
             if(destinyFragment!=null){
                 fragmentList.clear()
                 fragmentList.add(destinyFragment)
+                currentFragment = destinyFragment
                 supportFragmentManager.popBackStackImmediate(ExposeCategoryFragment.TAG,0)
+                binding.bnvMain.selectedItemId = R.id.optHome
             }
         }
+    }
+
+    private fun removeAllFragments(){
+        while (supportFragmentManager.backStackEntryCount >0){
+            supportFragmentManager.popBackStackImmediate()
+        }
+
+        fragmentList.clear()
+        currentFragment = null
     }
 }

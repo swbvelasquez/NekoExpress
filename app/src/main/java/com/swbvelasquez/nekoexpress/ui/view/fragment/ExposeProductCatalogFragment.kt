@@ -107,7 +107,7 @@ class ExposeProductCatalogFragment : Fragment() {
             binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
         }
         viewModel.getProductList().observe(viewLifecycleOwner){ productList ->
-            productAdapter.submitList(productList)
+            productAdapter.submitList(productList.toList())
         }
         viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
             if(exception.typeException != CustomTypeException.NONE) {

@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.provider.GeoreferenceProvider
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.databinding.FragmentPaymentDetailBinding
 import com.swbvelasquez.nekoexpress.domain.model.DeliveryAddressModel
@@ -37,6 +40,9 @@ class PaymentDetailFragment : Fragment() {
     private lateinit var binding: FragmentPaymentDetailBinding
     private var cartId: Long = 0
     private var cartTotal: Double = 0.0
+    private var keyDepartment:String = ""
+    private var keyProvince:String = ""
+    private var keyDistrict:String = ""
     private var onClickBackPressed: ((String)->Unit)? = null
     private var onClickConfirmOrder: (()->Unit)? = null
 
@@ -122,10 +128,66 @@ class PaymentDetailFragment : Fragment() {
 
     private fun setupUI(){
         binding.tvTotalOrder.text = String.format(getString(R.string.format_price),cartTotal)
+        setupDepartmentAutoCompleteTextView()
+    }
+
+    private fun setupDepartmentAutoCompleteTextView(){
+        val departmentList = GeoreferenceProvider.departmentMap.keys.toList()
+        val departmentAdapter = activity?.let { ArrayAdapter(it,R.layout.item_dropdown_general,GeoreferenceProvider.departmentMap.values.toList()) }
+
+        binding.acvDepartment.apply {
+            setAdapter(departmentAdapter)
+            keyListener = null
+            onItemClickListener =
+                OnItemClickListener { _, _, position, _ ->
+                    if(keyDepartment != departmentList[position]) {
+                        keyDepartment = departmentList[position]
+                        setupProvinceAutoCompleteTextView()
+                    }
+                }
+        }
+    }
+
+    private fun setupProvinceAutoCompleteTextView(){
+        val provinceMap = GeoreferenceProvider.provinceMap.filter { it.key.startsWith(keyDepartment) }
+        val provinceList = provinceMap.keys.toList()
+        val provinceAdapter = activity?.let { ArrayAdapter(it,R.layout.item_dropdown_general, provinceMap.values.toList()) }
+
+        binding.acvDepartment.apply {
+            setAdapter(provinceAdapter)
+            keyListener = null
+            onItemClickListener =
+                OnItemClickListener { _, _, position, _ ->
+                    if(keyProvince != provinceList[position]) {
+                        keyProvince = provinceList[position]
+                        setupDistrictAutoCompleteTextView()
+                    }
+                }
+        }
+    }
+
+    private fun setupDistrictAutoCompleteTextView(){
+        val districtMap = GeoreferenceProvider.districtMap.filter { it.key.startsWith(keyProvince) }
+        val districtList = districtMap.keys.toList()
+        val districtAdapter = activity?.let { ArrayAdapter(it,R.layout.item_dropdown_general, districtMap.values.toList()) }
+
+        binding.acvDepartment.apply {
+            setAdapter(districtAdapter)
+            keyListener = null
+            onItemClickListener =
+                OnItemClickListener { _, _, position, _ ->
+                    if(keyDistrict != districtList[position]) {
+                        keyDistrict = districtList[position]
+                    }
+                }
+        }
     }
 
     private fun confirmOrder(){
-        val deliveryAddress = DeliveryAddressModel("","","","","")
+        val deliveryAddress = DeliveryAddressModel(
+            keyDepartment,keyProvince,keyDistrict,
+            binding.etAddress.text.toString().trim(),
+            binding.etPhone.text.toString().trim())
 
         viewModel.confirmOrder(deliveryAddress)
     }

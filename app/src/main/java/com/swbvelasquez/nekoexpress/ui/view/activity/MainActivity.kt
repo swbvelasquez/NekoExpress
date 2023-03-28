@@ -19,14 +19,14 @@ import com.swbvelasquez.nekoexpress.ui.viewmodel.MainViewModelFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var onBackPressedCallback: OnBackPressedCallback
-    private lateinit var fragmentList:MutableList<Fragment>
+    private var fragmentList:MutableList<Fragment> = mutableListOf()
     private var currentFragment : Fragment? = null
+    private var baseTag : String = ""
     private var cartId : Long = 0
 
     private val viewModel : MainViewModel by viewModels {
         MainViewModelFactory(Constants.USER_ID)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,9 +111,8 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        fragmentList = mutableListOf()
         addFragment(fragment,ExposeCategoryFragment.TAG)
-        binding.bnvMain.selectedItemId = R.id.optHome
+        baseTag = ExposeCategoryFragment.TAG
     }
 
     private fun showProductsByCategory(category:String){
@@ -143,11 +142,11 @@ class MainActivity : AppCompatActivity() {
         if(currentFragment !is CheckoutCartFragment) {
             val fragment = CheckoutCartFragment.newInstance(cartId)
 
-            fragment.onBackPressed { destiny ->
-                removeFragment(destiny)
+            fragment.onBackPressed {
+                removeFragment(baseTag)
             }
             fragment.onPayOrder { totalOrder ->
-                removeFragment(ExposeCategoryFragment.TAG)
+                removeFragment(baseTag)
                 showPaymentDetails(cartId,totalOrder)
             }
 
@@ -163,8 +162,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fragment.onConfirmOrder {
-            removeAllFragments()
-            showCategories()
+            removeFragment(baseTag)
         }
 
         addFragment(fragment,PaymentDetailFragment.TAG)
@@ -172,14 +170,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun showUserProfile(){
         Functions.showSimpleMessage(this,"User Profile")
+        baseTag = UserProfileFragment::class.java.simpleName
     }
 
     private fun showFavoriteProducts(){
         Functions.showSimpleMessage(this,"Favorite Products")
+        baseTag = ExposeFavoriteProductFragment::class.java.simpleName
     }
 
     private fun showSalesHistory(){
         Functions.showSimpleMessage(this,"SalesHistory")
+        baseTag = ExposeSaleHistoryFragment::class.java.simpleName
     }
 
     private fun addFragment(fragment:Fragment,tag:String){
@@ -209,13 +210,16 @@ class MainActivity : AppCompatActivity() {
             currentFragment = fragmentList.last()
             supportFragmentManager.popBackStackImmediate(destinyTag,0)
         }else{
-            destinyFragment = supportFragmentManager.findFragmentByTag(ExposeCategoryFragment.TAG)
+            destinyFragment = supportFragmentManager.findFragmentByTag(baseTag)
 
             if(destinyFragment!=null){
                 fragmentList.clear()
                 fragmentList.add(destinyFragment)
                 currentFragment = destinyFragment
-                supportFragmentManager.popBackStackImmediate(ExposeCategoryFragment.TAG,0)
+                supportFragmentManager.popBackStackImmediate(baseTag,0)
+            }else{
+                removeAllFragments()
+                showCategories()
                 binding.bnvMain.selectedItemId = R.id.optHome
             }
         }

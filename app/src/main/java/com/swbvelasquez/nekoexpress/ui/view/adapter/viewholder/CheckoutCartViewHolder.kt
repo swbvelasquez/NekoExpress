@@ -30,20 +30,22 @@ class CheckoutCartViewHolder(view:View):RecyclerView.ViewHolder(view) {
 
             tvQuantity.text = product.quantity.toString()
 
-            imvAdd.setOnClickListener {
+            fabAdd.setOnClickListener {
                 product.apply {
                     quantity += 1
                     total = quantity * price
                 }
+                tvQuantity.text = product.quantity.toString()
                 onClickChangeQuantityListener(product)
             }
-            imvRemove.setOnClickListener {
+            fabRemove.setOnClickListener {
                 product.apply {
                     if(quantity>1) {
                         quantity -= 1
                         total = quantity * price
                     }
                 }
+                tvQuantity.text = product.quantity.toString()
                 onClickChangeQuantityListener(product)
             }
             imvDelete.setOnClickListener {

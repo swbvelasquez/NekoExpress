@@ -80,7 +80,7 @@ class ExposeCategoryFragment : Fragment() {
             binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
         }
         viewModel.getCategoryList().observe(viewLifecycleOwner){ categoryList ->
-            categoryAdapter.submitList(categoryList)
+            categoryAdapter.submitList(categoryList.toList())
         }
         viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
             if(exception.typeException != CustomTypeException.NONE) {

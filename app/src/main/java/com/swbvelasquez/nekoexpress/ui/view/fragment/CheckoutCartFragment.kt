@@ -15,6 +15,7 @@ import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.databinding.FragmentCheckoutCartBinding
 import com.swbvelasquez.nekoexpress.domain.model.CartModel
+import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.ui.view.adapter.CheckoutCartAdapter
 import com.swbvelasquez.nekoexpress.ui.viewmodel.CheckoutCartViewModel
 import com.swbvelasquez.nekoexpress.ui.viewmodel.CheckoutCartViewModelFactory
@@ -38,7 +39,7 @@ class CheckoutCartFragment : Fragment() {
     private lateinit var binding: FragmentCheckoutCartBinding
     private lateinit var cartAdapter: CheckoutCartAdapter
     private var cartId: Long = 0
-    private var onClickBackPressed: ((String)->Unit)? = null
+    private var onClickBackPressed: (()->Unit)? = null
     private var onClickPayOrder: ((Double)->Unit)? = null
 
     private val viewModel : CheckoutCartViewModel by viewModels {
@@ -55,7 +56,7 @@ class CheckoutCartFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     Log.d(TAG,"onBackPressed")
-                    onClickBackPressed?.invoke(ExposeCategoryFragment.TAG)
+                    onClickBackPressed?.invoke()
                     remove()
                 }
             }
@@ -76,8 +77,8 @@ class CheckoutCartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupButtons()
-        setupViewModel()
         setupRecyclerView()
+        setupViewModel()
     }
 
     private fun setupViewModel(){
@@ -90,11 +91,11 @@ class CheckoutCartFragment : Fragment() {
             }
         }
         viewModel.getResult().observe(viewLifecycleOwner){ result ->
-
             when(result){
                 is CartModel -> {
                     cart = result
-                    showTotalCart()
+                    cartAdapter.submitList(cart.productList.toList())
+                    calculateTotalCart()
                 }
                 is Boolean -> {
                     onClickPayOrder?.invoke(cart.total)
@@ -106,16 +107,10 @@ class CheckoutCartFragment : Fragment() {
     private fun setupRecyclerView(){
         cartAdapter = CheckoutCartAdapter(
             onClickChangeQuantityListener = {
-                val index = cart.productList.indexOf(it)
-                cart.productList[index] = it
-                cartAdapter.submitList(cart.productList.toList())
-                calculateTotalCart()
+                updateProduct(it)
             },
             onClickDeleteListener = {
-                val index = cart.productList.indexOf(it)
-                cart.productList.removeAt(index)
-                cartAdapter.submitList(cart.productList.toList())
-                calculateTotalCart()
+                deleteProduct(it)
             }
         )
 
@@ -139,10 +134,6 @@ class CheckoutCartFragment : Fragment() {
             total = subtotal + taxes
         }
 
-        showTotalCart()
-    }
-
-    private fun showTotalCart(){
         activity?.let{
             binding.tvSubtotal.text = String.format(getString(R.string.format_price),cart.subtotal)
             binding.tvTaxes.text = String.format(getString(R.string.format_price),cart.taxes)
@@ -150,7 +141,27 @@ class CheckoutCartFragment : Fragment() {
         }
     }
 
-    fun onBackPressed(onClickBackPressed:(String)->Unit){
+    private fun updateProduct(product:ProductCartModel){
+        val index = cart.productList.indexOf(product)
+
+        if(index >= 0) {
+            cart.productList[index] = product
+            cartAdapter.submitList(cart.productList.toList())
+            calculateTotalCart()
+        }
+    }
+
+    private fun deleteProduct(product:ProductCartModel){
+        val index = cart.productList.indexOf(product)
+
+        if(index >= 0) {
+            cart.productList.removeAt(index)
+            cartAdapter.submitList(cart.productList.toList())
+            calculateTotalCart()
+        }
+    }
+
+    fun onBackPressed(onClickBackPressed:()->Unit){
         this.onClickBackPressed=onClickBackPressed
     }
 

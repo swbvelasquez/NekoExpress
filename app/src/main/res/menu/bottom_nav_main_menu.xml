@@ -3,6 +3,7 @@
     <item
         android:id="@+id/optHome"
         android:title=""
+        android:checked="true"
         android:icon="@drawable/ic_home"/>
     <item
         android:id="@+id/optUserProfile"

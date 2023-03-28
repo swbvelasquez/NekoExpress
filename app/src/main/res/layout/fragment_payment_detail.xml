@@ -252,7 +252,7 @@
                         app:endIconMode="dropdown_menu">
 
                         <AutoCompleteTextView
-                            android:id="@+id/etDepartment"
+                            android:id="@+id/acvDepartment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/text_delivery_department_title"
@@ -281,7 +281,7 @@
                         app:endIconMode="dropdown_menu">
 
                         <AutoCompleteTextView
-                            android:id="@+id/etProvince"
+                            android:id="@+id/acvProvince"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/text_delivery_province_title"
@@ -310,7 +310,7 @@
                         app:endIconMode="dropdown_menu">
 
                         <AutoCompleteTextView
-                            android:id="@+id/etDistrict"
+                            android:id="@+id/acvDistrict"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/text_delivery_district_title"

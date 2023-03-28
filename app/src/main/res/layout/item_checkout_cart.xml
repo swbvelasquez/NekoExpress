@@ -99,27 +99,19 @@
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvColor"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvAdd"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_primary"
+            android:src="@drawable/ic_add"
+            app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="@dimen/view_margin_min"
             android:layout_marginBottom="@dimen/view_margin_min"
-            app:cardCornerRadius="@dimen/view_radius_16">
-
-            <ImageView
-                android:id="@+id/imvAdd"
-                android:layout_width="@dimen/image_view_icon_quantity_cart_size"
-                android:layout_height="@dimen/image_view_icon_quantity_cart_size"
-                android:layout_margin="@dimen/view_margin_4"
-                android:contentDescription="@string/image_view_icon_description"
-                android:src="@drawable/ic_add"
-                app:tint="@color/color_on_primary" />
-
-        </androidx.cardview.widget.CardView>
+            app:backgroundTint="@color/color_primary"
+            app:tint="@color/color_on_primary"
+            android:contentDescription="@string/image_view_icon_description" />
 
         <TextView
             android:id="@+id/tvQuantity"
@@ -129,32 +121,23 @@
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="@color/black"
             android:layout_marginEnd="@dimen/view_margin_default"
-            app:layout_constraintEnd_toStartOf="@id/cvAdd"
-            app:layout_constraintTop_toTopOf="@id/cvAdd"
-            app:layout_constraintBottom_toBottomOf="@id/cvAdd"
+            app:layout_constraintEnd_toStartOf="@id/fabAdd"
+            app:layout_constraintTop_toTopOf="@id/fabAdd"
+            app:layout_constraintBottom_toBottomOf="@id/fabAdd"
             />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvRemove"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/color_primary"
+            android:src="@drawable/ic_remove"
+            app:fabSize="mini"
             app:layout_constraintEnd_toStartOf="@id/tvQuantity"
-            app:layout_constraintTop_toTopOf="@id/cvAdd"
+            app:layout_constraintTop_toTopOf="@id/fabAdd"
             android:layout_marginEnd="@dimen/view_margin_default"
-            app:cardCornerRadius="@dimen/view_radius_16">
-
-            <ImageView
-                android:id="@+id/imvRemove"
-                android:layout_width="@dimen/image_view_icon_quantity_cart_size"
-                android:layout_height="@dimen/image_view_icon_quantity_cart_size"
-                android:layout_margin="@dimen/view_margin_4"
-                android:contentDescription="@string/image_view_icon_description"
-                android:src="@drawable/ic_remove"
-                app:tint="@color/color_on_primary" />
-
-        </androidx.cardview.widget.CardView>
-
+            app:backgroundTint="@color/color_primary"
+            app:tint="@color/color_on_primary"
+            android:contentDescription="@string/image_view_icon_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,7 +25,7 @@ private const val CART_TOTAL = "CART_TOTAL"
 
 class PaymentDetailFragment : Fragment() {
     companion object {
-        val TAG:String = CheckoutCartFragment::class.java.simpleName
+        val TAG:String = PaymentDetailFragment::class.java.simpleName
 
         @JvmStatic
         fun newInstance(cartId: Long,total: Double) =
@@ -153,7 +153,7 @@ class PaymentDetailFragment : Fragment() {
         val provinceList = provinceMap.keys.toList()
         val provinceAdapter = activity?.let { ArrayAdapter(it,R.layout.item_dropdown_general, provinceMap.values.toList()) }
 
-        binding.acvDepartment.apply {
+        binding.acvProvince.apply {
             setAdapter(provinceAdapter)
             keyListener = null
             onItemClickListener =
@@ -171,7 +171,7 @@ class PaymentDetailFragment : Fragment() {
         val districtList = districtMap.keys.toList()
         val districtAdapter = activity?.let { ArrayAdapter(it,R.layout.item_dropdown_general, districtMap.values.toList()) }
 
-        binding.acvDepartment.apply {
+        binding.acvDistrict.apply {
             setAdapter(districtAdapter)
             keyListener = null
             onItemClickListener =

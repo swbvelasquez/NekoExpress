@@ -8,8 +8,7 @@ class ProceedToPayCartUseCase {
 
     suspend operator fun invoke(cart:CartModel){
         if(cart.productList.isNotEmpty()){
-            repository.deleteAllProductsCartToDb(cart.productList)
-            repository.insertAllProductsCartToDb(cart.productList)
+            repository.updateProductCartListToDb(cart.productList)
         }
         repository.updateCartToDb(cart)
     }

@@ -7,7 +7,10 @@ import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.model.DeliveryAddressModel
 import com.swbvelasquez.nekoexpress.domain.usecase.ConfirmOrderUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetCartByIdUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PaymentDetailViewModel(private val cartId:Long):ViewModel() {
     private val getCartByIdUseCase = GetCartByIdUseCase()
@@ -31,6 +34,10 @@ class PaymentDetailViewModel(private val cartId:Long):ViewModel() {
 
             try{
                 val cartResult = getCartByIdUseCase(cartId)
+
+                withContext(Dispatchers.IO){
+                    delay(250)
+                }
 
                 cartResult?.let {
                     cart.value = cartResult

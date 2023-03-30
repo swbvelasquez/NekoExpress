@@ -101,6 +101,20 @@
     <dimen name="view_elevation_14">28dp</dimen>
     <dimen name="view_elevation_15">30dp</dimen>
     <dimen name="view_elevation_16">32dp</dimen>
+    <dimen name="view_elevation_17">34dp</dimen>
+    <dimen name="view_elevation_18">36dp</dimen>
+    <dimen name="view_elevation_19">38dp</dimen>
+    <dimen name="view_elevation_20">40dp</dimen>
+    <dimen name="view_elevation_21">42dp</dimen>
+    <dimen name="view_elevation_22">44dp</dimen>
+    <dimen name="view_elevation_23">46dp</dimen>
+    <dimen name="view_elevation_24">48dp</dimen>
+    <dimen name="view_elevation_25">50dp</dimen>
+    <dimen name="view_elevation_26">52dp</dimen>
+    <dimen name="view_elevation_27">54dp</dimen>
+    <dimen name="view_elevation_28">56dp</dimen>
+    <dimen name="view_elevation_29">58dp</dimen>
+    <dimen name="view_elevation_30">60dp</dimen>
 
     <dimen name="view_size_1">2dp</dimen>
     <dimen name="view_size_2">4dp</dimen>

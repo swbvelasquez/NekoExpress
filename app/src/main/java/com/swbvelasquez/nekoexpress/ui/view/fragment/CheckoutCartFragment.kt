@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Constants
@@ -97,8 +98,13 @@ class CheckoutCartFragment : Fragment() {
                     cartAdapter.submitList(cart.productList.toList())
                     calculateTotalCart()
                 }
+                is ProductCartModel -> {
+                    deleteProduct(result)
+                }
                 is Boolean -> {
-                    onClickPayOrder?.invoke(cart.total)
+                    if(result) {
+                        onClickPayOrder?.invoke(cart.total)
+                    }
                 }
             }
         }
@@ -106,11 +112,23 @@ class CheckoutCartFragment : Fragment() {
 
     private fun setupRecyclerView(){
         cartAdapter = CheckoutCartAdapter(
-            onClickChangeQuantityListener = {
-                updateProduct(it)
+            onClickChangeQuantityListener = { product ->
+                updateProduct(product)
             },
-            onClickDeleteListener = {
-                deleteProduct(it)
+            onClickDeleteListener = { product ->
+                activity?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(resources.getString(R.string.dialog_delete_item_title))
+                        .setMessage(resources.getString(R.string.dialog_delete_item_message))
+                        .setPositiveButton(resources.getString(R.string.dialog_delete_item_positive_button)) { _, _ ->
+                            viewModel.deleteProductFromCart(product)
+                        }
+                        .setNegativeButton(resources.getString(R.string.dialog_delete_item_negative_button)) { _, _ ->
+                        }
+                        .setCancelable(true)
+                        .show()
+                }
+
             }
         )
 

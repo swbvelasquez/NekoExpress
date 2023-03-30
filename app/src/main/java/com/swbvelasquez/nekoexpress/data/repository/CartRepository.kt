@@ -65,7 +65,7 @@ class CartRepository {
         if(!result) throw CustomException(CustomTypeException.DB_INSERT_ONE)
     }
 
-    suspend fun insertAllProductsCartToDb(productList:List<ProductCartModel>){
+    suspend fun insertProductCartListToDb(productList:List<ProductCartModel>){
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
         val result = withContext(Dispatchers.IO){
@@ -97,6 +97,16 @@ class CartRepository {
         if(!result) throw CustomException(CustomTypeException.DB_UPDATE_ONE)
     }
 
+    suspend fun updateProductCartListToDb(productList:List<ProductCartModel>){
+        val productCartEntityList = productList.map { it.toProductCartEntity() }
+
+        val result = withContext(Dispatchers.IO){
+            cartDao.updateProductCartList(productCartEntityList) == productCartEntityList.size
+        }
+
+        if(!result) throw CustomException(CustomTypeException.DB_UPDATE_LIST)
+    }
+
     suspend fun deleteProductCartToDb(product:ProductCartModel){
         val productEntity = product.toProductCartEntity()
 
@@ -107,11 +117,11 @@ class CartRepository {
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_ONE)
     }
 
-    suspend fun deleteAllProductsCartToDb(productList:List<ProductCartModel>){
+    suspend fun deleteProductCartListToDb(productList:List<ProductCartModel>){
         val productCartEntityList = productList.map { it.toProductCartEntity() }
 
         val result = withContext(Dispatchers.IO){
-            cartDao.deleteProductCartList(productCartEntityList) != productCartEntityList.size
+            cartDao.deleteProductCartList(productCartEntityList) == productCartEntityList.size
         }
 
         if(!result) throw CustomException(CustomTypeException.DB_DELETE_LIST)

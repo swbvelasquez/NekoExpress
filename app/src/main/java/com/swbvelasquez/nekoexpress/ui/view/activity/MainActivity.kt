@@ -39,6 +39,12 @@ class MainActivity : AppCompatActivity() {
         showCategories()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getLastAvailableCart()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         onBackPressedCallback.remove()
@@ -97,8 +103,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.totalQuantity.observe(this){
             binding.tvTotalQuantityProduct.text = it.toString()
         }
-
-        viewModel.getLastAvailableCart()
     }
 
     private fun showCategories(){
@@ -139,14 +143,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCart(){
-        if(currentFragment !is CheckoutCartFragment) {
+        if(currentFragment !is CheckoutCartFragment && currentFragment !is PaymentDetailFragment) {
             val fragment = CheckoutCartFragment.newInstance(cartId)
 
             fragment.onBackPressed {
                 removeFragment(baseTag)
             }
             fragment.onPayOrder { totalOrder ->
-                removeFragment(baseTag)
                 showPaymentDetails(cartId,totalOrder)
             }
 
@@ -163,6 +166,7 @@ class MainActivity : AppCompatActivity() {
 
         fragment.onConfirmOrder {
             removeFragment(baseTag)
+            viewModel.getLastAvailableCart()
         }
 
         addFragment(fragment,PaymentDetailFragment.TAG)
@@ -204,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         if(destinyFragment!=null){
             val index = fragmentList.indexOf(destinyFragment)
 
-            for(i in fragmentList.size - 1 downTo index+1){
+            for(i in fragmentList.size - 1 downTo index + 1){
                 fragmentList.removeAt(i)
             }
             currentFragment = fragmentList.last()

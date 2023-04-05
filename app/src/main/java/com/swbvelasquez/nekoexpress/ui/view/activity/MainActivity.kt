@@ -133,13 +133,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showProductDetails(productId:Long,cartId:Long,category:String){
-        val fragment = DetailProductCatalogFragment.newInstance(productId,cartId,category)
+        val fragment = ProductCatalogDetailFragment.newInstance(productId,cartId,category)
 
         fragment.onBackPressed { destiny->
             removeFragment(destiny)
         }
 
-        addFragment(fragment,DetailProductCatalogFragment.TAG)
+        addFragment(fragment,ProductCatalogDetailFragment.TAG)
     }
 
     private fun showCart(){

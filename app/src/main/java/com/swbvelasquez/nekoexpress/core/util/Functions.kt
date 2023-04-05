@@ -40,6 +40,13 @@ object Functions {
         return NekoApplication.gson.fromJson(this,type)
     }
 
+    fun isValidRegexFormat(message:String,format:String):Boolean{
+        val regex = Regex(format)
+        val matchResult = regex.matchEntire(message)
+
+        return matchResult != null
+    }
+
     fun getCompleteCategoryDto(index:Long,category: String):CategoryDto = CategoryDto(index+1,category, getCategoryImage(category))
 
     private fun getCategoryImage(category: String):String{

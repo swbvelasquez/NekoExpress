@@ -17,24 +17,24 @@ import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
-import com.swbvelasquez.nekoexpress.databinding.FragmentDetailProductCatalogBinding
+import com.swbvelasquez.nekoexpress.databinding.FragmentProductCatalogDetailBinding
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.model.toProductCartModel
-import com.swbvelasquez.nekoexpress.ui.viewmodel.DetailProductCatalogViewModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.ProductCatalogDetailViewModel
 
 
 private const val PRODUCT_ID = "PRODUCT_ID"
 private const val PRODUCT_CATEGORY = "PRODUCT_CATEGORY"
 private const val CART_ID = "CART_ID"
 
-class DetailProductCatalogFragment : Fragment() {
+class ProductCatalogDetailFragment : Fragment() {
     companion object {
-        val TAG:String = DetailProductCatalogFragment::class.java.simpleName
+        val TAG:String = ProductCatalogDetailFragment::class.java.simpleName
 
         @JvmStatic
         fun newInstance(productId: Long,cartId: Long,category:String) =
-            DetailProductCatalogFragment().apply {
+            ProductCatalogDetailFragment().apply {
                 arguments = Bundle().apply {
                     putLong(PRODUCT_ID, productId)
                     putString(PRODUCT_CATEGORY, category)
@@ -43,12 +43,12 @@ class DetailProductCatalogFragment : Fragment() {
             }
     }
 
-    private lateinit var binding: FragmentDetailProductCatalogBinding
+    private lateinit var binding: FragmentProductCatalogDetailBinding
     private lateinit var productCatalog:ProductCatalogModel
     private var productId:Long=0
     private var cartId:Long=0
     private var category:String= ""
-    private val viewModel: DetailProductCatalogViewModel by viewModels()
+    private val viewModel: ProductCatalogDetailViewModel by viewModels()
     private var onClickBackPressed: ((String)->Unit)? = null
     private var selectedColor:String = ""
     private var selectedSize:String = ""
@@ -79,7 +79,7 @@ class DetailProductCatalogFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentDetailProductCatalogBinding.inflate(inflater,container,false)
+        binding = FragmentProductCatalogDetailBinding.inflate(inflater,container,false)
         return binding.root
     }
 

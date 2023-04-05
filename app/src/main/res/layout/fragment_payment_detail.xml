@@ -122,6 +122,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/text_card_number_title"
                             android:inputType="number"
+                            android:maxLength="30"
                             tools:text="455788053421467"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -151,7 +152,7 @@
                             android:id="@+id/etExpireDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/text_expire_date_title"
+                            android:hint="@string/text_card_expire_date_title"
                             android:inputType="text"
                             tools:text="24/07"/>
 
@@ -182,8 +183,9 @@
                             android:id="@+id/etCVV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/text_cvv_title"
+                            android:hint="@string/text_card_cvv_title"
                             android:inputType="number"
+                            android:maxLength="4"
                             tools:text="532"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -214,6 +216,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/text_card_holder_title"
                             android:inputType="text"
+                            android:maxLength="150"
                             tools:text="Juan Valdez Olivares"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -344,6 +347,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/text_delivery_address_title"
                             android:inputType="text"
+                            android:maxLength="200"
                             tools:text="Jr Siempre Viva 143, Alto Mayo"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -374,6 +378,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/text_delivery_phone_title"
                             android:inputType="text"
+                            android:maxLength="50"
                             tools:text="958785478"/>
 
                     </com.google.android.material.textfield.TextInputLayout>

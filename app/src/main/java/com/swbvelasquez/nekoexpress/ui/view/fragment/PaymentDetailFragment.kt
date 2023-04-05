@@ -11,9 +11,11 @@ import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.core.provider.GeoreferenceProvider
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.databinding.FragmentPaymentDetailBinding
 import com.swbvelasquez.nekoexpress.domain.model.DeliveryAddressModel
@@ -184,12 +186,62 @@ class PaymentDetailFragment : Fragment() {
     }
 
     private fun confirmOrder(){
-        val deliveryAddress = DeliveryAddressModel(
-            keyDepartment,keyProvince,keyDistrict,
-            binding.etAddress.text.toString().trim(),
-            binding.etPhone.text.toString().trim())
+        if(validateFields()) {
+            val deliveryAddress = DeliveryAddressModel(
+                keyDepartment, keyProvince, keyDistrict,
+                binding.etAddress.text.toString().trim(),
+                binding.etPhone.text.toString().trim()
+            )
 
-        viewModel.confirmOrder(deliveryAddress)
+            viewModel.confirmOrder(deliveryAddress)
+        }
+    }
+
+    private fun validateEmptyFields(vararg textFields: TextInputLayout):Boolean{
+        var isValid = true
+
+        for (textField in textFields){
+            if (textField.editText?.text.toString().trim().isEmpty()){
+                textField.error = resources.getString(R.string.text_empty_field_validation)
+                isValid = false
+            } else {
+                textField.error = null
+            }
+        }
+
+        return isValid
+    }
+
+    private fun validateRegexMatchFields(vararg textFields: TextInputLayout,regex:String):Boolean{
+        var isValid = true
+
+        for (textField in textFields){
+            if (Functions.isValidRegexFormat(textField.editText?.text.toString().trim(),regex)){
+                textField.error = resources.getString(R.string.text_match_regex_validation)
+                textField.helperText = regex
+                isValid = false
+            } else {
+                textField.error = null
+                textField.helperText = null
+            }
+        }
+
+        return isValid
+    }
+
+    private fun validateFields():Boolean{
+        val isValid =
+            with(binding) {
+                validateEmptyFields(tilCardNumber,tilExpireDate,tilCVV,tilCardHolder,tilDepartment,tilProvince,tilDistrict,tilAddress,tilPhone)
+                        && validateRegexMatchFields(tilExpireDate, regex = Constants.REGEX_CARD_EXPIRE_DATE)
+                        && validateRegexMatchFields(tilPhone, regex = Constants.REGEX_PHONE)
+            }
+
+        if(!isValid) {
+            activity?.let { Functions.showSimpleMessage(it,resources.getString(R.string.text_general_message_error)) }
+        }
+
+        return isValid
     }
 
     fun onBackPressed(onClickBackPressed:(String)->Unit){

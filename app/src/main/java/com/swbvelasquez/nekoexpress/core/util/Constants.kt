@@ -11,4 +11,7 @@ object Constants {
     const val USER_ID = 1L
 
     const val CLOTH_CATEGORY = "clothing"
+
+    const val REGEX_CARD_EXPIRE_DATE = "^(0[1-9]|1[0-2])(/|-)[0-9]{2}$" // Regex MM/DD o MM-YY
+    const val REGEX_PHONE = """^\+\d{1,4}-\d{1,20}$"""
 }

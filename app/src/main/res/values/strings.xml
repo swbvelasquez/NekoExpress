@@ -20,8 +20,8 @@
 
     <string name="text_card_section_title">Card Information</string>
     <string name="text_card_number_title">Card Number</string>
-    <string name="text_expire_date_title">Expire Date</string>
-    <string name="text_cvv_title">CVV</string>
+    <string name="text_card_expire_date_title">Expire Date</string>
+    <string name="text_card_cvv_title">CVV</string>
     <string name="text_card_holder_title">Card Holder</string>
     <string name="text_delivery_section_title">Delivery Information</string>
     <string name="text_delivery_department_title">Department</string>
@@ -29,6 +29,10 @@
     <string name="text_delivery_district_title">District</string>
     <string name="text_delivery_address_title">Address</string>
     <string name="text_delivery_phone_title">Phone Number</string>
+
+    <string name="text_empty_field_validation">This field can\'t be empty</string>
+    <string name="text_match_regex_validation">This field doesn\'t match to the format required</string>
+    <string name="text_general_message_error">There are fields with errors</string>
 
     <string name="button_add_cart_description">Add To Cart</string>
     <string name="button_checkout_cart_description">Checkout</string>

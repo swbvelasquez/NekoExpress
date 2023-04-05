@@ -9,14 +9,13 @@ import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
 import com.swbvelasquez.nekoexpress.domain.usecase.AddProductToCartUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.GetCartByIdUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetProductByIdUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DetailProductCatalogViewModel:ViewModel() {
+class ProductCatalogDetailViewModel:ViewModel() {
     private val addProductToCartUseCase = AddProductToCartUseCase()
     private val getProductByIdUseCase = GetProductByIdUseCase()
 

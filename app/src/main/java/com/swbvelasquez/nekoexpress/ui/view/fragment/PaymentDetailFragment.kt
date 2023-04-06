@@ -202,7 +202,7 @@ class PaymentDetailFragment : Fragment() {
 
         for (textField in textFields){
             if (textField.editText?.text.toString().trim().isEmpty()){
-                textField.error = resources.getString(R.string.text_empty_field_validation)
+                textField.error = getString(R.string.text_empty_field_validation)
                 isValid = false
             } else {
                 textField.error = null
@@ -216,13 +216,11 @@ class PaymentDetailFragment : Fragment() {
         var isValid = true
 
         for (textField in textFields){
-            if (Functions.isValidRegexFormat(textField.editText?.text.toString().trim(),regex)){
-                textField.error = resources.getString(R.string.text_match_regex_validation)
-                textField.helperText = regex
+            if (!Functions.isValidRegexFormat(textField.editText?.text.toString().trim(),regex)){
+                textField.error = String.format(getString(R.string.text_match_regex_validation),textField.editText?.tag)
                 isValid = false
             } else {
                 textField.error = null
-                textField.helperText = null
             }
         }
 

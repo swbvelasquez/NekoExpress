@@ -31,7 +31,9 @@
     <string name="text_delivery_phone_title">Phone Number</string>
 
     <string name="text_empty_field_validation">This field can\'t be empty</string>
-    <string name="text_match_regex_validation">This field doesn\'t match to the format required</string>
+    <string name="text_match_regex_validation">This field doesn\'t match to the format %s required</string>
+    <string name="text_card_expire_date_format">mm/yy</string>
+    <string name="text_phone_format">+51-999888777</string>
     <string name="text_general_message_error">There are fields with errors</string>
 
     <string name="button_add_cart_description">Add To Cart</string>

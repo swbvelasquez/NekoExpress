@@ -4,11 +4,16 @@
     <string name="image_view_icon_description">Image Icon</string>
 
     <string name="format_price">S/ %.2f</string>
-    <string name="format_product_price">S/ %.2f</string>
-    <string name="format_product_score">%.1f</string>
-    <string name="format_product_size">Size: %s</string>
-    <string name="format_product_color">Color: %s</string>
-    <string name="format_product_review">(%d reviews)</string>
+    <string name="format_order_number">%09d</string>
+    <string name="format_order_delivery_address_summary">%s, %s, %s, %s</string>
+    <string name="format_item_product_price">S/ %.2f</string>
+    <string name="format_item_product_score">%.1f</string>
+    <string name="format_item_product_size">Size: %s</string>
+    <string name="format_item_product_color">Color: %s</string>
+    <string name="format_item_product_review">(%d reviews)</string>
+    <string name="format_item_order_number">Order No: %s</string>
+    <string name="format_item_order_total">Total: %.2f</string>
+    <string name="format_item_order_purchase_date">Date: %s</string>
 
     <string name="text_description_title">Description</string>
     <string name="text_size_title">Size</string>
@@ -17,6 +22,10 @@
     <string name="text_taxes_title">Taxes</string>
     <string name="text_total_title">Total</string>
     <string name="text_total_order_title">Total Order</string>
+    <string name="text_order_number_title">Order No.</string>
+    <string name="text_order_purchase_date_title">Purchase Date</string>
+    <string name="text_order_delivery_address_summary_title">Delivery Address</string>
+    <string name="text_order_summary_title">Order Summary</string>
 
     <string name="text_card_section_title">Card Information</string>
     <string name="text_card_number_title">Card Number</string>

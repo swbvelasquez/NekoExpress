@@ -16,17 +16,17 @@ class CheckoutCartViewHolder(view:View):RecyclerView.ViewHolder(view) {
              onClickDeleteListener:(ProductCartModel)->Unit){
         with(binding){
             tvTitle.text = product.title
-            tvPrice.text = String.format(itemView.context.getString(R.string.format_product_price),product.price)
+            tvPrice.text = String.format(itemView.context.getString(R.string.format_item_product_price),product.price)
 
             if(product.size.isEmpty())
                 tvSize.visibility = View.GONE
             else
-                tvSize.text = String.format(itemView.context.getString(R.string.format_product_size),product.size)
+                tvSize.text = String.format(itemView.context.getString(R.string.format_item_product_size),product.size)
 
             if(product.color.isEmpty())
                 tvColor.visibility = View.GONE
             else
-                tvColor.text = String.format(itemView.context.getString(R.string.format_product_color),product.color)
+                tvColor.text = String.format(itemView.context.getString(R.string.format_item_product_color),product.color)
 
             tvQuantity.text = product.quantity.toString()
 

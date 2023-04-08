@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/card_view_row_margin_min"
+    android:layout_marginHorizontal="@dimen/view_margin_min"
+    android:elevation="@dimen/view_elevation_8"
+    app:cardCornerRadius="@dimen/card_view_radius_default">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imvThumbnail"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/image_view_thumbnail_sale_history_height"
+            android:layout_marginStart="@dimen/view_margin_default"
+            android:layout_marginVertical="@dimen/view_margin_default"
+            android:contentDescription="@string/image_view_thumbnail_description"
+            android:src="@drawable/credit_card_thumbnail"
+            android:scaleType="centerInside"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_order_summary_title"
+            android:layout_marginStart="@dimen/view_margin_min"
+            android:layout_marginEnd="@dimen/view_margin_default"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintStart_toEndOf="@id/imvThumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imvThumbnail" />
+
+        <TextView
+            android:id="@+id/tvOrderNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Order No: 000000001"
+            android:layout_marginTop="@dimen/view_margin_min"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
+
+        <TextView
+            android:id="@+id/tvPurchaseDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Date: 10/02/23"
+            android:layout_marginTop="@dimen/view_margin_min"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="@color/color_secondary_variant"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderNumber"/>
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="Total: S/ 37.50"
+            android:layout_marginTop="@dimen/view_margin_min"
+            android:layout_marginEnd="@dimen/view_margin_default"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textStyle="bold"
+            android:textColor="@color/color_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderNumber"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -121,9 +121,9 @@ class ProductCatalogDetailFragment : Fragment() {
     private fun setupUiProduct(product:ProductCatalogModel){
         with(binding){
             tvTitle.text = product.title
-            tvPrice.text = String.format(getString(R.string.format_product_price),product.price)
-            tvScore.text = String.format(getString(R.string.format_product_score),product.rating.rate)
-            tvReviewAmount.text = String.format(getString(R.string.format_product_review),product.rating.count)
+            tvPrice.text = String.format(getString(R.string.format_item_product_price),product.price)
+            tvScore.text = String.format(getString(R.string.format_item_product_score),product.rating.rate)
+            tvReviewAmount.text = String.format(getString(R.string.format_item_product_review),product.rating.count)
             tvDescription.text = product.description
 
             activity?.let {

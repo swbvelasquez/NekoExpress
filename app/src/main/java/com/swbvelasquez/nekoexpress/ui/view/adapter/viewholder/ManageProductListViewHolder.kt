@@ -17,7 +17,7 @@ class ManageProductListViewHolder(view:View):ViewHolder(view) {
         with(binding){
             tvTitle.text = product.title
             tvCategory.text = product.category
-            tvPrice.text = String.format(itemView.context.getString(R.string.format_product_price),product.price)
+            tvPrice.text = String.format(itemView.context.getString(R.string.format_item_product_price),product.price)
             tvScore.text = product.rating.count.toString()
             rtbScore.rating = product.rating.rate.toFloat()
 

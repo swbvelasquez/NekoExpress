@@ -43,6 +43,7 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/view_margin_min"
+                android:layout_marginEnd="@dimen/view_margin_min"
                 android:layout_marginStart="@dimen/view_margin_default"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tvPrice"

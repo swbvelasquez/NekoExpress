@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_secondary"
+    tools:context=".ui.view.fragment.OrderDetailFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProduct"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/view_margin_default"
+        android:layout_marginBottom="@dimen/view_margin_default"
+        tools:listitem="@layout/item_order_detail"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/tvOrderNumberTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvOrderNumberTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_order_number_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvPurchaseDateTitle"/>
+
+    <TextView
+        android:id="@+id/tvOrderNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="000000001"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvPurchaseDateTitle"/>
+
+    <TextView
+        android:id="@+id/tvPurchaseDateTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_order_purchase_date_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSubtotalTitle"/>
+
+    <TextView
+        android:id="@+id/tvPurchaseDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="10/02/2023"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvSubtotalTitle"/>
+
+    <TextView
+        android:id="@+id/tvSubtotalTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_subtotal_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTaxesTitle"/>
+
+    <TextView
+        android:id="@+id/tvSubtotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="$ 435.95"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTaxesTitle"/>
+
+    <TextView
+        android:id="@+id/tvTaxesTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_taxes_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTotalTitle"/>
+
+    <TextView
+        android:id="@+id/tvTaxes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="$ 65.50"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvTotalTitle"/>
+
+    <TextView
+        android:id="@+id/tvTotalTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_total_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvAddressTitle"/>
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="$ 501.45"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvAddressTitle"/>
+
+    <TextView
+        android:id="@+id/tvAddressTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_order_delivery_address_summary_title"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:layout_marginBottom="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvAddress"/>
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Pasaje Independencia 143, Lima, Lima, San Juan de Miraflores"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginBottom="@dimen/view_margin_max"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/lyProgressBar"
+        layout="@layout/layout_progress_bar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ class ExposeProductCatalogViewHolder(view:View):ViewHolder(view) {
     fun bind(product:ProductCatalogModel,onClickListener:(ProductCatalogModel)->Unit, onClickFavoriteListener:(ProductCatalogModel)->Unit){
         with(binding){
             tvTitle.text = product.title
-            tvPrice.text = String.format(itemView.context.getString(R.string.format_product_price),product.price)
+            tvPrice.text = String.format(itemView.context.getString(R.string.format_item_product_price),product.price)
 
             var imageFavorite = if(product.isFavorite) R.drawable.ic_favorite_checked else R.drawable.ic_favorite_unchecked
             imvFavorite.setImageResource(imageFavorite)

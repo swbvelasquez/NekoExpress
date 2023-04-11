@@ -17,18 +17,18 @@ import com.swbvelasquez.nekoexpress.data.database.model.CartWithProductDto
 interface CartDao {
     @Transaction
     @Query("select * from CartTable where cartId = :cartId")
-    suspend fun getCartWithProducts(cartId:Long) : CartWithProductDto?
+    suspend fun getCartWithProductsById(cartId:Long) : CartWithProductDto?
 
     @Transaction
     @Query("select * from CartTable where cartId = (select max(cartId) from CartTable) and status = ${CartStatus.PENDING} and userId = :userId")
     suspend fun getLastCartWithProducts(userId:Long) : CartWithProductDto?
 
     @Query("select * from ProductCartTable where cartId = :cartId and productId = :productId")
-    suspend fun getProductCart(cartId:Long,productId:Long) : ProductCartCrossRefEntity?
+    suspend fun getProductCartById(cartId:Long, productId:Long) : ProductCartCrossRefEntity?
 
     @Query("select count(productId) from ProductCartTable where cartId = " +
             "(select max(cartId) from CartTable where userId= :userId and status = ${CartStatus.PENDING} and date + ${Constants.MAX_TIME_AVAILABLE_CART} >= (StrfTime('%s', 'now') * 1000))")
-    fun getTotalQuantityProductsByIdCart(userId: Long) : LiveData<Int>
+    fun getTotalQuantityProductsByUserId(userId: Long) : LiveData<Int>
 
     @Query("select count(1) from ProductCartTable where cartId = :cartId and productId = :productId")
     suspend fun existProductCart(cartId:Long,productId:Long) : Int

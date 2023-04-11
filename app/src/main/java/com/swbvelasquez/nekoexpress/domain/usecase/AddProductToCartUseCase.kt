@@ -7,7 +7,7 @@ class AddProductToCartUseCase {
     private val repository = CartRepository()
 
     suspend operator fun invoke(newProduct: ProductCartModel) {
-        val cart = repository.getCartWithProductsFromDb(newProduct.cartId)
+        val cart = repository.getCartWithProductsByIdFromDb(newProduct.cartId)
 
         cart?.let {
             val index = cart.productList.indexOfFirst { p -> p.productId == newProduct.productId && p.size == newProduct.size && p.color == newProduct.color }

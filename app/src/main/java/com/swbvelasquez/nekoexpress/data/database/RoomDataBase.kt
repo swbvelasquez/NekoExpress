@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.swbvelasquez.nekoexpress.data.database.dao.CartDao
 import com.swbvelasquez.nekoexpress.data.database.dao.ProductDao
 import com.swbvelasquez.nekoexpress.data.database.dao.CategoryDao
+import com.swbvelasquez.nekoexpress.data.database.dao.InvoiceDao
 import com.swbvelasquez.nekoexpress.data.database.entity.*
 
 @Database(
@@ -13,11 +14,14 @@ import com.swbvelasquez.nekoexpress.data.database.entity.*
         RatingEntity::class,
         CategoryEntity::class,
         CartEntity::class,
-        ProductCartCrossRefEntity::class],
-    version = 4
+        ProductCartCrossRefEntity::class,
+        InvoiceEntity::class,
+        InvoiceDetailEntity::class],
+    version = 5
 )
 abstract class RoomDataBase:RoomDatabase() {
     abstract fun getProductDao() : ProductDao
     abstract fun getCategoryDao() : CategoryDao
     abstract fun getCartDao() : CartDao
+    abstract fun getInvoiceDao() : InvoiceDao
 }

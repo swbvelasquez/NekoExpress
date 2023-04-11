@@ -7,6 +7,6 @@ class GetCartByIdUseCase {
     private val repository = CartRepository()
 
     suspend operator fun invoke(cartId:Long):CartModel?{
-        return repository.getCartWithProductsFromDb(cartId)
+        return repository.getCartWithProductsByIdFromDb(cartId)
     }
 }

@@ -15,8 +15,8 @@ import kotlinx.coroutines.withContext
 class CartRepository {
     private val cartDao = NekoApplication.database.getCartDao()
 
-    suspend fun getCartWithProductsFromDb(cartId:Long):CartModel? {
-        val cartDto = cartDao.getCartWithProducts(cartId)
+    suspend fun getCartWithProductsByIdFromDb(cartId:Long):CartModel? {
+        val cartDto = cartDao.getCartWithProductsById(cartId)
         var cartModel : CartModel? = null
 
         if(cartDto!=null){
@@ -37,8 +37,8 @@ class CartRepository {
         return cartModel
     }
 
-    fun getTotalQuantityProductsByIdCart(userId: Long) : LiveData<Int>{
-        return cartDao.getTotalQuantityProductsByIdCart(userId)
+    fun getTotalQuantityProductsByUserId(userId: Long) : LiveData<Int>{
+        return cartDao.getTotalQuantityProductsByUserId(userId)
     }
 
     suspend fun existProductCartFromDb(cartId:Long,productId:Long):Boolean {

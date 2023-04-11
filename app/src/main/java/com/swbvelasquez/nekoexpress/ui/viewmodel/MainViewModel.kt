@@ -3,14 +3,13 @@ package com.swbvelasquez.nekoexpress.ui.viewmodel
 import androidx.lifecycle.*
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
-import com.swbvelasquez.nekoexpress.domain.model.CartModel
 import com.swbvelasquez.nekoexpress.domain.usecase.GetLastAvailableCartUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.GetTotalQuantityProductsByIdCart
+import com.swbvelasquez.nekoexpress.domain.usecase.GetTotalQuantityProductsByUserId
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val userId:Long):ViewModel() {
     private val getLastAvailableCartUseCase = GetLastAvailableCartUseCase()
-    private val getTotalQuantityProductsByIdCart = GetTotalQuantityProductsByIdCart()
+    private val getTotalQuantityProductsByUserId = GetTotalQuantityProductsByUserId()
     private val loading = MutableLiveData<Boolean>()
     private val customException : MutableLiveData<CustomException> by lazy {
         MutableLiveData<CustomException>()
@@ -19,7 +18,7 @@ class MainViewModel(private val userId:Long):ViewModel() {
         MutableLiveData<Long>()
     }
     val totalQuantity = liveData {
-        emitSource(getTotalQuantityProductsByIdCart(userId))
+        emitSource(getTotalQuantityProductsByUserId(userId))
     }
 
     fun isLoading(): LiveData<Boolean> = loading

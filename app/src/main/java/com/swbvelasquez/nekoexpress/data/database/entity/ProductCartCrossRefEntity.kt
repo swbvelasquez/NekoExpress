@@ -4,11 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.RESTRICT
+import androidx.room.Index
 import com.swbvelasquez.nekoexpress.domain.model.ProductCartModel
 
 @Entity(
     tableName = "ProductCartTable",
     primaryKeys = ["cartId","productId","productCartId"],
+    indices = [Index(name = "productCart_product_fk_idx",value = ["productId"])], //Permite agilizar la lectura
     foreignKeys = [
         ForeignKey(
             entity = CartEntity::class,

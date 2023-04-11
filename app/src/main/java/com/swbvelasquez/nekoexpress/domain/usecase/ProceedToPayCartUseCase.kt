@@ -9,7 +9,7 @@ class ProceedToPayCartUseCase {
     suspend operator fun invoke(cart:CartModel){
         if(cart.productList.isNotEmpty()){
             repository.updateProductCartListToDb(cart.productList)
+            repository.updateCartToDb(cart)
         }
-        repository.updateCartToDb(cart)
     }
 }

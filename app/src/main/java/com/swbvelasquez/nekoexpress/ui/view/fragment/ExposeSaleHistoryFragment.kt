@@ -1,60 +1,109 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.swbvelasquez.nekoexpress.R
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentExposeSaleHistoryBinding
+import com.swbvelasquez.nekoexpress.domain.model.InvoiceModel
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeProductCatalogAdapter
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeSaleHistoryAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.ExposeSaleHistoryViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val USER_ID_PARAM = "USER_ID_PARAM"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExposeSaleHistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExposeSaleHistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        val TAG:String = ExposeSaleHistoryFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(userId: Long) =
+            ExposeSaleHistoryFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(USER_ID_PARAM, userId)
+                }
+            }
+    }
+
+    private lateinit var binding : FragmentExposeSaleHistoryBinding
+    private lateinit var invoiceAdapter: ExposeSaleHistoryAdapter
+    private var userId : Long = 0L
+    private val viewModel : ExposeSaleHistoryViewModel by viewModels()
+    private var onClickInvoice : ((InvoiceModel)->Unit)? = null
+    private var onClickBackPressed : (()->Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        arguments?.let { bundle ->
+            userId = bundle.getLong(USER_ID_PARAM,0)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke()
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding =  FragmentExposeSaleHistoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupViewModel()
+    }
+
+    private fun setupRecyclerView(){
+        invoiceAdapter = ExposeSaleHistoryAdapter(
+            onClickListener = { invoice ->
+                onClickInvoice?.invoke(invoice)
+            }
+        )
+
+        binding.rvSaleHistory.apply {
+            adapter = invoiceAdapter
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expose_sale_history, container, false)
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getInvoiceList().observe(viewLifecycleOwner){ invoiceList ->
+            invoiceAdapter.submitList(invoiceList.toList())
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
+
+        viewModel.getAllInvoiceList(userId)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExposeSaleHistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExposeSaleHistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun selectInvoice(onClickInvoice : ((InvoiceModel)->Unit)){
+        this.onClickInvoice = onClickInvoice
+    }
+
+    fun onBackPressed(onClickBackPressed:()->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_secondary"
     tools:context=".ui.view.fragment.ExposeSaleHistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSaleHistory"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/color_secondary"
+        android:layout_marginTop="@dimen/view_margin_2"
         tools:listitem="@layout/item_expose_sale_history"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

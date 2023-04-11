@@ -23,9 +23,10 @@ class MainActivity : AppCompatActivity() {
     private var currentFragment : Fragment? = null
     private var baseTag : String = ""
     private var cartId : Long = 0
+    private val userId : Long = Constants.USER_ID
 
     private val viewModel : MainViewModel by viewModels {
-        MainViewModelFactory(Constants.USER_ID)
+        MainViewModelFactory(userId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -183,8 +184,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSalesHistory(){
-        Functions.showSimpleMessage(this,"SalesHistory")
+        val fragment = ExposeSaleHistoryFragment.newInstance(userId)
+
+        fragment.selectInvoice{ invoice ->
+            showInvoiceDetails(invoice.invoiceId)
+        }
+        fragment.onBackPressed {
+            finish()
+        }
+
+        addFragment(fragment,ExposeSaleHistoryFragment.TAG)
         baseTag = ExposeSaleHistoryFragment::class.java.simpleName
+    }
+
+    private fun showInvoiceDetails(invoiceId:Long){
+        Functions.showSimpleMessage(this,"Invoice Details")
     }
 
     private fun addFragment(fragment:Fragment,tag:String){

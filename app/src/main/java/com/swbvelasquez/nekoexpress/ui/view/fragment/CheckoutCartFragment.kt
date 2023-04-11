@@ -153,9 +153,9 @@ class CheckoutCartFragment : Fragment() {
         }
 
         activity?.let{
-            binding.tvSubtotal.text = String.format(getString(R.string.format_price),cart.subtotal)
-            binding.tvTaxes.text = String.format(getString(R.string.format_price),cart.taxes)
-            binding.tvTotal.text = String.format(getString(R.string.format_price),cart.total)
+            binding.tvSubtotal.text = String.format(getString(R.string.format_price_default),cart.subtotal)
+            binding.tvTaxes.text = String.format(getString(R.string.format_price_default),cart.taxes)
+            binding.tvTotal.text = String.format(getString(R.string.format_price_default),cart.total)
         }
     }
 

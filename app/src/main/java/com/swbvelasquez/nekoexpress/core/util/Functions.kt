@@ -10,6 +10,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object Functions {
@@ -45,6 +47,13 @@ object Functions {
         val matchResult = regex.matchEntire(message)
 
         return matchResult != null
+    }
+
+    fun getFormattedDateFromLong(format:String,value:Long):String{
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+        val date = Date(value)
+
+        return dateFormat.format(date)
     }
 
     fun getCompleteCategoryDto(index:Long,category: String):CategoryDto = CategoryDto(index+1,category, getCategoryImage(category))

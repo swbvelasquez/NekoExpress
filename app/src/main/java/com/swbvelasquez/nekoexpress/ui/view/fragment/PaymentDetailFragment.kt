@@ -129,7 +129,7 @@ class PaymentDetailFragment : Fragment() {
     }
 
     private fun setupUI(){
-        binding.tvTotalOrder.text = String.format(getString(R.string.format_price),cartTotal)
+        binding.tvTotalOrder.text = String.format(getString(R.string.format_price_default),cartTotal)
         setupDepartmentAutoCompleteTextView()
     }
 

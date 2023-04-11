@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_secondary"
-    tools:context=".ui.view.fragment.OrderDetailFragment">
+    tools:context=".ui.view.fragment.InvoiceDetailFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProduct"
@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/view_margin_default"
         android:layout_marginBottom="@dimen/view_margin_default"
-        tools:listitem="@layout/item_order_detail"
+        tools:listitem="@layout/item_invoice_detail"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/tvOrderNumberTitle"
         app:layout_constraintEnd_toEndOf="parent"

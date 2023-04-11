@@ -3,17 +3,18 @@
     <string name="image_view_thumbnail_description">Image Thumbnail</string>
     <string name="image_view_icon_description">Image Icon</string>
 
-    <string name="format_price">S/ %.2f</string>
-    <string name="format_order_number">%09d</string>
-    <string name="format_order_delivery_address_summary">%s, %s, %s, %s</string>
-    <string name="format_item_product_price">S/ %.2f</string>
+    <string name="format_date_default">dd/MM/yyyy</string>
+    <string name="format_price_default">$ %.2f</string>
+    <string name="format_invoice_number">%09d</string>
+    <string name="format_invoice_delivery_address_summary">%s, %s, %s, %s</string>
+    <string name="format_item_product_price">$ %.2f</string>
     <string name="format_item_product_score">%.1f</string>
     <string name="format_item_product_size">Size: %s</string>
     <string name="format_item_product_color">Color: %s</string>
     <string name="format_item_product_review">(%d reviews)</string>
-    <string name="format_item_order_number">Order No: %s</string>
-    <string name="format_item_order_total">Total: %.2f</string>
-    <string name="format_item_order_purchase_date">Date: %s</string>
+    <string name="format_item_invoice_number">Order No: %09d</string>
+    <string name="format_item_invoice_total">Total: $ %.2f</string>
+    <string name="format_item_invoice_purchase_date">Date: %s</string>
 
     <string name="text_description_title">Description</string>
     <string name="text_size_title">Size</string>

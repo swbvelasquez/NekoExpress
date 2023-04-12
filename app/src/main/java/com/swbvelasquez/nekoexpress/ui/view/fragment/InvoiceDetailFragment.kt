@@ -1,60 +1,122 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.provider.GeoreferenceProvider
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentInvoiceDetailBinding
+import com.swbvelasquez.nekoexpress.domain.model.InvoiceModel
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeSaleHistoryAdapter
+import com.swbvelasquez.nekoexpress.ui.view.adapter.InvoiceDetailAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val INVOICE_ID_PARAM = "INVOICE_ID_PARAM"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [InvoiceDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class InvoiceDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        val TAG:String = InvoiceDetailFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(invoiceId: Long) =
+            InvoiceDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(INVOICE_ID_PARAM, invoiceId)
+                }
+            }
+    }
+
+    private lateinit var binding : FragmentInvoiceDetailBinding
+    private lateinit var invoiceDetailAdapter: InvoiceDetailAdapter
+    private var invoiceId : Long = 0L
+    private var onClickBackPressed: ((String)->Unit)? = null
+
+    private val viewModel : InvoiceDetailViewModel by viewModels {
+        InvoiceDetailViewModelFactory(invoiceId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        arguments?.let { bundle ->
+            invoiceId = bundle.getLong(INVOICE_ID_PARAM,0)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke(ExposeSaleHistoryFragment.TAG)
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentInvoiceDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupViewModel()
+    }
+
+    private fun setupRecyclerView(){
+        invoiceDetailAdapter = InvoiceDetailAdapter()
+
+        binding.rvDetail.apply {
+            adapter = invoiceDetailAdapter
+            layoutManager = LinearLayoutManager(activity)
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_invoice_detail, container, false)
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getInvoice().observe(viewLifecycleOwner){ invoice ->
+            setupUi(invoice)
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            InvoiceDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun setupUi(invoice:InvoiceModel){
+        with(binding){
+            activity?.let {
+                tvOrderNumber.text = String.format(it.getString(R.string.format_invoice_number),invoice.invoiceId)
+                tvPurchaseDate.text = Functions.getFormattedDateFromLong(it.getString(R.string.format_date_default),invoice.date)
+                tvSubtotal.text = String.format(getString(R.string.format_price_default),invoice.subtotal)
+                tvTaxes.text = String.format(getString(R.string.format_price_default),invoice.taxes)
+                tvTotal.text = String.format(getString(R.string.format_price_default),invoice.total)
+
+                val department = GeoreferenceProvider.departmentMap[invoice.deliveryAddress.department] ?: ""
+                val province = GeoreferenceProvider.provinceMap[invoice.deliveryAddress.province] ?: ""
+                val district = GeoreferenceProvider.districtMap[invoice.deliveryAddress.district] ?: ""
+
+                tvAddress.text = String.format(getString(R.string.format_invoice_delivery_address_summary),invoice.deliveryAddress.address,department,province,district)
             }
+        }
+
+        invoiceDetailAdapter.submitList(invoice.invoiceDetailList)
+    }
+
+    fun onBackPressed(onClickBackPressed:(String)->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

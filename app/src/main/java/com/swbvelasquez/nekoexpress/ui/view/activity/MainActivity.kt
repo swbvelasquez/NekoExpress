@@ -198,7 +198,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showInvoiceDetails(invoiceId:Long){
-        Functions.showSimpleMessage(this,"Invoice Details")
+        val fragment = InvoiceDetailFragment.newInstance(invoiceId)
+
+        fragment.onBackPressed { destiny->
+            removeFragment(destiny)
+        }
+
+        addFragment(fragment,InvoiceDetailFragment.TAG)
     }
 
     private fun addFragment(fragment:Fragment,tag:String){

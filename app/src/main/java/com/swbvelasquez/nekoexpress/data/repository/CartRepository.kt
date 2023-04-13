@@ -16,7 +16,7 @@ class CartRepository {
     private val cartDao = NekoApplication.database.getCartDao()
 
     suspend fun getCartWithProductsByIdFromDb(cartId:Long):CartModel? {
-        val cartDto = cartDao.getCartWithProductsById(cartId)
+        val cartDto = withContext(Dispatchers.IO){ cartDao.getCartWithProductsById(cartId) }
         var cartModel : CartModel? = null
 
         if(cartDto!=null){
@@ -27,7 +27,7 @@ class CartRepository {
     }
 
     suspend fun getLastCartWithProductsFromDb(userId:Long):CartModel? {
-        val cartDto = cartDao.getLastCartWithProducts(userId)
+        val cartDto = withContext(Dispatchers.IO){ cartDao.getLastCartWithProducts(userId) }
         var cartModel : CartModel? = null
 
         if(cartDto!=null){
@@ -42,7 +42,7 @@ class CartRepository {
     }
 
     suspend fun existProductCartFromDb(cartId:Long,productId:Long):Boolean {
-        return cartDao.existProductCart(cartId,productId) > 0
+        return withContext(Dispatchers.IO){cartDao.existProductCart(cartId,productId) > 0}
     }
 
     suspend fun insertCartToDb(cart:CartModel){

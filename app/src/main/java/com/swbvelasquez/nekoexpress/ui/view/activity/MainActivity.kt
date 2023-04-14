@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var currentFragment : Fragment? = null
     private var baseTag : String = ""
     private var cartId : Long = 0
-    private val userId : Long = Constants.USER_ID
+    private val userId : Long = Constants.DEFAULT_USER_ID
 
     private val viewModel : MainViewModel by viewModels {
         MainViewModelFactory(userId)

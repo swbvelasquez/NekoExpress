@@ -3,11 +3,13 @@ package com.swbvelasquez.nekoexpress.ui.viewmodel
 import androidx.lifecycle.*
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.domain.usecase.CreateDefaultUserUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetLastAvailableCartUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetTotalQuantityProductsByUserId
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val userId:Long):ViewModel() {
+    private val createDefaultUserUseCase = CreateDefaultUserUseCase()
     private val getLastAvailableCartUseCase = GetLastAvailableCartUseCase()
     private val getTotalQuantityProductsByUserId = GetTotalQuantityProductsByUserId()
     private val loading = MutableLiveData<Boolean>()
@@ -24,6 +26,24 @@ class MainViewModel(private val userId:Long):ViewModel() {
     fun isLoading(): LiveData<Boolean> = loading
     fun getTypeException(): LiveData<CustomException> = customException
     fun getCartId(): LiveData<Long> = cartId
+
+    init {
+        viewModelScope.launch {
+            viewModelScope.launch {
+                loading.value = true
+
+                try{
+                    createDefaultUserUseCase()
+                }catch (ex:CustomException){
+                    customException.value = ex
+                }catch (ex:Exception){
+                    customException.value = CustomException(CustomTypeException.UNKNOWN)
+                }finally {
+                    loading.value = false
+                }
+            }
+        }
+    }
 
     fun getLastAvailableCart(){
         viewModelScope.launch {

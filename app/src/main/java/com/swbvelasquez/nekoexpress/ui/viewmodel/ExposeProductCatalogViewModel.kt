@@ -6,13 +6,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.domain.model.FavoriteProductModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
+import com.swbvelasquez.nekoexpress.domain.usecase.AddFavoriteProductUseCase
+import com.swbvelasquez.nekoexpress.domain.usecase.DeleteFavoriteProductUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetAllCategoriesUseCase
 import com.swbvelasquez.nekoexpress.domain.usecase.GetProductsByCategoryUseCase
 import kotlinx.coroutines.launch
 
 class ExposeProductCatalogViewModel:ViewModel() {
     private val getProductsByCategoryUseCase = GetProductsByCategoryUseCase()
+    private val addFavoriteProductUseCase = AddFavoriteProductUseCase()
+    private val deleteFavoriteProductUseCase = DeleteFavoriteProductUseCase()
     private val loading = MutableLiveData<Boolean>()
 
     private val productList: MutableLiveData<MutableList<ProductCatalogModel>> by lazy {
@@ -42,6 +47,30 @@ class ExposeProductCatalogViewModel:ViewModel() {
                 customException.value = CustomException(CustomTypeException.UNKNOWN)
             }finally {
                 loading.value = false
+            }
+        }
+    }
+
+    fun addProductToFavorites(product:FavoriteProductModel){
+        viewModelScope.launch {
+            try{
+                addFavoriteProductUseCase(product)
+            }catch (ex:CustomException){
+                customException.value = ex
+            }catch (ex:Exception){
+                customException.value = CustomException(CustomTypeException.UNKNOWN)
+            }
+        }
+    }
+
+    fun deleteProductToFavorites(product:FavoriteProductModel){
+        viewModelScope.launch {
+            try{
+                deleteFavoriteProductUseCase(product)
+            }catch (ex:CustomException){
+                customException.value = ex
+            }catch (ex:Exception){
+                customException.value = CustomException(CustomTypeException.UNKNOWN)
             }
         }
     }

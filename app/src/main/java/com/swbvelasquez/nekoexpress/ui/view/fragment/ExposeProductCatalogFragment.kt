@@ -7,20 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.swbvelasquez.nekoexpress.R
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Constants
 import com.swbvelasquez.nekoexpress.core.util.Functions
 import com.swbvelasquez.nekoexpress.core.util.Functions.fromJson
-import com.swbvelasquez.nekoexpress.databinding.FragmentExposeCategoryBinding
 import com.swbvelasquez.nekoexpress.databinding.FragmentExposeProductCatalogBinding
 import com.swbvelasquez.nekoexpress.domain.model.CategoryModel
+import com.swbvelasquez.nekoexpress.domain.model.FavoriteProductModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
-import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeCategoryAdapter
 import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeProductCatalogAdapter
 import com.swbvelasquez.nekoexpress.ui.viewmodel.ExposeProductCatalogViewModel
 
@@ -87,11 +83,13 @@ class ExposeProductCatalogFragment : Fragment() {
     private fun setupRecyclerView(){
         productAdapter = ExposeProductCatalogAdapter(
             onClickListener = { product ->
-                //activity?.let { Functions.showSimpleMessage(it,"Producto Seleccionado: ${product.title}") }
                 onClickProductCatalog?.invoke(product)
             },
             onClickFavoriteListener = { product ->
-                activity?.let { Functions.showSimpleMessage(it,"Producto Favorito: ${product.title}") }
+                if(product.isFavorite)
+                    viewModel.addProductToFavorites(FavoriteProductModel(Constants.DEFAULT_USER_ID,product.productId))
+                else
+                    viewModel.deleteProductToFavorites(FavoriteProductModel(Constants.DEFAULT_USER_ID,product.productId))
             }
         )
 

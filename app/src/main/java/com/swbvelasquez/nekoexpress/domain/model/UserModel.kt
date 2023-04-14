@@ -12,9 +12,10 @@ data class UserModel(
     val firstName:String,
     val lastName:String,
     val registerDate:Long,
-    val productFavoriteList:List<ProductEntity> = mutableListOf()
+    val productFavoriteList:List<ProductCatalogModel> = mutableListOf()
 )
 
 fun UserEntity.toUserModel() = UserModel(userId=userId,email=email,phone=phone,firstName=firstName,lastName=lastName,registerDate=registerDate)
 
-fun UserWithFavoriteProductDto.toUserModel() = UserModel(userId=user.userId,email=user.email,phone=user.phone,firstName=user.firstName,lastName=user.lastName,registerDate=user.registerDate,productFavoriteList=productList)
+fun UserWithFavoriteProductDto.toUserModel() = UserModel(userId=user.userId,email=user.email,phone=user.phone,firstName=user.firstName
+    ,lastName=user.lastName,registerDate=user.registerDate,productFavoriteList=productList.map { it.toProductCatalogModel(true) })

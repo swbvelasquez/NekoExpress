@@ -49,6 +49,10 @@ object Functions {
         return matchResult != null
     }
 
+    fun getDateTimeNowInMs():Long{
+        return Calendar.getInstance().time.time
+    }
+
     fun getFormattedDateFromLong(format:String,value:Long):String{
         val dateFormat = SimpleDateFormat(format, Locale.getDefault())
         val date = Date(value)

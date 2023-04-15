@@ -2,6 +2,7 @@ package com.swbvelasquez.nekoexpress.domain.model
 
 import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.model.ProductWithRatingDto
+import com.swbvelasquez.nekoexpress.data.database.model.UserFavoriteProductWithRatingDto
 import com.swbvelasquez.nekoexpress.data.network.model.ProductDto
 
 data class ProductCatalogModel(
@@ -24,3 +25,5 @@ fun ProductWithRatingDto.toProductCatalogModel() = ProductCatalogModel(productId
 )
 
 fun ProductEntity.toProductCatalogModel(isFavorite:Boolean=false) = ProductCatalogModel(productId=productId,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(),isFavorite=isFavorite)
+
+fun UserFavoriteProductWithRatingDto.toProductCatalogModel() = ProductCatalogModel(productId=productId,title=title,price=price,description=description,category=category,image=image,rating=RatingModel(rate,count))

@@ -8,14 +8,12 @@ import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.domain.model.FavoriteProductModel
 import com.swbvelasquez.nekoexpress.domain.model.ProductCatalogModel
-import com.swbvelasquez.nekoexpress.domain.usecase.AddFavoriteProductUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.DeleteFavoriteProductUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.GetAllCategoriesUseCase
-import com.swbvelasquez.nekoexpress.domain.usecase.GetProductsByCategoryUseCase
+import com.swbvelasquez.nekoexpress.domain.usecase.*
 import kotlinx.coroutines.launch
 
 class ExposeProductCatalogViewModel:ViewModel() {
     private val getProductsByCategoryUseCase = GetProductsByCategoryUseCase()
+    private val getAllFavoriteProductsByCategoryUseCase = GetAllFavoriteProductsByCategoryUseCase()
     private val addFavoriteProductUseCase = AddFavoriteProductUseCase()
     private val deleteFavoriteProductUseCase = DeleteFavoriteProductUseCase()
     private val loading = MutableLiveData<Boolean>()
@@ -31,15 +29,22 @@ class ExposeProductCatalogViewModel:ViewModel() {
     fun getTypeException(): LiveData<CustomException> = customException
     fun getProductList():LiveData<MutableList<ProductCatalogModel>> = productList
 
-    fun getProductsByCategory(category:String){
+    fun getProductsByCategory(userId:Long, category:String){
         viewModelScope.launch {
             loading.value = true
 
             try{
                 val result = getProductsByCategoryUseCase(category)
 
-                result?.let {
-                    productList.value = it.toMutableList()
+                result?.let { productCatalogList ->
+                    val productCatalogMap = productCatalogList.associateBy { product -> product.productId }
+                    val favoriteList = getAllFavoriteProductsByCategoryUseCase(userId,category)
+
+                    favoriteList?.forEach { product ->
+                        productCatalogMap[product.productId]?.isFavorite = true
+                    }
+
+                    productList.value = productCatalogMap.values.toMutableList()
                 }
             }catch (ex:CustomException){
                 customException.value = ex

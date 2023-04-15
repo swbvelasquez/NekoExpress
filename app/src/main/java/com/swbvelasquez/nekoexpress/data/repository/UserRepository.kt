@@ -1,20 +1,20 @@
 package com.swbvelasquez.nekoexpress.data.repository
 
+import androidx.lifecycle.LiveData
 import com.swbvelasquez.nekoexpress.NekoApplication
 import com.swbvelasquez.nekoexpress.core.error.CustomException
 import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
 import com.swbvelasquez.nekoexpress.data.database.entity.*
-import com.swbvelasquez.nekoexpress.domain.model.FavoriteProductModel
-import com.swbvelasquez.nekoexpress.domain.model.UserModel
-import com.swbvelasquez.nekoexpress.domain.model.toUserModel
+import com.swbvelasquez.nekoexpress.data.database.model.UserFavoriteProductWithRatingDto
+import com.swbvelasquez.nekoexpress.domain.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class UserRepository {
     private val userDao = NekoApplication.database.getUserDao()
 
-    suspend fun getAllFavoriteProductsByUserIdFromDb(userId:Long): UserModel?{
-        val userEntity = withContext(Dispatchers.IO){ userDao.getAllFavoriteProductsByUserId(userId) }
+    suspend fun getUserWithFavoriteProductsByUserIdFromDb(userId:Long): UserModel?{
+        val userEntity = withContext(Dispatchers.IO){ userDao.getUserWithFavoriteProductsByUserId(userId) }
         var userModel : UserModel? = null
 
         if(userEntity!=null){
@@ -33,6 +33,21 @@ class UserRepository {
         }
 
         return userModel
+    }
+
+    fun getAllFavoriteProductsByUserIdFromDb(userId:Long): LiveData<List<UserFavoriteProductWithRatingDto>>? {
+        return userDao.getAllUserFavoriteProductsByUserId(userId)
+    }
+
+    suspend fun getAllFavoriteProductsByCategoryFromDb(userId:Long, category:String): List<ProductCatalogModel>?{
+        val productDtoList = withContext(Dispatchers.IO){ userDao.getAllFavoriteProductsByCategory(userId,category) }
+        var productModelList : List<ProductCatalogModel>? = null
+
+        if(productDtoList!=null){
+            productModelList = productDtoList.map { it.toProductCatalogModel() }
+        }
+
+        return productModelList
     }
 
     suspend fun insertUserToDb(user:UserModel){

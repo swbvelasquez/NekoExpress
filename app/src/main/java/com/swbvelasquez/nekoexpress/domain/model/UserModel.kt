@@ -1,7 +1,5 @@
 package com.swbvelasquez.nekoexpress.domain.model
 
-import androidx.room.ColumnInfo
-import com.swbvelasquez.nekoexpress.data.database.entity.ProductEntity
 import com.swbvelasquez.nekoexpress.data.database.entity.UserEntity
 import com.swbvelasquez.nekoexpress.data.database.model.UserWithFavoriteProductDto
 
@@ -12,10 +10,10 @@ data class UserModel(
     val firstName:String,
     val lastName:String,
     val registerDate:Long,
-    val productFavoriteList:List<ProductCatalogModel> = mutableListOf()
+    val favoriteProductList:MutableList<ProductCatalogModel> = mutableListOf()
 )
 
 fun UserEntity.toUserModel() = UserModel(userId=userId,email=email,phone=phone,firstName=firstName,lastName=lastName,registerDate=registerDate)
 
 fun UserWithFavoriteProductDto.toUserModel() = UserModel(userId=user.userId,email=user.email,phone=user.phone,firstName=user.firstName
-    ,lastName=user.lastName,registerDate=user.registerDate,productFavoriteList=productList.map { it.toProductCatalogModel(true) })
+    ,lastName=user.lastName,registerDate=user.registerDate,favoriteProductList=productList.map { it.toProductCatalogModel(true) }.toMutableList())

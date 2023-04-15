@@ -1,60 +1,125 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Constants
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentExposeFavoriteProductBinding
+import com.swbvelasquez.nekoexpress.domain.model.*
+import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeFavoriteProductAdapter
+import com.swbvelasquez.nekoexpress.ui.viewmodel.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val USER_ID_PARAM = "USER_ID_PARAM"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExposeFavoriteProductFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExposeFavoriteProductFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        val TAG:String = ExposeFavoriteProductFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(userId: Long) =
+            ExposeFavoriteProductFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(USER_ID_PARAM, userId)
+                }
+            }
+    }
+
+    private lateinit var binding: FragmentExposeFavoriteProductBinding
+    private lateinit var favoriteProductAdapter: ExposeFavoriteProductAdapter
+    private var userId: Long = 0
+    private var onClickProductCatalog : ((ProductCatalogModel)->Unit)? = null
+    private var onClickBackPressed: (()->Unit)? = null
+
+    private val viewModel : ExposeFavoriteProductViewModel by viewModels {
+        ExposeFavoriteProductViewModelFactory(userId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        arguments?.let { bundle ->
+            userId = bundle.getLong(USER_ID_PARAM,0)
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke()
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentExposeFavoriteProductBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupViewModel()
+    }
+
+    private fun setupRecyclerView(){
+        favoriteProductAdapter = ExposeFavoriteProductAdapter(
+            onClickListener = { product ->
+                onClickProductCatalog?.invoke(product)
+            },
+            onClickFavoriteListener = { product ->
+                activity?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(resources.getString(R.string.dialog_delete_item_title))
+                        .setMessage(resources.getString(R.string.dialog_delete_item_message))
+                        .setPositiveButton(resources.getString(R.string.dialog_delete_item_positive_button)) { _, _ ->
+                            viewModel.deleteProductToFavorites(FavoriteProductModel(Constants.DEFAULT_USER_ID,product.productId))
+                        }
+                        .setNegativeButton(resources.getString(R.string.dialog_delete_item_negative_button)) { _, _ ->
+                        }
+                        .setCancelable(true)
+                        .show()
+                }
+            }
+        )
+
+        binding.rvProduct.apply {
+            adapter = favoriteProductAdapter
+            layoutManager = GridLayoutManager(activity,2)
+            setHasFixedSize(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_expose_favorite_product, container, false)
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
+        viewModel.favoriteProductList.observe(viewLifecycleOwner){ favoriteProductList ->
+            favoriteProductAdapter.submitList(favoriteProductList.toList())
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExposeFavoriteProductFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExposeFavoriteProductFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun selectProduct(onClickProductCatalog:(ProductCatalogModel)->Unit){
+        this.onClickProductCatalog = onClickProductCatalog
+    }
+
+    fun onBackPressed(onClickBackPressed:()->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }

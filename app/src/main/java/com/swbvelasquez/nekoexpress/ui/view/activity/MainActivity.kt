@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showProductsByCategory(category:String){
-        val fragment = ExposeProductCatalogFragment.newInstance(category)
+        val fragment = ExposeProductCatalogFragment.newInstance(userId,category)
 
         fragment.selectProduct { product ->
             showProductDetails(product.productId,cartId,product.category)
@@ -179,8 +179,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFavoriteProducts(){
-        Functions.showSimpleMessage(this,"Favorite Products")
-        baseTag = ExposeFavoriteProductFragment::class.java.simpleName
+        val fragment = ExposeFavoriteProductFragment.newInstance(userId)
+
+        fragment.selectProduct{ product ->
+            showProductDetails(product.productId,cartId,product.category)
+        }
+        fragment.onBackPressed {
+            finish()
+        }
+
+        addFragment(fragment,ExposeFavoriteProductFragment.TAG)
+        baseTag = ExposeFavoriteProductFragment.TAG
     }
 
     private fun showSalesHistory(){
@@ -194,7 +203,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         addFragment(fragment,ExposeSaleHistoryFragment.TAG)
-        baseTag = ExposeSaleHistoryFragment::class.java.simpleName
+        baseTag = ExposeSaleHistoryFragment.TAG
     }
 
     private fun showInvoiceDetails(invoiceId:Long){

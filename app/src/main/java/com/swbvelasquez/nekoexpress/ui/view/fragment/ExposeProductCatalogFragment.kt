@@ -21,16 +21,18 @@ import com.swbvelasquez.nekoexpress.ui.view.adapter.ExposeProductCatalogAdapter
 import com.swbvelasquez.nekoexpress.ui.viewmodel.ExposeProductCatalogViewModel
 
 private const val CATEGORY_PARAM = "CATEGORY_PARAM"
+private const val USER_ID_PARAM = "USER_ID_PARAM"
 
 class ExposeProductCatalogFragment : Fragment() {
     companion object {
         val TAG:String = ExposeProductCatalogFragment::class.java.simpleName
 
         @JvmStatic
-        fun newInstance(categoryModel: String) =
+        fun newInstance(userId: Long,categoryModel: String) =
             ExposeProductCatalogFragment().apply {
                 arguments = Bundle().apply {
                     putString(CATEGORY_PARAM, categoryModel)
+                    putLong(USER_ID_PARAM, userId)
                 }
             }
     }
@@ -39,6 +41,7 @@ class ExposeProductCatalogFragment : Fragment() {
     private lateinit var categoryModel: CategoryModel
     private lateinit var productAdapter: ExposeProductCatalogAdapter
     private val viewModel : ExposeProductCatalogViewModel by viewModels()
+    private var userId: Long = 0
     private var onClickProductCatalog : ((ProductCatalogModel)->Unit)? = null
     private var onClickBackPressed : ((String)->Unit)? = null
 
@@ -50,6 +53,8 @@ class ExposeProductCatalogFragment : Fragment() {
             categoryJson?.let {
                 categoryModel = it.fromJson()
             }
+
+            userId = bundle.getLong(USER_ID_PARAM,0)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this,
@@ -113,7 +118,7 @@ class ExposeProductCatalogFragment : Fragment() {
             }
         }
 
-        viewModel.getProductsByCategory(categoryModel.name)
+        viewModel.getProductsByCategory(userId,categoryModel.name)
     }
 
     fun selectProduct(onClickProductCatalog:(ProductCatalogModel)->Unit){

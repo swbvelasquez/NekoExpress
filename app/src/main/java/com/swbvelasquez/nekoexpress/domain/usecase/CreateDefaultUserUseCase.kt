@@ -12,7 +12,7 @@ class CreateDefaultUserUseCase {
         var defaultUser = repository.getUserByEmailFromDb(Constants.DEFAULT_USER_EMAIL)
 
         if(defaultUser==null){
-            defaultUser = UserModel(userId=0, email = "default.user@gmail.com", phone = "+51-945954578", firstName = "Default", lastName = "User", registerDate = Functions.getDateTimeNowInMs())
+            defaultUser = UserModel(userId=0, email = "default.user@gmail.com", phone = "+51-945954578", firstName = "Default", lastName = "User", registerDate = Functions.getDateTimeNowInMs(), image = Constants.DEFAULT_USER_IMAGE)
             repository.insertUserToDb(defaultUser)
         }
     }

@@ -10,6 +10,7 @@ object Constants {
     const val TAXES_PERCENT = 0.18
     const val DEFAULT_USER_ID = 1L
     const val DEFAULT_USER_EMAIL = "default.user@gmail.com"
+    const val DEFAULT_USER_IMAGE = "https://cdn-icons-png.flaticon.com/512/5904/5904059.png"
 
     const val CLOTH_CATEGORY = "clothing"
 

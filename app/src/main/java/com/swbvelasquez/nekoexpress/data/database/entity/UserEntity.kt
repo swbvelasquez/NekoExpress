@@ -17,7 +17,8 @@ data class UserEntity(
     @ColumnInfo(name="phone") val phone:String,
     @ColumnInfo(name="firstName") val firstName:String,
     @ColumnInfo(name="lastName") val lastName:String,
+    @ColumnInfo(name="image") val image:String,
     @ColumnInfo(name="registerDate") val registerDate:Long
 )
 
-fun UserModel.toUserEntity() = UserEntity(userId=userId,email=email,phone=phone,firstName=firstName,lastName=lastName,registerDate=registerDate)
+fun UserModel.toUserEntity() = UserEntity(userId=userId,email=email,phone=phone,firstName=firstName,lastName=lastName,image=image,registerDate=registerDate)

@@ -32,6 +32,9 @@
     <string name="text_order_purchase_date_title">Purchase Date</string>
     <string name="text_order_delivery_address_summary_title">Delivery Address</string>
     <string name="text_order_summary_title">Order Summary</string>
+    <string name="text_email_title">Email</string>
+    <string name="text_phone_title">Mobile</string>
+    <string name="text_register_date_title">Register Date</string>
 
     <string name="text_card_section_title">Card Information</string>
     <string name="text_card_number_title">Card Number</string>

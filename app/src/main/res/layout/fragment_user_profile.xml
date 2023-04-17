@@ -1,14 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_secondary"
     tools:context=".ui.view.fragment.UserProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/imvThumbnail"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="@dimen/view_margin_max"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/ic_launcher_round"
+        android:contentDescription="@string/image_view_thumbnail_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvCompleteName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Default User"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/view_margin_min"
+        android:layout_marginHorizontal="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imvThumbnail"/>
+
+    <ImageView
+        android:id="@+id/imvEmailIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_email"
+        app:tint="@color/color_primary"
+        android:layout_marginStart="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvEmailTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvEmailTitle"
+        android:contentDescription="@string/image_view_thumbnail_description"/>
+
+    <TextView
+        android:id="@+id/tvEmailTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_email_title"
+        android:layout_marginTop="@dimen/view_margin_max"
+        android:layout_marginStart="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toEndOf="@id/imvEmailIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleteName"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="default.user@gmail.com"
+        android:layout_marginTop="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintStart_toStartOf="@id/tvEmailTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailTitle"/>
+
+    <ImageView
+        android:id="@+id/imvPhoneIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_mobile"
+        app:tint="@color/color_primary"
+        android:layout_marginStart="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvPhoneTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvPhoneTitle"
+        android:contentDescription="@string/image_view_thumbnail_description"/>
+
+    <TextView
+        android:id="@+id/tvPhoneTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_phone_title"
+        android:layout_marginTop="@dimen/view_margin_default"
+        android:layout_marginStart="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toEndOf="@id/imvPhoneIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEmail"/>
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="+51-945958745"
+        android:layout_marginTop="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintStart_toStartOf="@id/tvPhoneTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPhoneTitle"/>
+
+    <ImageView
+        android:id="@+id/imvRegisterDateIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/color_primary"
+        android:layout_marginStart="@dimen/view_margin_default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterDateTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterDateTitle"
+        android:contentDescription="@string/image_view_thumbnail_description"/>
+
+    <TextView
+        android:id="@+id/tvRegisterDateTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_register_date_title"
+        android:layout_marginTop="@dimen/view_margin_default"
+        android:layout_marginStart="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toEndOf="@id/imvRegisterDateIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPhone"/>
+
+    <TextView
+        android:id="@+id/tvRegisterDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="17/03/2021"
+        android:layout_marginTop="@dimen/view_margin_min"
+        android:layout_marginEnd="@dimen/view_margin_default"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintStart_toStartOf="@id/tvRegisterDateTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterDateTitle"/>
+
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/lyProgressBar"
+        layout="@layout/layout_progress_bar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

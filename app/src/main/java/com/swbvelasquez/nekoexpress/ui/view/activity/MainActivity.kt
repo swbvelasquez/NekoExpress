@@ -174,8 +174,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showUserProfile(){
-        Functions.showSimpleMessage(this,"User Profile")
-        baseTag = UserProfileFragment::class.java.simpleName
+        val fragment = UserProfileFragment.newInstance(Constants.DEFAULT_USER_EMAIL)
+
+        fragment.onBackPressed {
+            finish()
+        }
+
+        addFragment(fragment,UserProfileFragment.TAG)
+        baseTag = UserProfileFragment.TAG
     }
 
     private fun showFavoriteProducts(){

@@ -1,60 +1,110 @@
 package com.swbvelasquez.nekoexpress.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.swbvelasquez.nekoexpress.R
+import com.swbvelasquez.nekoexpress.core.error.CustomTypeException
+import com.swbvelasquez.nekoexpress.core.util.Functions
+import com.swbvelasquez.nekoexpress.databinding.FragmentPaymentDetailBinding
+import com.swbvelasquez.nekoexpress.databinding.FragmentUserProfileBinding
+import com.swbvelasquez.nekoexpress.domain.model.UserModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.PaymentDetailViewModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.PaymentDetailViewModelFactory
+import com.swbvelasquez.nekoexpress.ui.viewmodel.UserProfileViewModel
+import com.swbvelasquez.nekoexpress.ui.viewmodel.UserProfileViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val EMAIL_PARAM = "EMAIL_PARAM"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [UserProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        val TAG:String = UserProfileFragment::class.java.simpleName
+
+        @JvmStatic
+        fun newInstance(email: String) =
+            UserProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putString(EMAIL_PARAM, email)
+                }
+            }
+    }
+
+    private lateinit var binding: FragmentUserProfileBinding
+    private var email: String = ""
+    private var onClickBackPressed: (()->Unit)? = null
+
+    private val viewModel : UserProfileViewModel by viewModels {
+        UserProfileViewModelFactory(email)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        arguments?.let { bundle ->
+            email = bundle.getString(EMAIL_PARAM,"")
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG,"onBackPressed")
+                    onClickBackPressed?.invoke()
+                    remove()
+                }
+            }
+        )
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding =  FragmentUserProfileBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViewModel()
+    }
+
+    private fun setupViewModel(){
+        viewModel.isLoading().observe(viewLifecycleOwner){ loading ->
+            binding.lyProgressBar.root.visibility =  if(loading) View.VISIBLE else View.GONE
+        }
+        viewModel.getTypeException().observe(viewLifecycleOwner){ exception ->
+            if(exception.typeException != CustomTypeException.NONE) {
+                activity?.let { Functions.showSimpleMessage(it, exception.typeException.message) }
+            }
+        }
+        viewModel.getUser().observe(viewLifecycleOwner){ user ->
+            setupUI(user)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false)
+    private fun setupUI(user:UserModel){
+        with(binding){
+            val completeName = "${user.firstName} ${user.lastName}"
+            tvCompleteName.text = completeName
+            tvEmail.text = user.email
+            tvPhone.text = user.phone
+            tvRegisterDate.text = Functions.getFormattedDateFromLong(getString(R.string.format_date_default),user.registerDate)
+
+            Glide
+                .with(this@UserProfileFragment)
+                .load(user.image)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imvThumbnail)
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UserProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UserProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun onBackPressed(onClickBackPressed:()->Unit){
+        this.onClickBackPressed=onClickBackPressed
     }
 }
